@@ -1,0 +1,426 @@
+Nonterminals useless in grammar
+
+   varDeclList
+   stmtList
+   stmt
+   assignExp
+   exp
+   term
+   fncall
+   actualList
+   primType
+   indirect
+   loc
+
+
+Terminals unused in grammar
+
+   "newline"
+   BOOL
+   VOID
+   TRUE
+   FALSE
+   IF
+   ELSE
+   WHILE
+   RETURN
+   INTLITERAL
+   STRINGLITERAL
+   DEREF
+   DOT
+   WRITE
+   READ
+   CROSSCROSS
+   DASHDASH
+   CROSS
+   DASH
+   STAR
+   SLASH
+   NOT
+   AND
+   OR
+   EQUALS
+   NOTEQUALS
+   LESS
+   GREATER
+   LESSEQ
+   GREATEREQ
+   ASSIGN
+
+
+Rules useless in grammar
+
+   16 varDeclList: varDeclList varDecl
+   17            | %empty
+
+   18 stmtList: stmtList stmt
+   19         | %empty
+
+   20 stmt: assignExp SEMICOLON
+   21     | loc CROSSCROSS SEMICOLON
+   22     | loc DASHDASH SEMICOLON
+   23     | READ loc SEMICOLON
+   24     | WRITE exp SEMICOLON
+   25     | IF LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY
+   26     | IF LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY ELSE LCURLY varDeclList stmtList RCURLY
+   27     | WHILE LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY
+   28     | RETURN exp SEMICOLON
+   29     | RETURN SEMICOLON
+   30     | fncall SEMICOLON
+
+   31 assignExp: loc ASSIGN exp
+
+   32 exp: assignExp
+   33    | exp CROSS exp
+   34    | exp DASH exp
+   35    | exp STAR exp
+   36    | exp SLASH exp
+   37    | NOT exp
+   38    | exp AND exp
+   39    | exp OR exp
+   40    | exp EQUALS exp
+   41    | exp NOTEQUALS exp
+   42    | exp LESS exp
+   43    | exp GREATER exp
+   44    | exp LESSEQ exp
+   45    | exp GREATEREQ exp
+   46    | DASH term
+   47    | term
+
+   48 term: loc
+   49     | INTLITERAL
+   50     | STRINGLITERAL
+   51     | TRUE
+   52     | FALSE
+   53     | LPAREN exp RPAREN
+   54     | fncall
+
+   55 fncall: id LPAREN RPAREN
+   56       | id LPAREN actualList RPAREN
+
+   57 actualList: exp
+   58           | actualList COMMA exp
+
+   59 primType: INT
+   60         | BOOL
+   61         | VOID
+
+   62 indirect: indirect DEREF
+   63         | %empty
+
+   64 loc: id
+   65    | DEREF loc
+
+
+Grammar
+
+    0 $accept: program "end of file"
+
+    1 program: declList
+
+    2 declList: declList decl
+    3         | %empty
+
+    4 decl: varDecl
+    5     | fnDecl
+
+    6 varDecl: type id SEMICOLON
+
+    7 fnDecl: type id formals fnBody
+
+    8 formals: LPAREN RPAREN
+    9        | LPAREN formalsList RPAREN
+
+   10 formalsList: formalDecl
+   11            | formalDecl COMMA formalsList
+
+   12 formalDecl: type id
+
+   13 fnBody: LCURLY RCURLY
+
+   14 type: INT
+
+   15 id: ID
+
+
+Terminals, with rules where they appear
+
+"end of file" (0) 0
+error (256)
+"newline" (258)
+BOOL (259)
+INT (260) 14
+VOID (261)
+TRUE (262)
+FALSE (263)
+IF (264)
+ELSE (265)
+WHILE (266)
+RETURN (267)
+ID (268) 15
+INTLITERAL (269)
+STRINGLITERAL (270)
+DEREF (271)
+LCURLY (272) 13
+RCURLY (273) 13
+LPAREN (274) 8 9
+RPAREN (275) 8 9
+SEMICOLON (276) 6
+COMMA (277) 11
+DOT (278)
+WRITE (279)
+READ (280)
+CROSSCROSS (281)
+DASHDASH (282)
+CROSS (283)
+DASH (284)
+STAR (285)
+SLASH (286)
+NOT (287)
+AND (288)
+OR (289)
+EQUALS (290)
+NOTEQUALS (291)
+LESS (292)
+GREATER (293)
+LESSEQ (294)
+GREATEREQ (295)
+ASSIGN (296)
+
+
+Nonterminals, with rules where they appear
+
+$accept (42)
+    on left: 0
+program (43)
+    on left: 1, on right: 0
+declList (44)
+    on left: 2 3, on right: 1 2
+decl (45)
+    on left: 4 5, on right: 2
+varDecl (46)
+    on left: 6, on right: 4
+fnDecl (47)
+    on left: 7, on right: 5
+formals (48)
+    on left: 8 9, on right: 7
+formalsList (49)
+    on left: 10 11, on right: 9 11
+formalDecl (50)
+    on left: 12, on right: 10 11
+fnBody (51)
+    on left: 13, on right: 7
+type (52)
+    on left: 14, on right: 6 7 12
+id (53)
+    on left: 15, on right: 6 7 12
+
+
+State 0
+
+    0 $accept: . program "end of file"
+
+    $default  reduce using rule 3 (declList)
+
+    program   go to state 1
+    declList  go to state 2
+
+
+State 1
+
+    0 $accept: program . "end of file"
+
+    "end of file"  shift, and go to state 3
+
+
+State 2
+
+    1 program: declList .
+    2 declList: declList . decl
+
+    INT  shift, and go to state 4
+
+    $default  reduce using rule 1 (program)
+
+    decl     go to state 5
+    varDecl  go to state 6
+    fnDecl   go to state 7
+    type     go to state 8
+
+
+State 3
+
+    0 $accept: program "end of file" .
+
+    $default  accept
+
+
+State 4
+
+   14 type: INT .
+
+    $default  reduce using rule 14 (type)
+
+
+State 5
+
+    2 declList: declList decl .
+
+    $default  reduce using rule 2 (declList)
+
+
+State 6
+
+    4 decl: varDecl .
+
+    $default  reduce using rule 4 (decl)
+
+
+State 7
+
+    5 decl: fnDecl .
+
+    $default  reduce using rule 5 (decl)
+
+
+State 8
+
+    6 varDecl: type . id SEMICOLON
+    7 fnDecl: type . id formals fnBody
+
+    ID  shift, and go to state 9
+
+    id  go to state 10
+
+
+State 9
+
+   15 id: ID .
+
+    $default  reduce using rule 15 (id)
+
+
+State 10
+
+    6 varDecl: type id . SEMICOLON
+    7 fnDecl: type id . formals fnBody
+
+    LPAREN     shift, and go to state 11
+    SEMICOLON  shift, and go to state 12
+
+    formals  go to state 13
+
+
+State 11
+
+    8 formals: LPAREN . RPAREN
+    9        | LPAREN . formalsList RPAREN
+
+    INT     shift, and go to state 4
+    RPAREN  shift, and go to state 14
+
+    formalsList  go to state 15
+    formalDecl   go to state 16
+    type         go to state 17
+
+
+State 12
+
+    6 varDecl: type id SEMICOLON .
+
+    $default  reduce using rule 6 (varDecl)
+
+
+State 13
+
+    7 fnDecl: type id formals . fnBody
+
+    LCURLY  shift, and go to state 18
+
+    fnBody  go to state 19
+
+
+State 14
+
+    8 formals: LPAREN RPAREN .
+
+    $default  reduce using rule 8 (formals)
+
+
+State 15
+
+    9 formals: LPAREN formalsList . RPAREN
+
+    RPAREN  shift, and go to state 20
+
+
+State 16
+
+   10 formalsList: formalDecl .
+   11            | formalDecl . COMMA formalsList
+
+    COMMA  shift, and go to state 21
+
+    $default  reduce using rule 10 (formalsList)
+
+
+State 17
+
+   12 formalDecl: type . id
+
+    ID  shift, and go to state 9
+
+    id  go to state 22
+
+
+State 18
+
+   13 fnBody: LCURLY . RCURLY
+
+    RCURLY  shift, and go to state 23
+
+
+State 19
+
+    7 fnDecl: type id formals fnBody .
+
+    $default  reduce using rule 7 (fnDecl)
+
+
+State 20
+
+    9 formals: LPAREN formalsList RPAREN .
+
+    $default  reduce using rule 9 (formals)
+
+
+State 21
+
+   11 formalsList: formalDecl COMMA . formalsList
+
+    INT  shift, and go to state 4
+
+    formalsList  go to state 24
+    formalDecl   go to state 16
+    type         go to state 17
+
+
+State 22
+
+   12 formalDecl: type id .
+
+    $default  reduce using rule 12 (formalDecl)
+
+
+State 23
+
+   13 fnBody: LCURLY RCURLY .
+
+    $default  reduce using rule 13 (fnBody)
+
+
+State 24
+
+   11 formalsList: formalDecl COMMA formalsList .
+
+    $default  reduce using rule 11 (formalsList)
