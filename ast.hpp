@@ -289,7 +289,7 @@ private:
 class FnBodyNode : public DeclNode {
 public:
 	FnBodyNode(VarDeclListNode * declList, StmtListNode * stmtList)
-	: DeclNode(declList->getLine(), declList->getCol()) {
+	: DeclNode(0, 0) {
 		myDeclList = declList;
 		myStmtList = stmtList;
 	}

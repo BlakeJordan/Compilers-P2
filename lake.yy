@@ -187,7 +187,8 @@ decl : varDecl {
 
 /* TODO */
 varDeclList : varDeclList varDecl {
-
+  $1->push_back($2);
+  $$ = $1;
 } | /* epsilon */ {
   $$ = new std::list<VarDeclNode *>();
 }
@@ -207,7 +208,7 @@ fnDecl : type id formals fnBody {
 formals : LPAREN RPAREN {
   $$ = new std::list<FormalDeclNode *>();
 } | LPAREN formalsList RPAREN {
-  $$ = new FormalsListNode(std::list<FormalDeclNode *>());
+  $$ = new FormalsListNode($2);
 }
 
 /* TODO */
@@ -348,7 +349,7 @@ indirect : indirect DEREF {
 
 /* TODO */
 loc : id {
-  $$ = $1;
+
 } | DEREF loc {
 
 }
