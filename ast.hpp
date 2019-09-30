@@ -288,14 +288,14 @@ private:
 /* VERIFY */
 class FnBodyNode : public DeclNode {
 public:
-	FnBodyNode(DeclListNode * declList, StmtListNode * stmtList)
+	FnBodyNode(VarDeclListNode * declList, StmtListNode * stmtList)
 	: DeclNode(declList->getLine(), declList->getCol()) {
 		myDeclList = declList;
 		myStmtList = stmtList;
 	}
 	void unparse(std::ostream& out, int indent);
 private:
-	DeclListNode * myDeclList;
+	VarDeclListNode * myDeclList;
 	StmtListNode * myStmtList;
 };
 
