@@ -554,7 +554,7 @@ namespace lake {
           switch (yyn)
             {
   case 2:
-#line 152 "lake.yy" // lalr1.cc:859
+#line 162 "lake.yy" // lalr1.cc:859
     {
   (yylhs.value.programNode) = new ProgramNode(new DeclListNode((yystack_[0].value.declListNode)));
   *root = (yylhs.value.programNode);
@@ -563,481 +563,482 @@ namespace lake {
     break;
 
   case 3:
-#line 159 "lake.yy" // lalr1.cc:859
+#line 169 "lake.yy" // lalr1.cc:859
     {
   (yystack_[1].value.declListNode)->push_back((yystack_[0].value.declNode));
   (yylhs.value.declListNode) = (yystack_[1].value.declListNode);
+  std::cout<<"Value 1: "<<(yystack_[1].value.declListNode);
+  std::cout<<"Value 2: "<<(yystack_[0].value.declNode);
+  std::cout<<"ProductionValue: "<<(yylhs.value.declListNode);
 }
-#line 572 "parser.cc" // lalr1.cc:859
+#line 575 "parser.cc" // lalr1.cc:859
     break;
 
   case 4:
-#line 162 "lake.yy" // lalr1.cc:859
+#line 175 "lake.yy" // lalr1.cc:859
     {
   (yylhs.value.declListNode) = new std::list<DeclNode *>();
 }
-#line 580 "parser.cc" // lalr1.cc:859
+#line 583 "parser.cc" // lalr1.cc:859
     break;
 
   case 5:
-#line 168 "lake.yy" // lalr1.cc:859
+#line 181 "lake.yy" // lalr1.cc:859
     {
-  (yylhs.value.declNode) = new VarDeclNode((yystack_[0].value.varDeclNode)->token_type, (yystack_[0].value.varDeclNode)->_id);
+  (yylhs.value.declNode) = (yystack_[0].value.varDeclNode);
 		//Make sure to fill out this rule
 }
-#line 589 "parser.cc" // lalr1.cc:859
+#line 592 "parser.cc" // lalr1.cc:859
     break;
 
   case 6:
-#line 171 "lake.yy" // lalr1.cc:859
+#line 184 "lake.yy" // lalr1.cc:859
     {
-  (yylhs.value.declNode) = new FnDeclNode((yystack_[0].value.fnDeclNode));
+  (yylhs.value.declNode) = (yystack_[0].value.fnDeclNode);
 }
-#line 597 "parser.cc" // lalr1.cc:859
+#line 600 "parser.cc" // lalr1.cc:859
     break;
 
   case 7:
-#line 176 "lake.yy" // lalr1.cc:859
+#line 189 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 605 "parser.cc" // lalr1.cc:859
+#line 608 "parser.cc" // lalr1.cc:859
     break;
 
   case 8:
-#line 178 "lake.yy" // lalr1.cc:859
+#line 191 "lake.yy" // lalr1.cc:859
     {
   (yylhs.value.varDeclListNode) = new std::list<VarDeclNode *>();
 }
-#line 613 "parser.cc" // lalr1.cc:859
+#line 616 "parser.cc" // lalr1.cc:859
     break;
 
   case 9:
-#line 183 "lake.yy" // lalr1.cc:859
+#line 196 "lake.yy" // lalr1.cc:859
     {
   (yylhs.value.varDeclNode) = new VarDeclNode((yystack_[2].value.typeNode), (yystack_[1].value.idNode));
 }
-#line 621 "parser.cc" // lalr1.cc:859
+#line 624 "parser.cc" // lalr1.cc:859
     break;
 
   case 10:
-#line 188 "lake.yy" // lalr1.cc:859
+#line 201 "lake.yy" // lalr1.cc:859
     {
   (yylhs.value.fnDeclNode) = new FnDeclNode(new TypeNode((yystack_[3].value.typeNode)->lineNum, (yystack_[3].value.typeNode)->colNum),
-  (yystack_[2].value.idNode),
-  new FormalsListNode((yystack_[1].value.formalsNode)->myFormals),
-  new FnBodyNode((yystack_[0].value.fnBodyNode)->myVarDeclList, (yystack_[0].value.fnBodyNode)->myStmtList));
+  (yystack_[2].value.idNode), (yystack_[1].value.formalsNode), (yystack_[0].value.fnBodyNode));
 }
-#line 632 "parser.cc" // lalr1.cc:859
+#line 633 "parser.cc" // lalr1.cc:859
     break;
 
   case 11:
-#line 196 "lake.yy" // lalr1.cc:859
+#line 207 "lake.yy" // lalr1.cc:859
     {
   (yylhs.value.formalsNode) = new std::list<FormalDeclNode *>();
 }
-#line 640 "parser.cc" // lalr1.cc:859
+#line 641 "parser.cc" // lalr1.cc:859
     break;
 
   case 12:
-#line 198 "lake.yy" // lalr1.cc:859
+#line 209 "lake.yy" // lalr1.cc:859
     {
-  (yylhs.value.formalsNode) = new std::list<FormalDeclNode *>();
+  (yylhs.value.formalsNode) = new FormalsListNode(std::list<FormalDeclNode *>());
 }
-#line 648 "parser.cc" // lalr1.cc:859
+#line 649 "parser.cc" // lalr1.cc:859
     break;
 
   case 13:
-#line 203 "lake.yy" // lalr1.cc:859
+#line 214 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 656 "parser.cc" // lalr1.cc:859
+#line 657 "parser.cc" // lalr1.cc:859
     break;
 
   case 14:
-#line 205 "lake.yy" // lalr1.cc:859
+#line 216 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 664 "parser.cc" // lalr1.cc:859
+#line 665 "parser.cc" // lalr1.cc:859
     break;
 
   case 15:
-#line 210 "lake.yy" // lalr1.cc:859
+#line 221 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 672 "parser.cc" // lalr1.cc:859
+#line 673 "parser.cc" // lalr1.cc:859
     break;
 
   case 16:
-#line 215 "lake.yy" // lalr1.cc:859
+#line 226 "lake.yy" // lalr1.cc:859
     {
   (yylhs.value.fnBodyNode) = new FnBodyNode(new VarDeclListNode((yystack_[2].value.varDeclListNode)), new StmtListNode((yystack_[1].value.stmtListNode)));
 }
-#line 680 "parser.cc" // lalr1.cc:859
+#line 681 "parser.cc" // lalr1.cc:859
     break;
 
   case 17:
-#line 220 "lake.yy" // lalr1.cc:859
+#line 231 "lake.yy" // lalr1.cc:859
     {
   (yystack_[1].value.stmtListNode)->push_back((yystack_[0].value.stmtNode));
   (yylhs.value.stmtListNode) = (yystack_[1].value.stmtListNode);
 }
-#line 689 "parser.cc" // lalr1.cc:859
+#line 690 "parser.cc" // lalr1.cc:859
     break;
 
   case 18:
-#line 223 "lake.yy" // lalr1.cc:859
+#line 234 "lake.yy" // lalr1.cc:859
     {
   (yylhs.value.stmtListNode) = new std::list<StmtNode *>();
 }
-#line 697 "parser.cc" // lalr1.cc:859
+#line 698 "parser.cc" // lalr1.cc:859
     break;
 
   case 19:
-#line 228 "lake.yy" // lalr1.cc:859
+#line 239 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 705 "parser.cc" // lalr1.cc:859
+#line 706 "parser.cc" // lalr1.cc:859
     break;
 
   case 20:
-#line 230 "lake.yy" // lalr1.cc:859
+#line 241 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 713 "parser.cc" // lalr1.cc:859
+#line 714 "parser.cc" // lalr1.cc:859
     break;
 
   case 21:
-#line 232 "lake.yy" // lalr1.cc:859
+#line 243 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 721 "parser.cc" // lalr1.cc:859
+#line 722 "parser.cc" // lalr1.cc:859
     break;
 
   case 22:
-#line 234 "lake.yy" // lalr1.cc:859
+#line 245 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 729 "parser.cc" // lalr1.cc:859
+#line 730 "parser.cc" // lalr1.cc:859
     break;
 
   case 23:
-#line 236 "lake.yy" // lalr1.cc:859
+#line 247 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 737 "parser.cc" // lalr1.cc:859
+#line 738 "parser.cc" // lalr1.cc:859
     break;
 
   case 24:
-#line 238 "lake.yy" // lalr1.cc:859
+#line 249 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 745 "parser.cc" // lalr1.cc:859
+#line 746 "parser.cc" // lalr1.cc:859
     break;
 
   case 25:
-#line 240 "lake.yy" // lalr1.cc:859
+#line 251 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 753 "parser.cc" // lalr1.cc:859
+#line 754 "parser.cc" // lalr1.cc:859
     break;
 
   case 26:
-#line 242 "lake.yy" // lalr1.cc:859
-    {
-
-}
-#line 761 "parser.cc" // lalr1.cc:859
-    break;
-
-  case 27:
-#line 244 "lake.yy" // lalr1.cc:859
-    {
-
-}
-#line 769 "parser.cc" // lalr1.cc:859
-    break;
-
-  case 28:
-#line 246 "lake.yy" // lalr1.cc:859
-    {
-
-}
-#line 777 "parser.cc" // lalr1.cc:859
-    break;
-
-  case 29:
-#line 248 "lake.yy" // lalr1.cc:859
-    {
-
-}
-#line 785 "parser.cc" // lalr1.cc:859
-    break;
-
-  case 30:
 #line 253 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 793 "parser.cc" // lalr1.cc:859
+#line 762 "parser.cc" // lalr1.cc:859
     break;
 
-  case 31:
-#line 258 "lake.yy" // lalr1.cc:859
+  case 27:
+#line 255 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 801 "parser.cc" // lalr1.cc:859
+#line 770 "parser.cc" // lalr1.cc:859
     break;
 
-  case 32:
-#line 260 "lake.yy" // lalr1.cc:859
+  case 28:
+#line 257 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 809 "parser.cc" // lalr1.cc:859
+#line 778 "parser.cc" // lalr1.cc:859
     break;
 
-  case 33:
-#line 262 "lake.yy" // lalr1.cc:859
+  case 29:
+#line 259 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 817 "parser.cc" // lalr1.cc:859
+#line 786 "parser.cc" // lalr1.cc:859
     break;
 
-  case 34:
+  case 30:
 #line 264 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 825 "parser.cc" // lalr1.cc:859
+#line 794 "parser.cc" // lalr1.cc:859
+    break;
+
+  case 31:
+#line 269 "lake.yy" // lalr1.cc:859
+    {
+
+}
+#line 802 "parser.cc" // lalr1.cc:859
+    break;
+
+  case 32:
+#line 271 "lake.yy" // lalr1.cc:859
+    {
+
+}
+#line 810 "parser.cc" // lalr1.cc:859
+    break;
+
+  case 33:
+#line 273 "lake.yy" // lalr1.cc:859
+    {
+
+}
+#line 818 "parser.cc" // lalr1.cc:859
+    break;
+
+  case 34:
+#line 275 "lake.yy" // lalr1.cc:859
+    {
+
+}
+#line 826 "parser.cc" // lalr1.cc:859
     break;
 
   case 35:
-#line 266 "lake.yy" // lalr1.cc:859
+#line 277 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 833 "parser.cc" // lalr1.cc:859
+#line 834 "parser.cc" // lalr1.cc:859
     break;
 
   case 36:
-#line 268 "lake.yy" // lalr1.cc:859
+#line 279 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 841 "parser.cc" // lalr1.cc:859
+#line 842 "parser.cc" // lalr1.cc:859
     break;
 
   case 37:
-#line 270 "lake.yy" // lalr1.cc:859
+#line 281 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 849 "parser.cc" // lalr1.cc:859
+#line 850 "parser.cc" // lalr1.cc:859
     break;
 
   case 38:
-#line 272 "lake.yy" // lalr1.cc:859
+#line 283 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 857 "parser.cc" // lalr1.cc:859
+#line 858 "parser.cc" // lalr1.cc:859
     break;
 
   case 39:
-#line 274 "lake.yy" // lalr1.cc:859
+#line 285 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 865 "parser.cc" // lalr1.cc:859
+#line 866 "parser.cc" // lalr1.cc:859
     break;
 
   case 40:
-#line 276 "lake.yy" // lalr1.cc:859
+#line 287 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 873 "parser.cc" // lalr1.cc:859
+#line 874 "parser.cc" // lalr1.cc:859
     break;
 
   case 41:
-#line 278 "lake.yy" // lalr1.cc:859
+#line 289 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 881 "parser.cc" // lalr1.cc:859
+#line 882 "parser.cc" // lalr1.cc:859
     break;
 
   case 42:
-#line 280 "lake.yy" // lalr1.cc:859
+#line 291 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 889 "parser.cc" // lalr1.cc:859
+#line 890 "parser.cc" // lalr1.cc:859
     break;
 
   case 43:
-#line 282 "lake.yy" // lalr1.cc:859
-    {
-
-}
-#line 897 "parser.cc" // lalr1.cc:859
-    break;
-
-  case 44:
-#line 284 "lake.yy" // lalr1.cc:859
-    {
-
-}
-#line 905 "parser.cc" // lalr1.cc:859
-    break;
-
-  case 45:
-#line 286 "lake.yy" // lalr1.cc:859
-    {
-
-}
-#line 913 "parser.cc" // lalr1.cc:859
-    break;
-
-  case 46:
-#line 288 "lake.yy" // lalr1.cc:859
-    {
-
-}
-#line 921 "parser.cc" // lalr1.cc:859
-    break;
-
-  case 47:
 #line 293 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 929 "parser.cc" // lalr1.cc:859
+#line 898 "parser.cc" // lalr1.cc:859
     break;
 
-  case 48:
+  case 44:
 #line 295 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 937 "parser.cc" // lalr1.cc:859
+#line 906 "parser.cc" // lalr1.cc:859
     break;
 
-  case 49:
+  case 45:
 #line 297 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 945 "parser.cc" // lalr1.cc:859
+#line 914 "parser.cc" // lalr1.cc:859
     break;
 
-  case 50:
+  case 46:
 #line 299 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 953 "parser.cc" // lalr1.cc:859
+#line 922 "parser.cc" // lalr1.cc:859
+    break;
+
+  case 47:
+#line 304 "lake.yy" // lalr1.cc:859
+    {
+
+}
+#line 930 "parser.cc" // lalr1.cc:859
+    break;
+
+  case 48:
+#line 306 "lake.yy" // lalr1.cc:859
+    {
+
+}
+#line 938 "parser.cc" // lalr1.cc:859
+    break;
+
+  case 49:
+#line 308 "lake.yy" // lalr1.cc:859
+    {
+
+}
+#line 946 "parser.cc" // lalr1.cc:859
+    break;
+
+  case 50:
+#line 310 "lake.yy" // lalr1.cc:859
+    {
+
+}
+#line 954 "parser.cc" // lalr1.cc:859
     break;
 
   case 51:
-#line 301 "lake.yy" // lalr1.cc:859
+#line 312 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 961 "parser.cc" // lalr1.cc:859
+#line 962 "parser.cc" // lalr1.cc:859
     break;
 
   case 52:
-#line 303 "lake.yy" // lalr1.cc:859
+#line 314 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 969 "parser.cc" // lalr1.cc:859
+#line 970 "parser.cc" // lalr1.cc:859
     break;
 
   case 53:
-#line 305 "lake.yy" // lalr1.cc:859
+#line 316 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 977 "parser.cc" // lalr1.cc:859
+#line 978 "parser.cc" // lalr1.cc:859
     break;
 
   case 54:
-#line 310 "lake.yy" // lalr1.cc:859
+#line 321 "lake.yy" // lalr1.cc:859
     { // fn call with no args
 
 }
-#line 985 "parser.cc" // lalr1.cc:859
+#line 986 "parser.cc" // lalr1.cc:859
     break;
 
   case 55:
-#line 312 "lake.yy" // lalr1.cc:859
+#line 323 "lake.yy" // lalr1.cc:859
     { // with args
 
 }
-#line 993 "parser.cc" // lalr1.cc:859
+#line 994 "parser.cc" // lalr1.cc:859
     break;
 
   case 56:
-#line 317 "lake.yy" // lalr1.cc:859
+#line 328 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 1001 "parser.cc" // lalr1.cc:859
+#line 1002 "parser.cc" // lalr1.cc:859
     break;
 
   case 57:
-#line 319 "lake.yy" // lalr1.cc:859
+#line 330 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 1009 "parser.cc" // lalr1.cc:859
+#line 1010 "parser.cc" // lalr1.cc:859
     break;
 
   case 58:
-#line 324 "lake.yy" // lalr1.cc:859
+#line 335 "lake.yy" // lalr1.cc:859
     { (yylhs.value.typeNode) = new IntNode((yystack_[0].value.tokenValue)->_line, (yystack_[0].value.tokenValue)->_column); }
-#line 1015 "parser.cc" // lalr1.cc:859
+#line 1016 "parser.cc" // lalr1.cc:859
     break;
 
   case 59:
-#line 339 "lake.yy" // lalr1.cc:859
+#line 350 "lake.yy" // lalr1.cc:859
     {
-
+  (yylhs.value.derefNode) = (yystack_[0].value.idNode);
 }
-#line 1023 "parser.cc" // lalr1.cc:859
+#line 1024 "parser.cc" // lalr1.cc:859
     break;
 
   case 60:
-#line 341 "lake.yy" // lalr1.cc:859
+#line 352 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 1031 "parser.cc" // lalr1.cc:859
+#line 1032 "parser.cc" // lalr1.cc:859
     break;
 
   case 61:
-#line 346 "lake.yy" // lalr1.cc:859
+#line 357 "lake.yy" // lalr1.cc:859
     { (yylhs.value.idNode) = new IdNode((yystack_[0].value.idTokenValue)); }
-#line 1037 "parser.cc" // lalr1.cc:859
+#line 1038 "parser.cc" // lalr1.cc:859
     break;
 
 
-#line 1041 "parser.cc" // lalr1.cc:859
+#line 1042 "parser.cc" // lalr1.cc:859
             default:
               break;
             }
@@ -1205,19 +1206,19 @@ namespace lake {
   const short int
   Parser::yypact_[] =
   {
-     -87,    19,    11,   -87,   -87,   -87,   -87,   -87,    14,   -87,
-      16,     8,   -87,    22,   -87,    37,    36,    14,   -87,   -87,
-     -87,    11,   -87,    11,   -87,   -87,   233,    14,    12,    17,
-      46,     1,   -87,   114,     1,   -87,    43,    45,   -20,    49,
-      48,   114,   114,   -87,   -87,   -87,   -87,   114,   -87,    66,
-     114,   -87,   181,   -87,   -87,    29,   -87,   -87,   201,    50,
-     -87,   -87,    51,    55,   114,    94,   119,   140,   161,   -87,
-     -87,   261,   -87,   114,   114,   114,   114,   114,   114,   114,
+     -87,    16,    14,   -87,   -87,   -87,   -87,   -87,    18,   -87,
+      45,     8,   -87,    10,   -87,    19,    47,    18,   -87,   -87,
+     -87,    14,   -87,    14,   -87,   -87,   233,    18,    21,    52,
+      46,     1,   -87,   114,     1,   -87,    51,    55,   -20,    64,
+      63,   114,   114,   -87,   -87,   -87,   -87,   114,   -87,    66,
+     114,   -87,   181,   -87,   -87,    54,   -87,   -87,   201,    65,
+     -87,   -87,    67,    76,   114,    94,   119,   140,   161,   -87,
+     -87,   -87,   -87,   114,   114,   114,   114,   114,   114,   114,
      114,   114,   114,   114,   114,   -87,   -87,   -87,   -87,   261,
-     -87,   261,    18,    67,    69,   -87,   261,   261,   261,   261,
-     261,   261,   261,   261,   261,   261,   261,   261,   -87,   114,
-     -87,   -87,   261,    11,    11,   243,   253,    73,   -87,    70,
-     -87,    11,   263,   -87
+     -87,   261,    48,    70,    82,   -87,    27,    27,   -87,   -87,
+     287,   274,     7,     7,     7,     7,     7,     7,   -87,   114,
+     -87,   -87,   261,    14,    14,   243,   253,    93,   -87,    87,
+     -87,    14,   263,   -87
   };
 
   const unsigned char
@@ -1241,8 +1242,8 @@ namespace lake {
   const signed char
   Parser::yypgoto_[] =
   {
-     -87,   -87,   -87,   -87,   -86,    86,   -87,   -87,    74,   -87,
-     -87,   -58,   -87,   -24,   -32,    54,   -22,   -87,     9,   -26,
+     -87,   -87,   -87,   -87,   -86,   103,   -87,   -87,    85,   -87,
+     -87,   -58,   -87,   -24,   -32,    62,   -22,   -87,     9,   -26,
       -5
   };
 
@@ -1258,17 +1259,17 @@ namespace lake {
   Parser::yytable_[] =
   {
       38,    58,    36,    10,    37,    56,    62,    63,    59,    66,
-      67,     8,    22,     4,     9,    68,     4,    31,    71,     3,
-      17,    64,    40,    70,   113,   114,    57,     9,    14,    57,
-      17,    41,    89,    91,   121,    11,    42,    12,   108,    18,
-     109,    96,    97,    98,    99,   100,   101,   102,   103,   104,
-     105,   106,   107,    43,    44,   115,   116,    20,    21,     9,
-      45,    46,    31,   122,    60,    47,    61,    48,    65,    12,
-      64,    86,    87,    43,    44,    49,    88,   112,    50,     9,
-      45,    46,    31,   119,   110,    47,   111,   120,     6,    38,
-      38,    36,    36,    37,    37,    24,    38,     0,    36,     0,
-      37,    43,    44,    69,     0,     0,     0,     9,    45,    46,
-      31,     0,     0,    47,    90,     0,     0,     0,     0,     0,
+      67,     8,    22,     4,     9,    68,     3,    31,    71,     4,
+      17,    64,    40,    70,   113,   114,    57,    18,    14,    57,
+      17,     9,    89,    91,   121,    73,    74,    75,    76,    20,
+      41,    96,    97,    98,    99,   100,   101,   102,   103,   104,
+     105,   106,   107,    43,    44,   115,   116,    75,    76,     9,
+      45,    46,    31,   122,    11,    47,    12,    48,   108,    21,
+     109,    42,    60,    43,    44,    49,    61,   112,    50,     9,
+      45,    46,    31,    65,    12,    47,    86,   110,    87,    38,
+      38,    36,    36,    37,    37,    64,    38,    88,    36,   111,
+      37,    43,    44,   119,   120,     6,    24,     9,    45,    46,
+      31,    69,     0,    47,    90,     0,     0,     0,     0,     0,
        0,    43,    44,    49,     0,     0,    50,     9,    45,    46,
       31,     0,     0,    47,     0,     0,     0,     0,     0,    93,
        0,     0,     0,    49,     0,     0,    50,    73,    74,    75,
@@ -1287,24 +1288,26 @@ namespace lake {
        0,   118,    28,     0,    29,    30,     9,    33,    34,    31,
        0,   123,     0,     0,     0,     0,     0,    33,    34,    73,
       74,    75,    76,     0,    77,    78,    79,    80,    81,    82,
-      83,    84
+      83,    84,    73,    74,    75,    76,     0,    77,     0,    79,
+      80,    81,    82,    83,    84,    73,    74,    75,    76,     0,
+       0,     0,    79,    80,    81,    82,    83,    84
   };
 
   const signed char
   Parser::yycheck_[] =
   {
       26,    33,    26,     8,    26,    31,    26,    27,    34,    41,
-      42,     2,    17,     5,    13,    47,     5,    16,    50,     0,
-      11,    41,    27,    49,   110,   111,    31,    13,    20,    34,
-      21,    19,    64,    65,   120,    19,    19,    21,    20,    17,
-      22,    73,    74,    75,    76,    77,    78,    79,    80,    81,
-      82,    83,    84,     7,     8,   113,   114,    20,    22,    13,
-      14,    15,    16,   121,    21,    19,    21,    21,    19,    21,
-      41,    21,    21,     7,     8,    29,    21,   109,    32,    13,
-      14,    15,    16,    10,    17,    19,    17,    17,     2,   115,
-     116,   115,   116,   115,   116,    21,   122,    -1,   122,    -1,
-     122,     7,     8,    49,    -1,    -1,    -1,    13,    14,    15,
-      16,    -1,    -1,    19,    20,    -1,    -1,    -1,    -1,    -1,
+      42,     2,    17,     5,    13,    47,     0,    16,    50,     5,
+      11,    41,    27,    49,   110,   111,    31,    17,    20,    34,
+      21,    13,    64,    65,   120,    28,    29,    30,    31,    20,
+      19,    73,    74,    75,    76,    77,    78,    79,    80,    81,
+      82,    83,    84,     7,     8,   113,   114,    30,    31,    13,
+      14,    15,    16,   121,    19,    19,    21,    21,    20,    22,
+      22,    19,    21,     7,     8,    29,    21,   109,    32,    13,
+      14,    15,    16,    19,    21,    19,    21,    17,    21,   115,
+     116,   115,   116,   115,   116,    41,   122,    21,   122,    17,
+     122,     7,     8,    10,    17,     2,    21,    13,    14,    15,
+      16,    49,    -1,    19,    20,    -1,    -1,    -1,    -1,    -1,
       -1,     7,     8,    29,    -1,    -1,    32,    13,    14,    15,
       16,    -1,    -1,    19,    -1,    -1,    -1,    -1,    -1,    20,
       -1,    -1,    -1,    29,    -1,    -1,    32,    28,    29,    30,
@@ -1323,7 +1326,9 @@ namespace lake {
       -1,    18,     9,    -1,    11,    12,    13,    24,    25,    16,
       -1,    18,    -1,    -1,    -1,    -1,    -1,    24,    25,    28,
       29,    30,    31,    -1,    33,    34,    35,    36,    37,    38,
-      39,    40
+      39,    40,    28,    29,    30,    31,    -1,    33,    -1,    35,
+      36,    37,    38,    39,    40,    28,    29,    30,    31,    -1,
+      -1,    -1,    35,    36,    37,    38,    39,    40
   };
 
   const unsigned char
@@ -1391,13 +1396,13 @@ namespace lake {
   const unsigned short int
   Parser::yyrline_[] =
   {
-       0,   152,   152,   159,   162,   168,   171,   176,   178,   183,
-     188,   196,   198,   203,   205,   210,   215,   220,   223,   228,
-     230,   232,   234,   236,   238,   240,   242,   244,   246,   248,
-     253,   258,   260,   262,   264,   266,   268,   270,   272,   274,
-     276,   278,   280,   282,   284,   286,   288,   293,   295,   297,
-     299,   301,   303,   305,   310,   312,   317,   319,   324,   339,
-     341,   346
+       0,   162,   162,   169,   175,   181,   184,   189,   191,   196,
+     201,   207,   209,   214,   216,   221,   226,   231,   234,   239,
+     241,   243,   245,   247,   249,   251,   253,   255,   257,   259,
+     264,   269,   271,   273,   275,   277,   279,   281,   283,   285,
+     287,   289,   291,   293,   295,   297,   299,   304,   306,   308,
+     310,   312,   314,   316,   321,   323,   328,   330,   335,   350,
+     352,   357
   };
 
   // Print the state stack on the debug stream.
@@ -1482,8 +1487,8 @@ namespace lake {
 
 #line 5 "lake.yy" // lalr1.cc:1167
 } // lake
-#line 1486 "parser.cc" // lalr1.cc:1167
-#line 347 "lake.yy" // lalr1.cc:1168
+#line 1491 "parser.cc" // lalr1.cc:1167
+#line 358 "lake.yy" // lalr1.cc:1168
 
 
 void

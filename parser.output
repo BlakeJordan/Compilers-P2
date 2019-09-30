@@ -22,22 +22,6 @@ Rules useless in grammar
    65         | %empty
 
 
-State 71 conflicts: 12 shift/reduce
-State 89 conflicts: 12 shift/reduce
-State 96 conflicts: 12 shift/reduce
-State 97 conflicts: 12 shift/reduce
-State 98 conflicts: 12 shift/reduce
-State 99 conflicts: 12 shift/reduce
-State 100 conflicts: 12 shift/reduce
-State 101 conflicts: 12 shift/reduce
-State 102 conflicts: 12 shift/reduce
-State 103 conflicts: 12 shift/reduce
-State 104 conflicts: 12 shift/reduce
-State 105 conflicts: 12 shift/reduce
-State 106 conflicts: 12 shift/reduce
-State 107 conflicts: 12 shift/reduce
-
-
 Grammar
 
     0 $accept: program "end of file"
@@ -1067,32 +1051,7 @@ State 71
    42    | exp . LESSEQ exp
    43    | exp . GREATEREQ exp
 
-    CROSS      shift, and go to state 73
-    DASH       shift, and go to state 74
-    STAR       shift, and go to state 75
-    SLASH      shift, and go to state 76
-    AND        shift, and go to state 77
-    OR         shift, and go to state 78
-    EQUALS     shift, and go to state 79
-    NOTEQUALS  shift, and go to state 80
-    LESS       shift, and go to state 81
-    GREATER    shift, and go to state 82
-    LESSEQ     shift, and go to state 83
-    GREATEREQ  shift, and go to state 84
-
-    CROSS      [reduce using rule 35 (exp)]
-    DASH       [reduce using rule 35 (exp)]
-    STAR       [reduce using rule 35 (exp)]
-    SLASH      [reduce using rule 35 (exp)]
-    AND        [reduce using rule 35 (exp)]
-    OR         [reduce using rule 35 (exp)]
-    EQUALS     [reduce using rule 35 (exp)]
-    NOTEQUALS  [reduce using rule 35 (exp)]
-    LESS       [reduce using rule 35 (exp)]
-    GREATER    [reduce using rule 35 (exp)]
-    LESSEQ     [reduce using rule 35 (exp)]
-    GREATEREQ  [reduce using rule 35 (exp)]
-    $default   reduce using rule 35 (exp)
+    $default  reduce using rule 35 (exp)
 
 
 State 72
@@ -1423,19 +1382,7 @@ State 89
     LESSEQ     shift, and go to state 83
     GREATEREQ  shift, and go to state 84
 
-    CROSS      [reduce using rule 29 (assignExp)]
-    DASH       [reduce using rule 29 (assignExp)]
-    STAR       [reduce using rule 29 (assignExp)]
-    SLASH      [reduce using rule 29 (assignExp)]
-    AND        [reduce using rule 29 (assignExp)]
-    OR         [reduce using rule 29 (assignExp)]
-    EQUALS     [reduce using rule 29 (assignExp)]
-    NOTEQUALS  [reduce using rule 29 (assignExp)]
-    LESS       [reduce using rule 29 (assignExp)]
-    GREATER    [reduce using rule 29 (assignExp)]
-    LESSEQ     [reduce using rule 29 (assignExp)]
-    GREATEREQ  [reduce using rule 29 (assignExp)]
-    $default   reduce using rule 29 (assignExp)
+    $default  reduce using rule 29 (assignExp)
 
 
 State 90
@@ -1524,32 +1471,10 @@ State 96
    42    | exp . LESSEQ exp
    43    | exp . GREATEREQ exp
 
-    CROSS      shift, and go to state 73
-    DASH       shift, and go to state 74
-    STAR       shift, and go to state 75
-    SLASH      shift, and go to state 76
-    AND        shift, and go to state 77
-    OR         shift, and go to state 78
-    EQUALS     shift, and go to state 79
-    NOTEQUALS  shift, and go to state 80
-    LESS       shift, and go to state 81
-    GREATER    shift, and go to state 82
-    LESSEQ     shift, and go to state 83
-    GREATEREQ  shift, and go to state 84
+    STAR   shift, and go to state 75
+    SLASH  shift, and go to state 76
 
-    CROSS      [reduce using rule 31 (exp)]
-    DASH       [reduce using rule 31 (exp)]
-    STAR       [reduce using rule 31 (exp)]
-    SLASH      [reduce using rule 31 (exp)]
-    AND        [reduce using rule 31 (exp)]
-    OR         [reduce using rule 31 (exp)]
-    EQUALS     [reduce using rule 31 (exp)]
-    NOTEQUALS  [reduce using rule 31 (exp)]
-    LESS       [reduce using rule 31 (exp)]
-    GREATER    [reduce using rule 31 (exp)]
-    LESSEQ     [reduce using rule 31 (exp)]
-    GREATEREQ  [reduce using rule 31 (exp)]
-    $default   reduce using rule 31 (exp)
+    $default  reduce using rule 31 (exp)
 
 
 State 97
@@ -1568,32 +1493,10 @@ State 97
    42    | exp . LESSEQ exp
    43    | exp . GREATEREQ exp
 
-    CROSS      shift, and go to state 73
-    DASH       shift, and go to state 74
-    STAR       shift, and go to state 75
-    SLASH      shift, and go to state 76
-    AND        shift, and go to state 77
-    OR         shift, and go to state 78
-    EQUALS     shift, and go to state 79
-    NOTEQUALS  shift, and go to state 80
-    LESS       shift, and go to state 81
-    GREATER    shift, and go to state 82
-    LESSEQ     shift, and go to state 83
-    GREATEREQ  shift, and go to state 84
+    STAR   shift, and go to state 75
+    SLASH  shift, and go to state 76
 
-    CROSS      [reduce using rule 32 (exp)]
-    DASH       [reduce using rule 32 (exp)]
-    STAR       [reduce using rule 32 (exp)]
-    SLASH      [reduce using rule 32 (exp)]
-    AND        [reduce using rule 32 (exp)]
-    OR         [reduce using rule 32 (exp)]
-    EQUALS     [reduce using rule 32 (exp)]
-    NOTEQUALS  [reduce using rule 32 (exp)]
-    LESS       [reduce using rule 32 (exp)]
-    GREATER    [reduce using rule 32 (exp)]
-    LESSEQ     [reduce using rule 32 (exp)]
-    GREATEREQ  [reduce using rule 32 (exp)]
-    $default   reduce using rule 32 (exp)
+    $default  reduce using rule 32 (exp)
 
 
 State 98
@@ -1612,32 +1515,7 @@ State 98
    42    | exp . LESSEQ exp
    43    | exp . GREATEREQ exp
 
-    CROSS      shift, and go to state 73
-    DASH       shift, and go to state 74
-    STAR       shift, and go to state 75
-    SLASH      shift, and go to state 76
-    AND        shift, and go to state 77
-    OR         shift, and go to state 78
-    EQUALS     shift, and go to state 79
-    NOTEQUALS  shift, and go to state 80
-    LESS       shift, and go to state 81
-    GREATER    shift, and go to state 82
-    LESSEQ     shift, and go to state 83
-    GREATEREQ  shift, and go to state 84
-
-    CROSS      [reduce using rule 33 (exp)]
-    DASH       [reduce using rule 33 (exp)]
-    STAR       [reduce using rule 33 (exp)]
-    SLASH      [reduce using rule 33 (exp)]
-    AND        [reduce using rule 33 (exp)]
-    OR         [reduce using rule 33 (exp)]
-    EQUALS     [reduce using rule 33 (exp)]
-    NOTEQUALS  [reduce using rule 33 (exp)]
-    LESS       [reduce using rule 33 (exp)]
-    GREATER    [reduce using rule 33 (exp)]
-    LESSEQ     [reduce using rule 33 (exp)]
-    GREATEREQ  [reduce using rule 33 (exp)]
-    $default   reduce using rule 33 (exp)
+    $default  reduce using rule 33 (exp)
 
 
 State 99
@@ -1656,32 +1534,7 @@ State 99
    42    | exp . LESSEQ exp
    43    | exp . GREATEREQ exp
 
-    CROSS      shift, and go to state 73
-    DASH       shift, and go to state 74
-    STAR       shift, and go to state 75
-    SLASH      shift, and go to state 76
-    AND        shift, and go to state 77
-    OR         shift, and go to state 78
-    EQUALS     shift, and go to state 79
-    NOTEQUALS  shift, and go to state 80
-    LESS       shift, and go to state 81
-    GREATER    shift, and go to state 82
-    LESSEQ     shift, and go to state 83
-    GREATEREQ  shift, and go to state 84
-
-    CROSS      [reduce using rule 34 (exp)]
-    DASH       [reduce using rule 34 (exp)]
-    STAR       [reduce using rule 34 (exp)]
-    SLASH      [reduce using rule 34 (exp)]
-    AND        [reduce using rule 34 (exp)]
-    OR         [reduce using rule 34 (exp)]
-    EQUALS     [reduce using rule 34 (exp)]
-    NOTEQUALS  [reduce using rule 34 (exp)]
-    LESS       [reduce using rule 34 (exp)]
-    GREATER    [reduce using rule 34 (exp)]
-    LESSEQ     [reduce using rule 34 (exp)]
-    GREATEREQ  [reduce using rule 34 (exp)]
-    $default   reduce using rule 34 (exp)
+    $default  reduce using rule 34 (exp)
 
 
 State 100
@@ -1704,8 +1557,6 @@ State 100
     DASH       shift, and go to state 74
     STAR       shift, and go to state 75
     SLASH      shift, and go to state 76
-    AND        shift, and go to state 77
-    OR         shift, and go to state 78
     EQUALS     shift, and go to state 79
     NOTEQUALS  shift, and go to state 80
     LESS       shift, and go to state 81
@@ -1713,19 +1564,7 @@ State 100
     LESSEQ     shift, and go to state 83
     GREATEREQ  shift, and go to state 84
 
-    CROSS      [reduce using rule 36 (exp)]
-    DASH       [reduce using rule 36 (exp)]
-    STAR       [reduce using rule 36 (exp)]
-    SLASH      [reduce using rule 36 (exp)]
-    AND        [reduce using rule 36 (exp)]
-    OR         [reduce using rule 36 (exp)]
-    EQUALS     [reduce using rule 36 (exp)]
-    NOTEQUALS  [reduce using rule 36 (exp)]
-    LESS       [reduce using rule 36 (exp)]
-    GREATER    [reduce using rule 36 (exp)]
-    LESSEQ     [reduce using rule 36 (exp)]
-    GREATEREQ  [reduce using rule 36 (exp)]
-    $default   reduce using rule 36 (exp)
+    $default  reduce using rule 36 (exp)
 
 
 State 101
@@ -1749,7 +1588,6 @@ State 101
     STAR       shift, and go to state 75
     SLASH      shift, and go to state 76
     AND        shift, and go to state 77
-    OR         shift, and go to state 78
     EQUALS     shift, and go to state 79
     NOTEQUALS  shift, and go to state 80
     LESS       shift, and go to state 81
@@ -1757,19 +1595,7 @@ State 101
     LESSEQ     shift, and go to state 83
     GREATEREQ  shift, and go to state 84
 
-    CROSS      [reduce using rule 37 (exp)]
-    DASH       [reduce using rule 37 (exp)]
-    STAR       [reduce using rule 37 (exp)]
-    SLASH      [reduce using rule 37 (exp)]
-    AND        [reduce using rule 37 (exp)]
-    OR         [reduce using rule 37 (exp)]
-    EQUALS     [reduce using rule 37 (exp)]
-    NOTEQUALS  [reduce using rule 37 (exp)]
-    LESS       [reduce using rule 37 (exp)]
-    GREATER    [reduce using rule 37 (exp)]
-    LESSEQ     [reduce using rule 37 (exp)]
-    GREATEREQ  [reduce using rule 37 (exp)]
-    $default   reduce using rule 37 (exp)
+    $default  reduce using rule 37 (exp)
 
 
 State 102
@@ -1788,32 +1614,12 @@ State 102
    42    | exp . LESSEQ exp
    43    | exp . GREATEREQ exp
 
-    CROSS      shift, and go to state 73
-    DASH       shift, and go to state 74
-    STAR       shift, and go to state 75
-    SLASH      shift, and go to state 76
-    AND        shift, and go to state 77
-    OR         shift, and go to state 78
-    EQUALS     shift, and go to state 79
-    NOTEQUALS  shift, and go to state 80
-    LESS       shift, and go to state 81
-    GREATER    shift, and go to state 82
-    LESSEQ     shift, and go to state 83
-    GREATEREQ  shift, and go to state 84
+    CROSS  shift, and go to state 73
+    DASH   shift, and go to state 74
+    STAR   shift, and go to state 75
+    SLASH  shift, and go to state 76
 
-    CROSS      [reduce using rule 38 (exp)]
-    DASH       [reduce using rule 38 (exp)]
-    STAR       [reduce using rule 38 (exp)]
-    SLASH      [reduce using rule 38 (exp)]
-    AND        [reduce using rule 38 (exp)]
-    OR         [reduce using rule 38 (exp)]
-    EQUALS     [reduce using rule 38 (exp)]
-    NOTEQUALS  [reduce using rule 38 (exp)]
-    LESS       [reduce using rule 38 (exp)]
-    GREATER    [reduce using rule 38 (exp)]
-    LESSEQ     [reduce using rule 38 (exp)]
-    GREATEREQ  [reduce using rule 38 (exp)]
-    $default   reduce using rule 38 (exp)
+    $default  reduce using rule 38 (exp)
 
 
 State 103
@@ -1832,32 +1638,12 @@ State 103
    42    | exp . LESSEQ exp
    43    | exp . GREATEREQ exp
 
-    CROSS      shift, and go to state 73
-    DASH       shift, and go to state 74
-    STAR       shift, and go to state 75
-    SLASH      shift, and go to state 76
-    AND        shift, and go to state 77
-    OR         shift, and go to state 78
-    EQUALS     shift, and go to state 79
-    NOTEQUALS  shift, and go to state 80
-    LESS       shift, and go to state 81
-    GREATER    shift, and go to state 82
-    LESSEQ     shift, and go to state 83
-    GREATEREQ  shift, and go to state 84
+    CROSS  shift, and go to state 73
+    DASH   shift, and go to state 74
+    STAR   shift, and go to state 75
+    SLASH  shift, and go to state 76
 
-    CROSS      [reduce using rule 39 (exp)]
-    DASH       [reduce using rule 39 (exp)]
-    STAR       [reduce using rule 39 (exp)]
-    SLASH      [reduce using rule 39 (exp)]
-    AND        [reduce using rule 39 (exp)]
-    OR         [reduce using rule 39 (exp)]
-    EQUALS     [reduce using rule 39 (exp)]
-    NOTEQUALS  [reduce using rule 39 (exp)]
-    LESS       [reduce using rule 39 (exp)]
-    GREATER    [reduce using rule 39 (exp)]
-    LESSEQ     [reduce using rule 39 (exp)]
-    GREATEREQ  [reduce using rule 39 (exp)]
-    $default   reduce using rule 39 (exp)
+    $default  reduce using rule 39 (exp)
 
 
 State 104
@@ -1876,32 +1662,12 @@ State 104
    42    | exp . LESSEQ exp
    43    | exp . GREATEREQ exp
 
-    CROSS      shift, and go to state 73
-    DASH       shift, and go to state 74
-    STAR       shift, and go to state 75
-    SLASH      shift, and go to state 76
-    AND        shift, and go to state 77
-    OR         shift, and go to state 78
-    EQUALS     shift, and go to state 79
-    NOTEQUALS  shift, and go to state 80
-    LESS       shift, and go to state 81
-    GREATER    shift, and go to state 82
-    LESSEQ     shift, and go to state 83
-    GREATEREQ  shift, and go to state 84
+    CROSS  shift, and go to state 73
+    DASH   shift, and go to state 74
+    STAR   shift, and go to state 75
+    SLASH  shift, and go to state 76
 
-    CROSS      [reduce using rule 40 (exp)]
-    DASH       [reduce using rule 40 (exp)]
-    STAR       [reduce using rule 40 (exp)]
-    SLASH      [reduce using rule 40 (exp)]
-    AND        [reduce using rule 40 (exp)]
-    OR         [reduce using rule 40 (exp)]
-    EQUALS     [reduce using rule 40 (exp)]
-    NOTEQUALS  [reduce using rule 40 (exp)]
-    LESS       [reduce using rule 40 (exp)]
-    GREATER    [reduce using rule 40 (exp)]
-    LESSEQ     [reduce using rule 40 (exp)]
-    GREATEREQ  [reduce using rule 40 (exp)]
-    $default   reduce using rule 40 (exp)
+    $default  reduce using rule 40 (exp)
 
 
 State 105
@@ -1920,32 +1686,12 @@ State 105
    42    | exp . LESSEQ exp
    43    | exp . GREATEREQ exp
 
-    CROSS      shift, and go to state 73
-    DASH       shift, and go to state 74
-    STAR       shift, and go to state 75
-    SLASH      shift, and go to state 76
-    AND        shift, and go to state 77
-    OR         shift, and go to state 78
-    EQUALS     shift, and go to state 79
-    NOTEQUALS  shift, and go to state 80
-    LESS       shift, and go to state 81
-    GREATER    shift, and go to state 82
-    LESSEQ     shift, and go to state 83
-    GREATEREQ  shift, and go to state 84
+    CROSS  shift, and go to state 73
+    DASH   shift, and go to state 74
+    STAR   shift, and go to state 75
+    SLASH  shift, and go to state 76
 
-    CROSS      [reduce using rule 41 (exp)]
-    DASH       [reduce using rule 41 (exp)]
-    STAR       [reduce using rule 41 (exp)]
-    SLASH      [reduce using rule 41 (exp)]
-    AND        [reduce using rule 41 (exp)]
-    OR         [reduce using rule 41 (exp)]
-    EQUALS     [reduce using rule 41 (exp)]
-    NOTEQUALS  [reduce using rule 41 (exp)]
-    LESS       [reduce using rule 41 (exp)]
-    GREATER    [reduce using rule 41 (exp)]
-    LESSEQ     [reduce using rule 41 (exp)]
-    GREATEREQ  [reduce using rule 41 (exp)]
-    $default   reduce using rule 41 (exp)
+    $default  reduce using rule 41 (exp)
 
 
 State 106
@@ -1964,32 +1710,12 @@ State 106
    42    | exp LESSEQ exp .
    43    | exp . GREATEREQ exp
 
-    CROSS      shift, and go to state 73
-    DASH       shift, and go to state 74
-    STAR       shift, and go to state 75
-    SLASH      shift, and go to state 76
-    AND        shift, and go to state 77
-    OR         shift, and go to state 78
-    EQUALS     shift, and go to state 79
-    NOTEQUALS  shift, and go to state 80
-    LESS       shift, and go to state 81
-    GREATER    shift, and go to state 82
-    LESSEQ     shift, and go to state 83
-    GREATEREQ  shift, and go to state 84
+    CROSS  shift, and go to state 73
+    DASH   shift, and go to state 74
+    STAR   shift, and go to state 75
+    SLASH  shift, and go to state 76
 
-    CROSS      [reduce using rule 42 (exp)]
-    DASH       [reduce using rule 42 (exp)]
-    STAR       [reduce using rule 42 (exp)]
-    SLASH      [reduce using rule 42 (exp)]
-    AND        [reduce using rule 42 (exp)]
-    OR         [reduce using rule 42 (exp)]
-    EQUALS     [reduce using rule 42 (exp)]
-    NOTEQUALS  [reduce using rule 42 (exp)]
-    LESS       [reduce using rule 42 (exp)]
-    GREATER    [reduce using rule 42 (exp)]
-    LESSEQ     [reduce using rule 42 (exp)]
-    GREATEREQ  [reduce using rule 42 (exp)]
-    $default   reduce using rule 42 (exp)
+    $default  reduce using rule 42 (exp)
 
 
 State 107
@@ -2008,32 +1734,12 @@ State 107
    43    | exp . GREATEREQ exp
    43    | exp GREATEREQ exp .
 
-    CROSS      shift, and go to state 73
-    DASH       shift, and go to state 74
-    STAR       shift, and go to state 75
-    SLASH      shift, and go to state 76
-    AND        shift, and go to state 77
-    OR         shift, and go to state 78
-    EQUALS     shift, and go to state 79
-    NOTEQUALS  shift, and go to state 80
-    LESS       shift, and go to state 81
-    GREATER    shift, and go to state 82
-    LESSEQ     shift, and go to state 83
-    GREATEREQ  shift, and go to state 84
+    CROSS  shift, and go to state 73
+    DASH   shift, and go to state 74
+    STAR   shift, and go to state 75
+    SLASH  shift, and go to state 76
 
-    CROSS      [reduce using rule 43 (exp)]
-    DASH       [reduce using rule 43 (exp)]
-    STAR       [reduce using rule 43 (exp)]
-    SLASH      [reduce using rule 43 (exp)]
-    AND        [reduce using rule 43 (exp)]
-    OR         [reduce using rule 43 (exp)]
-    EQUALS     [reduce using rule 43 (exp)]
-    NOTEQUALS  [reduce using rule 43 (exp)]
-    LESS       [reduce using rule 43 (exp)]
-    GREATER    [reduce using rule 43 (exp)]
-    LESSEQ     [reduce using rule 43 (exp)]
-    GREATEREQ  [reduce using rule 43 (exp)]
-    $default   reduce using rule 43 (exp)
+    $default  reduce using rule 43 (exp)
 
 
 State 108

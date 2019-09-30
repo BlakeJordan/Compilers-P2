@@ -60,6 +60,7 @@
   std::list<FormalDeclNode *> * formalsNode;
   FormalDeclNode * formalDeclNode;
   FnDeclNode * fnDeclNode;
+  DerefNode * derefNode;
 }
 
 %define parse.assert
@@ -131,13 +132,22 @@
 %type <primTypeNode> primType
 %type <typeNode> type
 /* %type <indirectNode> ??? */
-/* %type <locNode> ??? */
+%type <derefNode> loc
 %type <idNode> id
 
 
 /* NOTE: Make sure to add precedence and associativity
  * declarations!
 */
+%right ASSIGN
+%left OR
+%left AND
+%left EQUALS NOTEQUALS LESS GREATER LESSEQ GREATEREQ
+%left CROSS DASH
+%left STAR SLASH
+%left NOT
+/* highest precedence */
+%left DEREF
 
 %%
 
@@ -159,6 +169,9 @@ program : declList {
 declList : declList decl {
   $1->push_back($2);
   $$ = $1;
+  std::cout<<"Value 1: "<<$1;
+  std::cout<<"Value 2: "<<$2;
+  std::cout<<"ProductionValue: "<<$$;
 } | /* epsilon */ {
   $$ = new std::list<DeclNode *>();
 }
@@ -166,10 +179,10 @@ declList : declList decl {
 
 /* TODO */
 decl : varDecl {
-  $$ = new VarDeclNode($1->token_type, $1->_id);
+  $$ = $1;
 		//Make sure to fill out this rule
 } | fnDecl {
-  $$ = new FnDeclNode($1);
+  $$ = $1;
 }
 
 /* TODO */
@@ -187,16 +200,14 @@ varDecl : type id SEMICOLON {
 /* TODO */
 fnDecl : type id formals fnBody {
   $$ = new FnDeclNode(new TypeNode($1->lineNum, $1->colNum),
-  $2,
-  new FormalsListNode($3->myFormals),
-  new FnBodyNode($4->myVarDeclList, $4->myStmtList));
+  $2, $3, $4);
 }
 
 /* TODO */
 formals : LPAREN RPAREN {
   $$ = new std::list<FormalDeclNode *>();
 } | LPAREN formalsList RPAREN {
-  $$ = new std::list<FormalDeclNode *>();
+  $$ = new FormalsListNode(std::list<FormalDeclNode *>());
 }
 
 /* TODO */
@@ -337,7 +348,7 @@ indirect : indirect DEREF {
 
 /* TODO */
 loc : id {
-
+  $$ = $1;
 } | DEREF loc {
 
 }

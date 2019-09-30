@@ -164,8 +164,9 @@ namespace lake {
   std::list<FormalDeclNode *> * formalsNode;
   FormalDeclNode * formalDeclNode;
   FnDeclNode * fnDeclNode;
+  DerefNode * derefNode;
 
-#line 169 "grammar.hh" // lalr1.cc:377
+#line 170 "grammar.hh" // lalr1.cc:377
     };
 #else
     typedef YYSTYPE semantic_type;
@@ -520,7 +521,7 @@ namespace lake {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 301,     ///< Last index in yytable_.
+      yylast_ = 327,     ///< Last index in yytable_.
       yynnts_ = 21,  ///< Number of nonterminal symbols.
       yyfinal_ = 3, ///< Termination state number.
       yyterror_ = 1,
@@ -537,7 +538,7 @@ namespace lake {
 
 #line 5 "lake.yy" // lalr1.cc:377
 } // lake
-#line 541 "grammar.hh" // lalr1.cc:377
+#line 542 "grammar.hh" // lalr1.cc:377
 
 
 

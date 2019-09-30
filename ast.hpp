@@ -115,6 +115,7 @@ class DeclNode;
 class VarDeclNode;
 class FnDeclNode;
 class FormalDeclNode;
+class FormalsListNode;
 class FnBodyNode;
 class StmtListNode;
 class ExpListNode;
@@ -207,6 +208,11 @@ public:
 	DeclNode(size_t lineIn, size_t colIn) : ASTNode(lineIn, colIn){
 	}
 	virtual void unparse(std::ostream& out, int indent) = 0;
+	size_t getLine(){ return line; }
+	size_t getCol() { return col; }
+private:
+	size_t line;
+	size_t col;
 };
 
 /* VERIFY */
@@ -224,7 +230,7 @@ private:
 class VarDeclNode : public DeclNode{
 public:
 	VarDeclNode(TypeNode * type, IdNode * id)
-		: DeclNode(type->lineNum, type->colNum) {
+		: DeclNode(0, 0) {
 			myType = type;
 			myId = id;
 	}
@@ -239,7 +245,7 @@ class FnDeclNode : public DeclNode {
 public:
 	FnDeclNode(TypeNode * type, IdNode * id,
 		FormalsListNode * formals, FnBodyNode * fnBody)
-		: DeclNode(type->lineNum, type->colNum) {
+		: DeclNode(0, 0) {
 			myType = type;
 			myId = id;
 			myFormals = formals;
@@ -249,7 +255,7 @@ public:
 private:
 	TypeNode * myType;
 	IdNode * myId;
-	FormalsNode * myFormals;
+	FormalsListNode * myFormals;
 	FnBodyNode * myFnBody;
 };
 
@@ -257,7 +263,7 @@ private:
 class FormalDeclNode : public DeclNode {
 public:
 	FormalDeclNode(TypeNode * type, IdNode * id)
-		: DeclNode(type->getLine(), type->getCol()) {
+		: DeclNode(0, 0) {
 			myType = type;
 			myId = id;
 	}
@@ -269,28 +275,28 @@ private:
 
 /* VERIFY */
 class FormalsListNode : public ASTNode {
-	std::list<FormalDeclNode *> myFormals;
 public:
-	FormalsListNode(std::list<formalDeclNode *> formalDeclsIn)
+	FormalsListNode(std::list<FormalDeclNode *> formalDeclsIn)
 		: ASTNode(0, 0) {
 			myFormals = formalDeclsIn;
 	}
 	void unparse(std::ostream& out, int indent);
 private:
+	std::list<FormalDeclNode *> myFormals;
 };
 
 /* VERIFY */
 class FnBodyNode : public DeclNode {
 public:
-	VarDeclListNode * myVarDeclList;
-	StmtListNode * myStmtList;
-	FnBodyNode(VarDeclListNode * varDeclList, StmtListNode * stmtList)
-	: DeclNode(type->getLine(), type->getCol()) {
-		myVarDeclList = varDeclList;
+	FnBodyNode(DeclListNode * declList, StmtListNode * stmtList)
+	: DeclNode(declList->getLine(), declList->getCol()) {
+		myDeclList = declList;
 		myStmtList = stmtList;
 	}
 	void unparse(std::ostream& out, int indent);
 private:
+	DeclListNode * myDeclList;
+	StmtListNode * myStmtList;
 };
 
 /* VERIFY */
@@ -341,17 +347,23 @@ public:
 	void unparse(std::ostream& out, int indent);
 };
 
+class VoidNode : public TypeNode {
+public:
+	VoidNode(size_t lineIn, size_t colIn) : TypeNode(lineIn, colIn){ }
+	void unparse(std::ostream& out, int index);
+};
+
 /* VERIFY */
 class PtrNode : public TypeNode {
 public:
-	PtrNode(IDNode * id, int * indirectionLevel)
-	: TypeNode(id->getLine(), id->getCol()) {
+	PtrNode(IdNode * id, int * indirectionLevel)
+	: TypeNode(0, 0) {
 		myId = id;
 		myIndirectionLevel = indirectionLevel;
 	}
 	void unparse(std::ostream& out, int indent);
 private:
-	IDNode * myId;
+	IdNode * myId;
 	int * myIndirectionLevel;
 };
 
@@ -367,7 +379,7 @@ public:
 class AssignStmtNode : public StmtNode {
 public:
 	AssignStmtNode(AssignNode * assign)
-	: StmtNode(assign->getLine(), assign->getCol()){
+	: StmtNode(0, 0){
 		myAssign = assign;
 	}
 	void unparse(std::ostream& out, int indent);
@@ -379,7 +391,7 @@ private:
 class PostIncStmtNode : public StmtNode {
 public:
 	PostIncStmtNode(ExpNode * exp)
-	: StmtNode(exp->getLine(), exp->getCol()) {
+	: StmtNode(0, 0) {
 		myExp = exp;
 	}
 	void unparse(std::ostream& out, int indent);
@@ -391,7 +403,7 @@ private:
 class PostDecStmtNode : public StmtNode {
 public:
 	PostDecStmtNode(ExpNode * exp)
-	: StmtNode(exp->getLine(), exp->getCol()) {
+	: StmtNode(0, 0) {
 		myExp = exp;
 	}
 	void unparse(std::ostream& out, int indent);
@@ -403,7 +415,7 @@ private:
 class ReadStmtNode : public StmtNode {
 public:
 	ReadStmtNode(ExpNode * exp)
-	: StmtNode(assign->getLine(), assign->getCol()) {
+	: StmtNode(0, 0) {
 		myExp = exp;
 	}
 	void unparse(std::ostream& out, int indent);
@@ -415,7 +427,7 @@ private:
 class WriteStmtNode : public StmtNode {
 public:
 	WriteStmtNode(ExpNode * exp)
-	: StmtNode(exp->getLine(), exp->getCol()) {
+	: StmtNode(0, 0) {
 		myExp = exp;
 	}
 	void unparse(std::ostream& out, int indent);
@@ -427,7 +439,7 @@ private:
 class IfStmtNode : public StmtNode {
 public:
 	IfStmtNode(ExpNode * exp, DeclListNode * declList, StmtListNode * stmtList)
-	: StmtNode(exp->getLine(), exp->getCol()) {
+	: StmtNode(0, 0) {
 		myExp = exp;
 		myDeclList = declList;
 		myStmtList = stmtList;
@@ -444,7 +456,7 @@ class IfElseStmtNode : public StmtNode {
 public:
 	IfElseStmtNode(ExpNode * exp, DeclListNode * declList, StmtListNode * stmtList,
 	DeclListNode * elseDeclList, StmtListNode * elseStmtList)
-	: StmtNode(exp->getLine(), exp->getCol()) {
+	: StmtNode(0, 0) {
 		myExp = exp;
 		myDeclList = declList;
 		myStmtList = stmtList;
@@ -456,7 +468,7 @@ private:
 	ExpNode * myExp;
 	DeclListNode * myDeclList;
 	StmtListNode * myStmtList;
-	DeclListnode * myElseDeclList;
+	DeclListNode * myElseDeclList;
 	StmtListNode * myElseStmtList;
 };
 
@@ -464,7 +476,7 @@ private:
 class WhileStmtNode : public StmtNode {
 public:
 	WhileStmtNode(ExpNode * exp, DeclListNode * declList, StmtListNode * stmtList)
-	: StmtNode(exp->getLine(), exp->getCol()) {
+	: StmtNode(0, 0) {
 		myExp = exp;
 		myDeclList = declList;
 		myStmtList = stmtList;
@@ -480,7 +492,7 @@ private:
 class CallStmtNode : public StmtNode {
 public:
 	CallStmtNode(CallExpNode * expCall)
-	: StmtNode(expCall->getLine(), expCall->getCol()) {
+	: StmtNode(0, 0) {
 		myExpCall = expCall;
 	}
 	void unparse(std::ostream& out, int indent);
@@ -492,7 +504,7 @@ private:
 class ReturnStmtNode : public StmtNode {
 public:
 	ReturnStmtNode(ExpNode * exp)
-	: StmtNode(assign->getLine(), assign->getCol()) {
+	: StmtNode(0, 0) {
 		myExp = exp;
 	}
 private:
@@ -554,7 +566,7 @@ private:
 /* VERIFY */
 class DerefNode : public ExpNode {
 public:
-	DerefNode(ExpNode * exp, IDNode * id) : ExpNode(id->getLine(), id->getCol()) {
+	DerefNode(ExpNode * exp, IdNode * id) : ExpNode(id->getLine(), id->getCol()) {
 	}
 	void unparse(std::ostream& out, int indent);
 };
@@ -562,7 +574,8 @@ public:
 /* VERIFY */
 class AssignNode : public ExpNode {
 public:
-	AssignNode() {
+	AssignNode(ExpNode * lhs, ExpNode * rhs) : ExpNode(0, 0)  {
+
 	}
 	void unparse(std::ostream& out, int indent);
 };
@@ -570,7 +583,8 @@ public:
 /* VERIFY */
 class CallExpNode : public ExpNode {
 public:
-	CallExpNode() {
+	CallExpNode() : ExpNode(0, 0) {
+
 	}
 	void unparse(std::ostream& out, int indent);
 };
@@ -578,7 +592,8 @@ public:
 /* VERIFY */
 class UnaryExpNode : public ExpNode {
 public:
-	UnaryExpNode() {
+	UnaryExpNode() : ExpNode(0, 0) {
+
 	}
 	void unparse(std::ostream& out, int indent);
 };
@@ -586,7 +601,8 @@ public:
 /* VERIFY */
 class UnaryMinusNode : public UnaryExpNode {
 public:
-	UnaryMinusNode() {
+	UnaryMinusNode() : UnaryExpNode() {
+
 	}
 	void unparse(std::ostream& out, int indent);
 };
@@ -594,7 +610,8 @@ public:
 /* VERIFY */
 class NotNode : public UnaryExpNode {
 public:
-	NotNode() {
+	NotNode() : UnaryExpNode() {
+
 	}
 	void unparse(std::ostream& out, int indent);
 };
@@ -602,7 +619,7 @@ public:
 /* VERIFY */
 class BinaryExpNode : public ExpNode {
 public:
-	BinaryExpNode() {
+	BinaryExpNode() : ExpNode(0, 0) {
 	}
 	void unparse(std::ostream& out, int indent);
 };
