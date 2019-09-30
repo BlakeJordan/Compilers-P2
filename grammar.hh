@@ -160,8 +160,8 @@ namespace lake {
   std::list<StmtNode *> * stmtListNode;
   lake::StmtNode * stmtNode;
   FnBodyNode * fnBodyNode;
-  std::list<FormalDeclNode *> * formalsListNode;
-  std::list<FormalDeclNode *> * formalsNode;
+  FormalsListNode * formalsListNode;
+  FormalsListNode * formalsNode;
   FormalDeclNode * formalDeclNode;
   FnDeclNode * fnDeclNode;
   DerefNode * derefNode;

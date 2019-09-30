@@ -56,8 +56,8 @@
   std::list<StmtNode *> * stmtListNode;
   lake::StmtNode * stmtNode;
   FnBodyNode * fnBodyNode;
-  std::list<FormalDeclNode *> * formalsListNode;
-  std::list<FormalDeclNode *> * formalsNode;
+  FormalsListNode * formalsListNode;
+  FormalsListNode * formalsNode;
   FormalDeclNode * formalDeclNode;
   FnDeclNode * fnDeclNode;
   DerefNode * derefNode;
@@ -206,9 +206,9 @@ fnDecl : type id formals fnBody {
 
 /* TODO */
 formals : LPAREN RPAREN {
-  $$ = new std::list<FormalDeclNode *>();
+  $$ = new FormalsListNode(std::list<FormalDeclNode *>());
 } | LPAREN formalsList RPAREN {
-  $$ = new FormalsListNode($2);
+  $$ = $2;
 }
 
 /* TODO */

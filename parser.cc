@@ -636,7 +636,7 @@ namespace lake {
   case 11:
 #line 208 "lake.yy" // lalr1.cc:859
     {
-  (yylhs.value.formalsNode) = new std::list<FormalDeclNode *>();
+  (yylhs.value.formalsNode) = new FormalsListNode(std::list<FormalDeclNode *>());
 }
 #line 642 "parser.cc" // lalr1.cc:859
     break;
@@ -644,7 +644,7 @@ namespace lake {
   case 12:
 #line 210 "lake.yy" // lalr1.cc:859
     {
-  (yylhs.value.formalsNode) = new FormalsListNode((yystack_[1].value.formalsListNode));
+  (yylhs.value.formalsNode) = (yystack_[1].value.formalsListNode);
 }
 #line 650 "parser.cc" // lalr1.cc:859
     break;
