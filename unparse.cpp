@@ -25,15 +25,14 @@ void VarDeclNode::unparse(std::ostream& out, int indent){
 	out << ";\n";
 }
 
+void VarDeclListNode::unparse(std::ostream& out, int indent) {
+
+}
+
 /* VERIFY */
 void DeclNode::unparse(std::ostream& out, int indent) {
 
 }
-/* VERIFY */
-void VarDeclNode::unparse(std::ostream& out, int indent) {
-
-}
-/* VERIFY */
 
 /* TODO */
 void FnDeclNode::unparse(std::ostream& out, int indent) {}
@@ -41,6 +40,11 @@ void FnDeclNode::unparse(std::ostream& out, int indent) {}
 void FormalDeclNode::unparse(std::ostream& out, int indent) {
 
 }
+
+void FormalsListNode::unparse(std::ostream& out, int indent) {
+
+}
+
 /* VERIFY */
 void FnBodyNode::unparse(std::ostream& out, int indent) {
 
@@ -50,7 +54,10 @@ void StmtListNode::unparse(std::ostream& out, int indent) {
 
 }
 /* VERIFY */
-void ExpListNode;
+void ExpListNode::unparse(std::ostream& out, int indent) {
+
+}
+
 void TypeNode::unparse(std::ostream& out, int indent) {
 
 }
@@ -216,10 +223,5 @@ void LessEqNode::unparse(std::ostream& out, int indent) {
 void GreaterEqNode::unparse(std::ostream& out, int indent) {
 
 }
-/* VERIFY */
-void DeclListNode::unparse(std::ostream& out, int indent) {
-
-}
-/* VERIFY */
 
 } // End namespace lake
