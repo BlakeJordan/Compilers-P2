@@ -15,7 +15,7 @@ varDeclList     ::= varDeclList varDecl
 varDecl         ::= type id SEMICOLON
 
 fnDecl          ::= type id formals fnBody
-                
+
 formals         ::= LPAREN RPAREN
                 | LPAREN formalsList RPAREN
 
@@ -42,7 +42,7 @@ stmt            ::= assignExp SEMICOLON
                 | fncall SEMICOLON
 
 assignExp       ::= loc ASSIGN exp
-                
+
 exp             ::= assignExp
                 | exp PLUS exp
                 | exp MINUS exp

@@ -49,10 +49,17 @@
 	lake::ProgramNode * programNode;
 	std::list<DeclNode *> * declListNode;
 	lake::DeclNode * declNode;
+  std::list<VarDeclNode *> * varDeclListNode;
 	lake::VarDeclNode * varDeclNode;
 	lake::TypeNode * typeNode;
 	lake::IdNode * idNode;
-  lake::StmtListNode * stmtListNode;
+  std::list<StmtNode *> * stmtListNode;
+  lake::StmtNode * stmtNode;
+  FnBodyNode * fnBodyNode;
+  std::list<FormalDeclNode *> * formalsListNode;
+  std::list<FormalDeclNode *> * formalsNode;
+  FormalDeclNode * formalDeclNode;
+  FnDeclNode * fnDeclNode;
 }
 
 %define parse.assert
@@ -113,7 +120,7 @@
 %type <formalsNode> formals
 %type <formalsListNode> formalsList
 %type <formalDeclNode> formalDecl
-%type <FnBodyNode> fnBody
+%type <fnBodyNode> fnBody
 %type <stmtListNode> stmtList
 %type <stmtNode> stmt
 %type <AssignNode> assignExp
@@ -179,17 +186,17 @@ varDecl : type id SEMICOLON {
 
 /* TODO */
 fnDecl : type id formals fnBody {
-  $$ = new FnDeclNode(new TypeNode($1->_line, $1->_column),
-    new IdNode($2),
-    new std::list<FormalDeclNode *>($3),
-    new FnBodyNode($4));
+  $$ = new FnDeclNode(new TypeNode($1->lineNum, $1->colNum),
+  $2,
+  new FormalsListNode($3->myFormals),
+  new FnBodyNode($4->myVarDeclList, $4->myStmtList));
 }
 
 /* TODO */
 formals : LPAREN RPAREN {
-
+  $$ = new std::list<FormalDeclNode *>();
 } | LPAREN formalsList RPAREN {
-
+  $$ = new std::list<FormalDeclNode *>();
 }
 
 /* TODO */
@@ -206,7 +213,7 @@ formalDecl : type id {
 
 /* TODO */
 fnBody : LCURLY varDeclList stmtList RCURLY {
-
+  $$ = new FnBodyNode(new VarDeclListNode($2), new StmtListNode($3));
 }
 
 /* TODO */

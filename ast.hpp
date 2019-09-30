@@ -239,7 +239,7 @@ class FnDeclNode : public DeclNode {
 public:
 	FnDeclNode(TypeNode * type, IdNode * id,
 		FormalsListNode * formals, FnBodyNode * fnBody)
-		: DeclNode(type->getLine(), type->getCol()) {
+		: DeclNode(type->lineNum, type->colNum) {
 			myType = type;
 			myId = id;
 			myFormals = formals;
@@ -269,19 +269,21 @@ private:
 
 /* VERIFY */
 class FormalsListNode : public ASTNode {
+	std::list<FormalDeclNode *> myFormals;
 public:
-	FormalsListNode(std::list<formalDeclNode *> * formalDeclsIn)
+	FormalsListNode(std::list<formalDeclNode *> formalDeclsIn)
 		: ASTNode(0, 0) {
 			myFormals = formalDeclsIn;
 	}
 	void unparse(std::ostream& out, int indent);
 private:
-	std::list<FormalDeclNode *> * myFormals;
 };
 
 /* VERIFY */
 class FnBodyNode : public DeclNode {
 public:
+	VarDeclListNode * myVarDeclList;
+	StmtListNode * myStmtList;
 	FnBodyNode(VarDeclListNode * varDeclList, StmtListNode * stmtList)
 	: DeclNode(type->getLine(), type->getCol()) {
 		myVarDeclList = varDeclList;
@@ -289,8 +291,6 @@ public:
 	}
 	void unparse(std::ostream& out, int indent);
 private:
-	VarDeclListNode * myVarDeclList;
-	StmtListNode * myStmtList;
 };
 
 /* VERIFY */
@@ -318,14 +318,13 @@ private:
 /* VERIFY */
 class TypeNode : public ASTNode{
 public:
+	size_t lineNum;
+	size_t colNum;
 	TypeNode(size_t lineIn, size_t colIn) : ASTNode(lineIn, colIn){
 		lineNum = lineIn;
 		colNum = colIn;
 	}
-	virtual void unparse(std::ostream& out, int indent) = 0;
-private:
-	size_t lineNum;
-	size_t colNum;
+	void unparse(std::ostream& out, int indent);
 };
 
 /* COMPLETE */
@@ -481,8 +480,8 @@ private:
 class CallStmtNode : public StmtNode {
 public:
 	CallStmtNode(CallExpNode * expCall)
-	: StmtNode(assign->getLine(), assign->getCol()) {
-		myExpCall = expCall
+	: StmtNode(expCall->getLine(), expCall->getCol()) {
+		myExpCall = expCall;
 	}
 	void unparse(std::ostream& out, int indent);
 private:
@@ -543,13 +542,13 @@ public:
 
 /* COMPLETE */
 class IdNode : public ExpNode{
+	std::string myStrVal;
 public:
-	IdNode(IDToken * token) : ExpNode(token->_line, token->_column){
+	IdNode(IDToken *& token) : ExpNode(token->_line, token->_column){
 		myStrVal = token->value();
 	}
 	void unparse(std::ostream& out, int indent);
 private:
-	std::string myStrVal;
 };
 
 /* VERIFY */
