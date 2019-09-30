@@ -151,13 +151,14 @@ namespace lake {
 	lake::IDToken * idTokenValue;
 	lake::ASTNode * astNode;
 	lake::ProgramNode * programNode;
-	std::list<DeclNode *> * declList;
+	std::list<DeclNode *> * declListNode;
 	lake::DeclNode * declNode;
 	lake::VarDeclNode * varDeclNode;
 	lake::TypeNode * typeNode;
 	lake::IdNode * idNode;
+  lake::StmtListNode * stmtListNode;
 
-#line 161 "grammar.hh" // lalr1.cc:377
+#line 162 "grammar.hh" // lalr1.cc:377
     };
 #else
     typedef YYSTYPE semantic_type;
@@ -377,7 +378,7 @@ namespace lake {
     // Tables.
   // YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
   // STATE-NUM.
-  static const signed char yypact_[];
+  static const short int yypact_[];
 
   // YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
   // Performed when YYTABLE does not specify something else to do.  Zero
@@ -512,8 +513,8 @@ namespace lake {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 15,     ///< Last index in yytable_.
-      yynnts_ = 12,  ///< Number of nonterminal symbols.
+      yylast_ = 301,     ///< Last index in yytable_.
+      yynnts_ = 21,  ///< Number of nonterminal symbols.
       yyfinal_ = 3, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
@@ -529,7 +530,7 @@ namespace lake {
 
 #line 5 "lake.yy" // lalr1.cc:377
 } // lake
-#line 533 "grammar.hh" // lalr1.cc:377
+#line 534 "grammar.hh" // lalr1.cc:377
 
 
 

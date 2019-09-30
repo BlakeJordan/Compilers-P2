@@ -109,7 +109,6 @@ namespace lake{
 /* You may find it useful to forward declare AST subclasses
    here so that you don't have to worry about the order
    in which you declare your subclasses below */
-
 class ProgramNode;
 class DeclListNode;
 class DeclNode;
@@ -205,13 +204,15 @@ private:
 /* VERIFY */
 class DeclNode : public ASTNode{
 public:
-	DeclNode(size_t line, size_t col) : ASTNode(line, col){}
+	DeclNode(size_t lineIn, size_t colIn) : ASTNode(lineIn, colIn){
+	}
+	virtual void unparse(std::ostream& out, int indent) = 0;
 };
 
 /* VERIFY */
 class VarDeclListNode : public ASTNode{
 public:
-	VarDeclListNode(std::list<varDeclNode *> * varDeclsIn) : ASTNode(0, 0){
+	VarDeclListNode(std::list<VarDeclNode *> * varDeclsIn) : ASTNode(0, 0){
 		myVarDecls = varDeclsIn;
 	}
 	void unparse(std::ostream& out, int indent);
@@ -222,9 +223,10 @@ private:
 /* COMPLETE */
 class VarDeclNode : public DeclNode{
 public:
-	VarDeclNode(TypeNode * type, IdNode * id) : DeclNode(type->getLine(), type->getCol()){
-		myType = type;
-		myId = id;
+	VarDeclNode(TypeNode * type, IdNode * id)
+		: DeclNode(type->lineNum, type->colNum) {
+			myType = type;
+			myId = id;
 	}
 	void unparse(std::ostream& out, int indent);
 private:
@@ -235,42 +237,95 @@ private:
 /* TODO */
 class FnDeclNode : public DeclNode {
 public:
-	FnDeclNode(TypeNode * type, IdNode * id, formalsNode * formals, fnBodyNode * fnBody) {
-
+	FnDeclNode(TypeNode * type, IdNode * id,
+		FormalsListNode * formals, FnBodyNode * fnBody)
+		: DeclNode(type->getLine(), type->getCol()) {
+			myType = type;
+			myId = id;
+			myFormals = formals;
+			myFnBody = fnBody;
 	}
-	void unparse(std::ostream);
+	void unparse(std::ostream& out, int indent);
+private:
+	TypeNode * myType;
+	IdNode * myId;
+	FormalsNode * myFormals;
+	FnBodyNode * myFnBody;
 };
 
 /* VERIFY */
-class FnBodyNode : public ASTNode {
+class FormalDeclNode : public DeclNode {
 public:
-	FnBodyNode() {
+	FormalDeclNode(TypeNode * type, IdNode * id)
+		: DeclNode(type->getLine(), type->getCol()) {
+			myType = type;
+			myId = id;
 	}
-	void unparse(std::ostream)
+	void unparse(std::ostream& out, int indent);
+private:
+	TypeNode * myType;
+	IdNode * myId;
+};
+
+/* VERIFY */
+class FormalsListNode : public ASTNode {
+public:
+	FormalsListNode(std::list<formalDeclNode *> * formalDeclsIn)
+		: ASTNode(0, 0) {
+			myFormals = formalDeclsIn;
+	}
+	void unparse(std::ostream& out, int indent);
+private:
+	std::list<FormalDeclNode *> * myFormals;
+};
+
+/* VERIFY */
+class FnBodyNode : public DeclNode {
+public:
+	FnBodyNode(VarDeclListNode * varDeclList, StmtListNode * stmtList)
+	: DeclNode(type->getLine(), type->getCol()) {
+		myVarDeclList = varDeclList;
+		myStmtList = stmtList;
+	}
+	void unparse(std::ostream& out, int indent);
+private:
+	VarDeclListNode * myVarDeclList;
+	StmtListNode * myStmtList;
 };
 
 /* VERIFY */
 class StmtListNode : public ASTNode {
 public:
-	StmtListNode() {
+	StmtListNode(std::list<StmtNode *> * stmtsIn) : ASTNode(0, 0){
+		myStmts = stmtsIn;
 	}
-	void unparse(std::ostream)
+	void unparse(std::ostream& out, int indent);
+private:
+	std::list<StmtNode *> * myStmts;
 };
 
 /* VERIFY */
 class ExpListNode : public ASTNode {
 public:
-	ExpListNode() {
+	ExpListNode(std::list<ExpNode *> * expsIn) : ASTNode(0, 0){
+		myExps = expsIn;
 	}
-	void unparse(std::ostream)
+	void unparse(std::ostream& out, int indent);
+private:
+	std::list<ExpNode *> * myExps;
 };
 
-/* COMPLETE */
+/* VERIFY */
 class TypeNode : public ASTNode{
 public:
 	TypeNode(size_t lineIn, size_t colIn) : ASTNode(lineIn, colIn){
+		lineNum = lineIn;
+		colNum = colIn;
 	}
 	virtual void unparse(std::ostream& out, int indent) = 0;
+private:
+	size_t lineNum;
+	size_t colNum;
 };
 
 /* COMPLETE */
@@ -287,6 +342,205 @@ public:
 	void unparse(std::ostream& out, int indent);
 };
 
+/* VERIFY */
+class PtrNode : public TypeNode {
+public:
+	PtrNode(IDNode * id, int * indirectionLevel)
+	: TypeNode(id->getLine(), id->getCol()) {
+		myId = id;
+		myIndirectionLevel = indirectionLevel;
+	}
+	void unparse(std::ostream& out, int indent);
+private:
+	IDNode * myId;
+	int * myIndirectionLevel;
+};
+
+/* VERIFY */
+class StmtNode : public ASTNode {
+public:
+	StmtNode(size_t lineIn, size_t colIn) : ASTNode(lineIn, colIn) {
+	}
+	virtual void unparse(std::ostream& out, int indent) = 0;
+};
+
+/* VERIFY */
+class AssignStmtNode : public StmtNode {
+public:
+	AssignStmtNode(AssignNode * assign)
+	: StmtNode(assign->getLine(), assign->getCol()){
+		myAssign = assign;
+	}
+	void unparse(std::ostream& out, int indent);
+private:
+	AssignNode * myAssign;
+};
+
+/* VERIFY */
+class PostIncStmtNode : public StmtNode {
+public:
+	PostIncStmtNode(ExpNode * exp)
+	: StmtNode(exp->getLine(), exp->getCol()) {
+		myExp = exp;
+	}
+	void unparse(std::ostream& out, int indent);
+private:
+	ExpNode * myExp;
+};
+
+/* VERIFY */
+class PostDecStmtNode : public StmtNode {
+public:
+	PostDecStmtNode(ExpNode * exp)
+	: StmtNode(exp->getLine(), exp->getCol()) {
+		myExp = exp;
+	}
+	void unparse(std::ostream& out, int indent);
+private:
+	ExpNode * myExp;
+};
+
+/* VERIFY */
+class ReadStmtNode : public StmtNode {
+public:
+	ReadStmtNode(ExpNode * exp)
+	: StmtNode(assign->getLine(), assign->getCol()) {
+		myExp = exp;
+	}
+	void unparse(std::ostream& out, int indent);
+private:
+	ExpNode * myExp;
+};
+
+/* VERIFY */
+class WriteStmtNode : public StmtNode {
+public:
+	WriteStmtNode(ExpNode * exp)
+	: StmtNode(exp->getLine(), exp->getCol()) {
+		myExp = exp;
+	}
+	void unparse(std::ostream& out, int indent);
+private:
+	ExpNode * myExp;
+};
+
+/* VERIFY */
+class IfStmtNode : public StmtNode {
+public:
+	IfStmtNode(ExpNode * exp, DeclListNode * declList, StmtListNode * stmtList)
+	: StmtNode(exp->getLine(), exp->getCol()) {
+		myExp = exp;
+		myDeclList = declList;
+		myStmtList = stmtList;
+	}
+	void unparse(std::ostream& out, int indent);
+private:
+	ExpNode * myExp;
+	DeclListNode * myDeclList;
+	StmtListNode * myStmtList;
+};
+
+/* VERIFY */
+class IfElseStmtNode : public StmtNode {
+public:
+	IfElseStmtNode(ExpNode * exp, DeclListNode * declList, StmtListNode * stmtList,
+	DeclListNode * elseDeclList, StmtListNode * elseStmtList)
+	: StmtNode(exp->getLine(), exp->getCol()) {
+		myExp = exp;
+		myDeclList = declList;
+		myStmtList = stmtList;
+		myElseDeclList = elseDeclList;
+		myElseStmtList = elseStmtList;
+	}
+	void unparse(std::ostream& out, int indent);
+private:
+	ExpNode * myExp;
+	DeclListNode * myDeclList;
+	StmtListNode * myStmtList;
+	DeclListnode * myElseDeclList;
+	StmtListNode * myElseStmtList;
+};
+
+/* VERIFY */
+class WhileStmtNode : public StmtNode {
+public:
+	WhileStmtNode(ExpNode * exp, DeclListNode * declList, StmtListNode * stmtList)
+	: StmtNode(exp->getLine(), exp->getCol()) {
+		myExp = exp;
+		myDeclList = declList;
+		myStmtList = stmtList;
+	}
+	void unparse(std::ostream& out, int indent);
+private:
+	ExpNode * myExp;
+	DeclListNode * myDeclList;
+	StmtListNode * myStmtList;
+};
+
+/* VERIFY */
+class CallStmtNode : public StmtNode {
+public:
+	CallStmtNode(CallExpNode * expCall)
+	: StmtNode(assign->getLine(), assign->getCol()) {
+		myExpCall = expCall
+	}
+	void unparse(std::ostream& out, int indent);
+private:
+	CallExpNode * myExpCall;
+};
+
+/* VERIFY */
+class ReturnStmtNode : public StmtNode {
+public:
+	ReturnStmtNode(ExpNode * exp)
+	: StmtNode(assign->getLine(), assign->getCol()) {
+		myExp = exp;
+	}
+private:
+	ExpNode * myExp;
+	void unparse(std::ostream& out, int indent);
+};
+
+/* COMPLETE */
+class ExpNode : public ASTNode{
+public:
+	ExpNode(size_t line, size_t col) : ASTNode(line, col){}
+private:
+	virtual void unparse(std::ostream& out, int indent) = 0;
+};
+
+/* VERIFY */
+class IntLitNode : public ExpNode {
+public:
+	IntLitNode(size_t line, size_t col) : ExpNode(line, col) {
+	}
+	void unparse(std::ostream& out, int indent);
+};
+
+/* VERIFY */
+class StrLitNode : public ExpNode {
+public:
+	StrLitNode(size_t line, size_t col) : ExpNode(line, col) {
+	}
+	void unparse(std::ostream& out, int indent);
+};
+
+/* VERIFY */
+class TrueNode : public ExpNode {
+public:
+	TrueNode(size_t line, size_t col) : ExpNode(line, col) {
+	}
+	void unparse(std::ostream& out, int indent);
+};
+
+/* VERIFY */
+class FalseNode : public ExpNode {
+public:
+	FalseNode(size_t line, size_t col) : ExpNode(line, col) {
+	}
+	void unparse(std::ostream& out, int indent);
+};
+
 /* COMPLETE */
 class IdNode : public ExpNode{
 public:
@@ -299,306 +553,155 @@ private:
 };
 
 /* VERIFY */
-class PtrNode : public ASTNode {
+class DerefNode : public ExpNode {
 public:
-	Node() {
+	DerefNode(ExpNode * exp, IDNode * id) : ExpNode(id->getLine(), id->getCol()) {
 	}
-	void unparse(std::ostream)
+	void unparse(std::ostream& out, int indent);
 };
 
 /* VERIFY */
-class StmtNode : public ASTNode {
+class AssignNode : public ExpNode {
 public:
-	Node() {
+	AssignNode() {
 	}
-	void unparse(std::ostream)
+	void unparse(std::ostream& out, int indent);
 };
 
 /* VERIFY */
-class AssignStmtNode : public ASTNode {
+class CallExpNode : public ExpNode {
 public:
-	Node() {
+	CallExpNode() {
 	}
-	void unparse(std::ostream)
+	void unparse(std::ostream& out, int indent);
 };
 
 /* VERIFY */
-class PostIncStmtNode : public ASTNode {
+class UnaryExpNode : public ExpNode {
 public:
-	Node() {
+	UnaryExpNode() {
 	}
-	void unparse(std::ostream)
+	void unparse(std::ostream& out, int indent);
 };
 
 /* VERIFY */
-class PostDecStmtNode : public ASTNode {
+class UnaryMinusNode : public UnaryExpNode {
 public:
-	Node() {
+	UnaryMinusNode() {
 	}
-	void unparse(std::ostream)
+	void unparse(std::ostream& out, int indent);
 };
 
 /* VERIFY */
-class ReadStmtNode : public ASTNode {
+class NotNode : public UnaryExpNode {
 public:
-	Node() {
+	NotNode() {
 	}
-	void unparse(std::ostream)
+	void unparse(std::ostream& out, int indent);
 };
 
 /* VERIFY */
-class WriteStmtNode : public ASTNode {
+class BinaryExpNode : public ExpNode {
 public:
-	Node() {
+	BinaryExpNode() {
 	}
-	void unparse(std::ostream)
+	void unparse(std::ostream& out, int indent);
 };
 
 /* VERIFY */
-class IfStmtNode : public ASTNode {
+class PlusNode : public BinaryExpNode {
 public:
-	Node() {
+	PlusNode() {
 	}
-	void unparse(std::ostream)
+	void unparse(std::ostream& out, int indent);
 };
 
 /* VERIFY */
-class IfElseStmtNode : public ASTNode {
+class MinusNode : public BinaryExpNode {
 public:
-	Node() {
+	MinusNode() {
 	}
-	void unparse(std::ostream)
+	void unparse(std::ostream& out, int indent);
 };
 
 /* VERIFY */
-class WhileStmtNode : public ASTNode {
+class TimesNode : public BinaryExpNode {
 public:
-	Node() {
+	TimesNode() {
 	}
-	void unparse(std::ostream)
+	void unparse(std::ostream& out, int indent);
 };
 
 /* VERIFY */
-class CallStmtNode : public ASTNode {
+class DivideNode : public BinaryExpNode {
 public:
-	Node() {
+	DivideNode() {
 	}
-	void unparse(std::ostream)
+	void unparse(std::ostream& out, int indent);
 };
 
 /* VERIFY */
-class ReturnStmtNode : public ASTNode {
+class AndNode : public BinaryExpNode {
 public:
-	Node() {
+	AndNode() {
 	}
-	void unparse(std::ostream)
-};
-
-/* COMPLETE */
-class ExpNode : public ASTNode{
-public:
-	ExpNode(size_t line, size_t col) : ASTNode(line, col){}
+	void unparse(std::ostream& out, int indent);
 };
 
 /* VERIFY */
-class IntLitNode : public ASTNode {
+class OrNode : public BinaryExpNode {
 public:
-	Node() {
+	OrNode() {
 	}
-	void unparse(std::ostream)
+	void unparse(std::ostream& out, int indent);
 };
 
 /* VERIFY */
-class StrLitNode : public ASTNode {
+class EqualsNode : public BinaryExpNode {
 public:
-	Node() {
+	EqualsNode() {
 	}
-	void unparse(std::ostream)
+	void unparse(std::ostream& out, int indent);
 };
 
 /* VERIFY */
-class TrueNode : public ASTNode {
+class NotEqualsNode : public BinaryExpNode {
 public:
-	Node() {
+	NotEqualsNode() {
 	}
-	void unparse(std::ostream)
+	void unparse(std::ostream& out, int indent);
 };
 
 /* VERIFY */
-class FalseNode : public ASTNode {
+class LessNode : public BinaryExpNode {
 public:
-	Node() {
+	LessNode() {
 	}
-	void unparse(std::ostream)
+	void unparse(std::ostream& out, int indent);
 };
 
 /* VERIFY */
-class IdNode : public ASTNode {
+class GreaterNode : public BinaryExpNode {
 public:
-	Node() {
+	GreaterNode() {
 	}
-	void unparse(std::ostream)
+	void unparse(std::ostream& out, int indent);
 };
 
 /* VERIFY */
-class DerefNode : public ASTNode {
+class LessEqNode : public BinaryExpNode {
 public:
-	Node() {
+	LessEqNode() {
 	}
-	void unparse(std::ostream)
+	void unparse(std::ostream& out, int indent);
 };
 
 /* VERIFY */
-class AssignNode : public ASTNode {
+class GreaterEqNode : public BinaryExpNode {
 public:
-	Node() {
+	GreaterEqNode() {
 	}
-	void unparse(std::ostream)
-};
-
-/* VERIFY */
-class CallExpNode : public ASTNode {
-public:
-	Node() {
-	}
-	void unparse(std::ostream)
-};
-
-/* VERIFY */
-class UnaryExpNode : public ASTNode {
-public:
-	Node() {
-	}
-	void unparse(std::ostream)
-};
-
-/* VERIFY */
-class UnaryMinusNode : public ASTNode {
-public:
-	Node() {
-	}
-	void unparse(std::ostream)
-};
-
-/* VERIFY */
-class NotNode : public ASTNode {
-public:
-	Node() {
-	}
-	void unparse(std::ostream)
-};
-
-/* VERIFY */
-class BinaryExpNode : public ASTNode {
-public:
-	Node() {
-	}
-	void unparse(std::ostream)
-};
-
-/* VERIFY */
-class PlusNode : public ASTNode {
-public:
-	Node() {
-	}
-	void unparse(std::ostream)
-};
-
-/* VERIFY */
-class MinusNode : public ASTNode {
-public:
-	Node() {
-	}
-	void unparse(std::ostream)
-};
-
-/* VERIFY */
-class TimesNode : public ASTNode {
-public:
-	Node() {
-	}
-	void unparse(std::ostream)
-};
-
-/* VERIFY */
-class DivideNode : public ASTNode {
-public:
-	Node() {
-	}
-	void unparse(std::ostream)
-};
-
-/* VERIFY */
-class AndNode : public ASTNode {
-public:
-	Node() {
-	}
-	void unparse(std::ostream)
-};
-
-/* VERIFY */
-class OrNode : public ASTNode {
-public:
-	Node() {
-	}
-	void unparse(std::ostream)
-};
-
-/* VERIFY */
-class EqualsNode : public ASTNode {
-public:
-	Node() {
-	}
-	void unparse(std::ostream)
-};
-
-/* VERIFY */
-class NotEqualsNode : public ASTNode {
-public:
-	Node() {
-	}
-	void unparse(std::ostream)
-};
-
-/* VERIFY */
-class LessNode : public ASTNode {
-public:
-	Node() {
-	}
-	void unparse(std::ostream)
-};
-
-/* VERIFY */
-class GreaterNode : public ASTNode {
-public:
-	Node() {
-	}
-	void unparse(std::ostream)
-};
-
-/* VERIFY */
-class LessEqNode : public ASTNode {
-public:
-	Node() {
-	}
-	void unparse(std::ostream)
-};
-
-/* VERIFY */
-class GreaterEqNode : public ASTNode {
-public:
-	Node() {
-	}
-	void unparse(std::ostream)
-};
-
-/* VERIFY */
-class DeclListNode;
-
-/* VERIFY */
-class FormalsNode: public DeclNode {
-public:
-	FormalsNode(size_t line, size_t col) : ASTNode(line, col){}
+	void unparse(std::ostream& out, int indent);
 };
 
 } //End namespace lake

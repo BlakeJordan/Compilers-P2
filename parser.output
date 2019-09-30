@@ -1,16 +1,7 @@
 Nonterminals useless in grammar
 
-   varDeclList
-   stmtList
-   stmt
-   assignExp
-   exp
-   term
-   fncall
-   actualList
    primType
    indirect
-   loc
 
 
 Terminals unused in grammar
@@ -18,98 +9,33 @@ Terminals unused in grammar
    "newline"
    BOOL
    VOID
-   TRUE
-   FALSE
-   IF
-   ELSE
-   WHILE
-   RETURN
-   INTLITERAL
-   STRINGLITERAL
-   DEREF
    DOT
-   WRITE
-   READ
-   CROSSCROSS
-   DASHDASH
-   CROSS
-   DASH
-   STAR
-   SLASH
-   NOT
-   AND
-   OR
-   EQUALS
-   NOTEQUALS
-   LESS
-   GREATER
-   LESSEQ
-   GREATEREQ
-   ASSIGN
 
 
 Rules useless in grammar
 
-   16 varDeclList: varDeclList varDecl
-   17            | %empty
+   61 primType: INT
+   62         | BOOL
+   63         | VOID
 
-   18 stmtList: stmtList stmt
-   19         | %empty
+   64 indirect: indirect DEREF
+   65         | %empty
 
-   20 stmt: assignExp SEMICOLON
-   21     | loc CROSSCROSS SEMICOLON
-   22     | loc DASHDASH SEMICOLON
-   23     | READ loc SEMICOLON
-   24     | WRITE exp SEMICOLON
-   25     | IF LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY
-   26     | IF LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY ELSE LCURLY varDeclList stmtList RCURLY
-   27     | WHILE LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY
-   28     | RETURN exp SEMICOLON
-   29     | RETURN SEMICOLON
-   30     | fncall SEMICOLON
 
-   31 assignExp: loc ASSIGN exp
-
-   32 exp: assignExp
-   33    | exp CROSS exp
-   34    | exp DASH exp
-   35    | exp STAR exp
-   36    | exp SLASH exp
-   37    | NOT exp
-   38    | exp AND exp
-   39    | exp OR exp
-   40    | exp EQUALS exp
-   41    | exp NOTEQUALS exp
-   42    | exp LESS exp
-   43    | exp GREATER exp
-   44    | exp LESSEQ exp
-   45    | exp GREATEREQ exp
-   46    | DASH term
-   47    | term
-
-   48 term: loc
-   49     | INTLITERAL
-   50     | STRINGLITERAL
-   51     | TRUE
-   52     | FALSE
-   53     | LPAREN exp RPAREN
-   54     | fncall
-
-   55 fncall: id LPAREN RPAREN
-   56       | id LPAREN actualList RPAREN
-
-   57 actualList: exp
-   58           | actualList COMMA exp
-
-   59 primType: INT
-   60         | BOOL
-   61         | VOID
-
-   62 indirect: indirect DEREF
-   63         | %empty
-
-   64 loc: id
-   65    | DEREF loc
+State 71 conflicts: 12 shift/reduce
+State 89 conflicts: 12 shift/reduce
+State 96 conflicts: 12 shift/reduce
+State 97 conflicts: 12 shift/reduce
+State 98 conflicts: 12 shift/reduce
+State 99 conflicts: 12 shift/reduce
+State 100 conflicts: 12 shift/reduce
+State 101 conflicts: 12 shift/reduce
+State 102 conflicts: 12 shift/reduce
+State 103 conflicts: 12 shift/reduce
+State 104 conflicts: 12 shift/reduce
+State 105 conflicts: 12 shift/reduce
+State 106 conflicts: 12 shift/reduce
+State 107 conflicts: 12 shift/reduce
 
 
 Grammar
@@ -124,23 +50,77 @@ Grammar
     4 decl: varDecl
     5     | fnDecl
 
-    6 varDecl: type id SEMICOLON
+    6 varDeclList: varDeclList varDecl
+    7            | %empty
 
-    7 fnDecl: type id formals fnBody
+    8 varDecl: type id SEMICOLON
 
-    8 formals: LPAREN RPAREN
-    9        | LPAREN formalsList RPAREN
+    9 fnDecl: type id formals fnBody
 
-   10 formalsList: formalDecl
-   11            | formalDecl COMMA formalsList
+   10 formals: LPAREN RPAREN
+   11        | LPAREN formalsList RPAREN
 
-   12 formalDecl: type id
+   12 formalsList: formalDecl
+   13            | formalDecl COMMA formalsList
 
-   13 fnBody: LCURLY RCURLY
+   14 formalDecl: type id
 
-   14 type: INT
+   15 fnBody: LCURLY varDeclList stmtList RCURLY
 
-   15 id: ID
+   16 stmtList: stmtList stmt
+   17         | %empty
+
+   18 stmt: assignExp SEMICOLON
+   19     | loc CROSSCROSS SEMICOLON
+   20     | loc DASHDASH SEMICOLON
+   21     | READ loc SEMICOLON
+   22     | WRITE exp SEMICOLON
+   23     | IF LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY
+   24     | IF LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY ELSE LCURLY varDeclList stmtList RCURLY
+   25     | WHILE LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY
+   26     | RETURN exp SEMICOLON
+   27     | RETURN SEMICOLON
+   28     | fncall SEMICOLON
+
+   29 assignExp: loc ASSIGN exp
+
+   30 exp: assignExp
+   31    | exp CROSS exp
+   32    | exp DASH exp
+   33    | exp STAR exp
+   34    | exp SLASH exp
+   35    | NOT exp
+   36    | exp AND exp
+   37    | exp OR exp
+   38    | exp EQUALS exp
+   39    | exp NOTEQUALS exp
+   40    | exp LESS exp
+   41    | exp GREATER exp
+   42    | exp LESSEQ exp
+   43    | exp GREATEREQ exp
+   44    | DASH term
+   45    | term
+
+   46 term: loc
+   47     | INTLITERAL
+   48     | STRINGLITERAL
+   49     | TRUE
+   50     | FALSE
+   51     | LPAREN exp RPAREN
+   52     | fncall
+
+   53 fncall: id LPAREN RPAREN
+   54       | id LPAREN actualList RPAREN
+
+   55 actualList: exp
+   56           | actualList COMMA exp
+
+   57 type: INT
+
+   58 loc: id
+   59    | DEREF loc
+
+   60 id: ID
 
 
 Terminals, with rules where they appear
@@ -149,43 +129,43 @@ Terminals, with rules where they appear
 error (256)
 "newline" (258)
 BOOL (259)
-INT (260) 14
+INT (260) 57
 VOID (261)
-TRUE (262)
-FALSE (263)
-IF (264)
-ELSE (265)
-WHILE (266)
-RETURN (267)
-ID (268) 15
-INTLITERAL (269)
-STRINGLITERAL (270)
-DEREF (271)
-LCURLY (272) 13
-RCURLY (273) 13
-LPAREN (274) 8 9
-RPAREN (275) 8 9
-SEMICOLON (276) 6
-COMMA (277) 11
+TRUE (262) 49
+FALSE (263) 50
+IF (264) 23 24
+ELSE (265) 24
+WHILE (266) 25
+RETURN (267) 26 27
+ID (268) 60
+INTLITERAL (269) 47
+STRINGLITERAL (270) 48
+DEREF (271) 59
+LCURLY (272) 15 23 24 25
+RCURLY (273) 15 23 24 25
+LPAREN (274) 10 11 23 24 25 51 53 54
+RPAREN (275) 10 11 23 24 25 51 53 54
+SEMICOLON (276) 8 18 19 20 21 22 26 27 28
+COMMA (277) 13 56
 DOT (278)
-WRITE (279)
-READ (280)
-CROSSCROSS (281)
-DASHDASH (282)
-CROSS (283)
-DASH (284)
-STAR (285)
-SLASH (286)
-NOT (287)
-AND (288)
-OR (289)
-EQUALS (290)
-NOTEQUALS (291)
-LESS (292)
-GREATER (293)
-LESSEQ (294)
-GREATEREQ (295)
-ASSIGN (296)
+WRITE (279) 22
+READ (280) 21
+CROSSCROSS (281) 19
+DASHDASH (282) 20
+CROSS (283) 31
+DASH (284) 32 44
+STAR (285) 33
+SLASH (286) 34
+NOT (287) 35
+AND (288) 36
+OR (289) 37
+EQUALS (290) 38
+NOTEQUALS (291) 39
+LESS (292) 40
+GREATER (293) 41
+LESSEQ (294) 42
+GREATEREQ (295) 43
+ASSIGN (296) 29
 
 
 Nonterminals, with rules where they appear
@@ -198,22 +178,42 @@ declList (44)
     on left: 2 3, on right: 1 2
 decl (45)
     on left: 4 5, on right: 2
-varDecl (46)
-    on left: 6, on right: 4
-fnDecl (47)
-    on left: 7, on right: 5
-formals (48)
-    on left: 8 9, on right: 7
-formalsList (49)
-    on left: 10 11, on right: 9 11
-formalDecl (50)
-    on left: 12, on right: 10 11
-fnBody (51)
-    on left: 13, on right: 7
-type (52)
-    on left: 14, on right: 6 7 12
-id (53)
-    on left: 15, on right: 6 7 12
+varDeclList (46)
+    on left: 6 7, on right: 6 15 23 24 25
+varDecl (47)
+    on left: 8, on right: 4 6
+fnDecl (48)
+    on left: 9, on right: 5
+formals (49)
+    on left: 10 11, on right: 9
+formalsList (50)
+    on left: 12 13, on right: 11 13
+formalDecl (51)
+    on left: 14, on right: 12 13
+fnBody (52)
+    on left: 15, on right: 9
+stmtList (53)
+    on left: 16 17, on right: 15 16 23 24 25
+stmt (54)
+    on left: 18 19 20 21 22 23 24 25 26 27 28, on right: 16
+assignExp (55)
+    on left: 29, on right: 18 30
+exp (56)
+    on left: 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45, on right:
+    22 23 24 25 26 29 31 32 33 34 35 36 37 38 39 40 41 42 43 51 55
+    56
+term (57)
+    on left: 46 47 48 49 50 51 52, on right: 44 45
+fncall (58)
+    on left: 53 54, on right: 28 52
+actualList (59)
+    on left: 55 56, on right: 54 56
+type (60)
+    on left: 57, on right: 8 9 14
+loc (61)
+    on left: 58 59, on right: 19 20 21 29 46 59
+id (62)
+    on left: 60, on right: 8 9 14 53 54 58
 
 
 State 0
@@ -257,9 +257,9 @@ State 3
 
 State 4
 
-   14 type: INT .
+   57 type: INT .
 
-    $default  reduce using rule 14 (type)
+    $default  reduce using rule 57 (type)
 
 
 State 5
@@ -285,8 +285,8 @@ State 7
 
 State 8
 
-    6 varDecl: type . id SEMICOLON
-    7 fnDecl: type . id formals fnBody
+    8 varDecl: type . id SEMICOLON
+    9 fnDecl: type . id formals fnBody
 
     ID  shift, and go to state 9
 
@@ -295,15 +295,15 @@ State 8
 
 State 9
 
-   15 id: ID .
+   60 id: ID .
 
-    $default  reduce using rule 15 (id)
+    $default  reduce using rule 60 (id)
 
 
 State 10
 
-    6 varDecl: type id . SEMICOLON
-    7 fnDecl: type id . formals fnBody
+    8 varDecl: type id . SEMICOLON
+    9 fnDecl: type id . formals fnBody
 
     LPAREN     shift, and go to state 11
     SEMICOLON  shift, and go to state 12
@@ -313,8 +313,8 @@ State 10
 
 State 11
 
-    8 formals: LPAREN . RPAREN
-    9        | LPAREN . formalsList RPAREN
+   10 formals: LPAREN . RPAREN
+   11        | LPAREN . formalsList RPAREN
 
     INT     shift, and go to state 4
     RPAREN  shift, and go to state 14
@@ -326,14 +326,14 @@ State 11
 
 State 12
 
-    6 varDecl: type id SEMICOLON .
+    8 varDecl: type id SEMICOLON .
 
-    $default  reduce using rule 6 (varDecl)
+    $default  reduce using rule 8 (varDecl)
 
 
 State 13
 
-    7 fnDecl: type id formals . fnBody
+    9 fnDecl: type id formals . fnBody
 
     LCURLY  shift, and go to state 18
 
@@ -342,31 +342,31 @@ State 13
 
 State 14
 
-    8 formals: LPAREN RPAREN .
+   10 formals: LPAREN RPAREN .
 
-    $default  reduce using rule 8 (formals)
+    $default  reduce using rule 10 (formals)
 
 
 State 15
 
-    9 formals: LPAREN formalsList . RPAREN
+   11 formals: LPAREN formalsList . RPAREN
 
     RPAREN  shift, and go to state 20
 
 
 State 16
 
-   10 formalsList: formalDecl .
-   11            | formalDecl . COMMA formalsList
+   12 formalsList: formalDecl .
+   13            | formalDecl . COMMA formalsList
 
     COMMA  shift, and go to state 21
 
-    $default  reduce using rule 10 (formalsList)
+    $default  reduce using rule 12 (formalsList)
 
 
 State 17
 
-   12 formalDecl: type . id
+   14 formalDecl: type . id
 
     ID  shift, and go to state 9
 
@@ -375,28 +375,30 @@ State 17
 
 State 18
 
-   13 fnBody: LCURLY . RCURLY
+   15 fnBody: LCURLY . varDeclList stmtList RCURLY
 
-    RCURLY  shift, and go to state 23
+    $default  reduce using rule 7 (varDeclList)
+
+    varDeclList  go to state 23
 
 
 State 19
 
-    7 fnDecl: type id formals fnBody .
+    9 fnDecl: type id formals fnBody .
 
-    $default  reduce using rule 7 (fnDecl)
+    $default  reduce using rule 9 (fnDecl)
 
 
 State 20
 
-    9 formals: LPAREN formalsList RPAREN .
+   11 formals: LPAREN formalsList RPAREN .
 
-    $default  reduce using rule 9 (formals)
+    $default  reduce using rule 11 (formals)
 
 
 State 21
 
-   11 formalsList: formalDecl COMMA . formalsList
+   13 formalsList: formalDecl COMMA . formalsList
 
     INT  shift, and go to state 4
 
@@ -407,20 +409,1855 @@ State 21
 
 State 22
 
-   12 formalDecl: type id .
+   14 formalDecl: type id .
 
-    $default  reduce using rule 12 (formalDecl)
+    $default  reduce using rule 14 (formalDecl)
 
 
 State 23
 
-   13 fnBody: LCURLY RCURLY .
+    6 varDeclList: varDeclList . varDecl
+   15 fnBody: LCURLY varDeclList . stmtList RCURLY
 
-    $default  reduce using rule 13 (fnBody)
+    INT  shift, and go to state 4
+
+    $default  reduce using rule 17 (stmtList)
+
+    varDecl   go to state 25
+    stmtList  go to state 26
+    type      go to state 27
 
 
 State 24
 
-   11 formalsList: formalDecl COMMA formalsList .
+   13 formalsList: formalDecl COMMA formalsList .
 
-    $default  reduce using rule 11 (formalsList)
+    $default  reduce using rule 13 (formalsList)
+
+
+State 25
+
+    6 varDeclList: varDeclList varDecl .
+
+    $default  reduce using rule 6 (varDeclList)
+
+
+State 26
+
+   15 fnBody: LCURLY varDeclList stmtList . RCURLY
+   16 stmtList: stmtList . stmt
+
+    IF      shift, and go to state 28
+    WHILE   shift, and go to state 29
+    RETURN  shift, and go to state 30
+    ID      shift, and go to state 9
+    DEREF   shift, and go to state 31
+    RCURLY  shift, and go to state 32
+    WRITE   shift, and go to state 33
+    READ    shift, and go to state 34
+
+    stmt       go to state 35
+    assignExp  go to state 36
+    fncall     go to state 37
+    loc        go to state 38
+    id         go to state 39
+
+
+State 27
+
+    8 varDecl: type . id SEMICOLON
+
+    ID  shift, and go to state 9
+
+    id  go to state 40
+
+
+State 28
+
+   23 stmt: IF . LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY
+   24     | IF . LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY ELSE LCURLY varDeclList stmtList RCURLY
+
+    LPAREN  shift, and go to state 41
+
+
+State 29
+
+   25 stmt: WHILE . LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY
+
+    LPAREN  shift, and go to state 42
+
+
+State 30
+
+   26 stmt: RETURN . exp SEMICOLON
+   27     | RETURN . SEMICOLON
+
+    TRUE           shift, and go to state 43
+    FALSE          shift, and go to state 44
+    ID             shift, and go to state 9
+    INTLITERAL     shift, and go to state 45
+    STRINGLITERAL  shift, and go to state 46
+    DEREF          shift, and go to state 31
+    LPAREN         shift, and go to state 47
+    SEMICOLON      shift, and go to state 48
+    DASH           shift, and go to state 49
+    NOT            shift, and go to state 50
+
+    assignExp  go to state 51
+    exp        go to state 52
+    term       go to state 53
+    fncall     go to state 54
+    loc        go to state 55
+    id         go to state 39
+
+
+State 31
+
+   59 loc: DEREF . loc
+
+    ID     shift, and go to state 9
+    DEREF  shift, and go to state 31
+
+    loc  go to state 56
+    id   go to state 57
+
+
+State 32
+
+   15 fnBody: LCURLY varDeclList stmtList RCURLY .
+
+    $default  reduce using rule 15 (fnBody)
+
+
+State 33
+
+   22 stmt: WRITE . exp SEMICOLON
+
+    TRUE           shift, and go to state 43
+    FALSE          shift, and go to state 44
+    ID             shift, and go to state 9
+    INTLITERAL     shift, and go to state 45
+    STRINGLITERAL  shift, and go to state 46
+    DEREF          shift, and go to state 31
+    LPAREN         shift, and go to state 47
+    DASH           shift, and go to state 49
+    NOT            shift, and go to state 50
+
+    assignExp  go to state 51
+    exp        go to state 58
+    term       go to state 53
+    fncall     go to state 54
+    loc        go to state 55
+    id         go to state 39
+
+
+State 34
+
+   21 stmt: READ . loc SEMICOLON
+
+    ID     shift, and go to state 9
+    DEREF  shift, and go to state 31
+
+    loc  go to state 59
+    id   go to state 57
+
+
+State 35
+
+   16 stmtList: stmtList stmt .
+
+    $default  reduce using rule 16 (stmtList)
+
+
+State 36
+
+   18 stmt: assignExp . SEMICOLON
+
+    SEMICOLON  shift, and go to state 60
+
+
+State 37
+
+   28 stmt: fncall . SEMICOLON
+
+    SEMICOLON  shift, and go to state 61
+
+
+State 38
+
+   19 stmt: loc . CROSSCROSS SEMICOLON
+   20     | loc . DASHDASH SEMICOLON
+   29 assignExp: loc . ASSIGN exp
+
+    CROSSCROSS  shift, and go to state 62
+    DASHDASH    shift, and go to state 63
+    ASSIGN      shift, and go to state 64
+
+
+State 39
+
+   53 fncall: id . LPAREN RPAREN
+   54       | id . LPAREN actualList RPAREN
+   58 loc: id .
+
+    LPAREN  shift, and go to state 65
+
+    $default  reduce using rule 58 (loc)
+
+
+State 40
+
+    8 varDecl: type id . SEMICOLON
+
+    SEMICOLON  shift, and go to state 12
+
+
+State 41
+
+   23 stmt: IF LPAREN . exp RPAREN LCURLY varDeclList stmtList RCURLY
+   24     | IF LPAREN . exp RPAREN LCURLY varDeclList stmtList RCURLY ELSE LCURLY varDeclList stmtList RCURLY
+
+    TRUE           shift, and go to state 43
+    FALSE          shift, and go to state 44
+    ID             shift, and go to state 9
+    INTLITERAL     shift, and go to state 45
+    STRINGLITERAL  shift, and go to state 46
+    DEREF          shift, and go to state 31
+    LPAREN         shift, and go to state 47
+    DASH           shift, and go to state 49
+    NOT            shift, and go to state 50
+
+    assignExp  go to state 51
+    exp        go to state 66
+    term       go to state 53
+    fncall     go to state 54
+    loc        go to state 55
+    id         go to state 39
+
+
+State 42
+
+   25 stmt: WHILE LPAREN . exp RPAREN LCURLY varDeclList stmtList RCURLY
+
+    TRUE           shift, and go to state 43
+    FALSE          shift, and go to state 44
+    ID             shift, and go to state 9
+    INTLITERAL     shift, and go to state 45
+    STRINGLITERAL  shift, and go to state 46
+    DEREF          shift, and go to state 31
+    LPAREN         shift, and go to state 47
+    DASH           shift, and go to state 49
+    NOT            shift, and go to state 50
+
+    assignExp  go to state 51
+    exp        go to state 67
+    term       go to state 53
+    fncall     go to state 54
+    loc        go to state 55
+    id         go to state 39
+
+
+State 43
+
+   49 term: TRUE .
+
+    $default  reduce using rule 49 (term)
+
+
+State 44
+
+   50 term: FALSE .
+
+    $default  reduce using rule 50 (term)
+
+
+State 45
+
+   47 term: INTLITERAL .
+
+    $default  reduce using rule 47 (term)
+
+
+State 46
+
+   48 term: STRINGLITERAL .
+
+    $default  reduce using rule 48 (term)
+
+
+State 47
+
+   51 term: LPAREN . exp RPAREN
+
+    TRUE           shift, and go to state 43
+    FALSE          shift, and go to state 44
+    ID             shift, and go to state 9
+    INTLITERAL     shift, and go to state 45
+    STRINGLITERAL  shift, and go to state 46
+    DEREF          shift, and go to state 31
+    LPAREN         shift, and go to state 47
+    DASH           shift, and go to state 49
+    NOT            shift, and go to state 50
+
+    assignExp  go to state 51
+    exp        go to state 68
+    term       go to state 53
+    fncall     go to state 54
+    loc        go to state 55
+    id         go to state 39
+
+
+State 48
+
+   27 stmt: RETURN SEMICOLON .
+
+    $default  reduce using rule 27 (stmt)
+
+
+State 49
+
+   44 exp: DASH . term
+
+    TRUE           shift, and go to state 43
+    FALSE          shift, and go to state 44
+    ID             shift, and go to state 9
+    INTLITERAL     shift, and go to state 45
+    STRINGLITERAL  shift, and go to state 46
+    DEREF          shift, and go to state 31
+    LPAREN         shift, and go to state 47
+
+    term    go to state 69
+    fncall  go to state 54
+    loc     go to state 70
+    id      go to state 39
+
+
+State 50
+
+   35 exp: NOT . exp
+
+    TRUE           shift, and go to state 43
+    FALSE          shift, and go to state 44
+    ID             shift, and go to state 9
+    INTLITERAL     shift, and go to state 45
+    STRINGLITERAL  shift, and go to state 46
+    DEREF          shift, and go to state 31
+    LPAREN         shift, and go to state 47
+    DASH           shift, and go to state 49
+    NOT            shift, and go to state 50
+
+    assignExp  go to state 51
+    exp        go to state 71
+    term       go to state 53
+    fncall     go to state 54
+    loc        go to state 55
+    id         go to state 39
+
+
+State 51
+
+   30 exp: assignExp .
+
+    $default  reduce using rule 30 (exp)
+
+
+State 52
+
+   26 stmt: RETURN exp . SEMICOLON
+   31 exp: exp . CROSS exp
+   32    | exp . DASH exp
+   33    | exp . STAR exp
+   34    | exp . SLASH exp
+   36    | exp . AND exp
+   37    | exp . OR exp
+   38    | exp . EQUALS exp
+   39    | exp . NOTEQUALS exp
+   40    | exp . LESS exp
+   41    | exp . GREATER exp
+   42    | exp . LESSEQ exp
+   43    | exp . GREATEREQ exp
+
+    SEMICOLON  shift, and go to state 72
+    CROSS      shift, and go to state 73
+    DASH       shift, and go to state 74
+    STAR       shift, and go to state 75
+    SLASH      shift, and go to state 76
+    AND        shift, and go to state 77
+    OR         shift, and go to state 78
+    EQUALS     shift, and go to state 79
+    NOTEQUALS  shift, and go to state 80
+    LESS       shift, and go to state 81
+    GREATER    shift, and go to state 82
+    LESSEQ     shift, and go to state 83
+    GREATEREQ  shift, and go to state 84
+
+
+State 53
+
+   45 exp: term .
+
+    $default  reduce using rule 45 (exp)
+
+
+State 54
+
+   52 term: fncall .
+
+    $default  reduce using rule 52 (term)
+
+
+State 55
+
+   29 assignExp: loc . ASSIGN exp
+   46 term: loc .
+
+    ASSIGN  shift, and go to state 64
+
+    $default  reduce using rule 46 (term)
+
+
+State 56
+
+   59 loc: DEREF loc .
+
+    $default  reduce using rule 59 (loc)
+
+
+State 57
+
+   58 loc: id .
+
+    $default  reduce using rule 58 (loc)
+
+
+State 58
+
+   22 stmt: WRITE exp . SEMICOLON
+   31 exp: exp . CROSS exp
+   32    | exp . DASH exp
+   33    | exp . STAR exp
+   34    | exp . SLASH exp
+   36    | exp . AND exp
+   37    | exp . OR exp
+   38    | exp . EQUALS exp
+   39    | exp . NOTEQUALS exp
+   40    | exp . LESS exp
+   41    | exp . GREATER exp
+   42    | exp . LESSEQ exp
+   43    | exp . GREATEREQ exp
+
+    SEMICOLON  shift, and go to state 85
+    CROSS      shift, and go to state 73
+    DASH       shift, and go to state 74
+    STAR       shift, and go to state 75
+    SLASH      shift, and go to state 76
+    AND        shift, and go to state 77
+    OR         shift, and go to state 78
+    EQUALS     shift, and go to state 79
+    NOTEQUALS  shift, and go to state 80
+    LESS       shift, and go to state 81
+    GREATER    shift, and go to state 82
+    LESSEQ     shift, and go to state 83
+    GREATEREQ  shift, and go to state 84
+
+
+State 59
+
+   21 stmt: READ loc . SEMICOLON
+
+    SEMICOLON  shift, and go to state 86
+
+
+State 60
+
+   18 stmt: assignExp SEMICOLON .
+
+    $default  reduce using rule 18 (stmt)
+
+
+State 61
+
+   28 stmt: fncall SEMICOLON .
+
+    $default  reduce using rule 28 (stmt)
+
+
+State 62
+
+   19 stmt: loc CROSSCROSS . SEMICOLON
+
+    SEMICOLON  shift, and go to state 87
+
+
+State 63
+
+   20 stmt: loc DASHDASH . SEMICOLON
+
+    SEMICOLON  shift, and go to state 88
+
+
+State 64
+
+   29 assignExp: loc ASSIGN . exp
+
+    TRUE           shift, and go to state 43
+    FALSE          shift, and go to state 44
+    ID             shift, and go to state 9
+    INTLITERAL     shift, and go to state 45
+    STRINGLITERAL  shift, and go to state 46
+    DEREF          shift, and go to state 31
+    LPAREN         shift, and go to state 47
+    DASH           shift, and go to state 49
+    NOT            shift, and go to state 50
+
+    assignExp  go to state 51
+    exp        go to state 89
+    term       go to state 53
+    fncall     go to state 54
+    loc        go to state 55
+    id         go to state 39
+
+
+State 65
+
+   53 fncall: id LPAREN . RPAREN
+   54       | id LPAREN . actualList RPAREN
+
+    TRUE           shift, and go to state 43
+    FALSE          shift, and go to state 44
+    ID             shift, and go to state 9
+    INTLITERAL     shift, and go to state 45
+    STRINGLITERAL  shift, and go to state 46
+    DEREF          shift, and go to state 31
+    LPAREN         shift, and go to state 47
+    RPAREN         shift, and go to state 90
+    DASH           shift, and go to state 49
+    NOT            shift, and go to state 50
+
+    assignExp   go to state 51
+    exp         go to state 91
+    term        go to state 53
+    fncall      go to state 54
+    actualList  go to state 92
+    loc         go to state 55
+    id          go to state 39
+
+
+State 66
+
+   23 stmt: IF LPAREN exp . RPAREN LCURLY varDeclList stmtList RCURLY
+   24     | IF LPAREN exp . RPAREN LCURLY varDeclList stmtList RCURLY ELSE LCURLY varDeclList stmtList RCURLY
+   31 exp: exp . CROSS exp
+   32    | exp . DASH exp
+   33    | exp . STAR exp
+   34    | exp . SLASH exp
+   36    | exp . AND exp
+   37    | exp . OR exp
+   38    | exp . EQUALS exp
+   39    | exp . NOTEQUALS exp
+   40    | exp . LESS exp
+   41    | exp . GREATER exp
+   42    | exp . LESSEQ exp
+   43    | exp . GREATEREQ exp
+
+    RPAREN     shift, and go to state 93
+    CROSS      shift, and go to state 73
+    DASH       shift, and go to state 74
+    STAR       shift, and go to state 75
+    SLASH      shift, and go to state 76
+    AND        shift, and go to state 77
+    OR         shift, and go to state 78
+    EQUALS     shift, and go to state 79
+    NOTEQUALS  shift, and go to state 80
+    LESS       shift, and go to state 81
+    GREATER    shift, and go to state 82
+    LESSEQ     shift, and go to state 83
+    GREATEREQ  shift, and go to state 84
+
+
+State 67
+
+   25 stmt: WHILE LPAREN exp . RPAREN LCURLY varDeclList stmtList RCURLY
+   31 exp: exp . CROSS exp
+   32    | exp . DASH exp
+   33    | exp . STAR exp
+   34    | exp . SLASH exp
+   36    | exp . AND exp
+   37    | exp . OR exp
+   38    | exp . EQUALS exp
+   39    | exp . NOTEQUALS exp
+   40    | exp . LESS exp
+   41    | exp . GREATER exp
+   42    | exp . LESSEQ exp
+   43    | exp . GREATEREQ exp
+
+    RPAREN     shift, and go to state 94
+    CROSS      shift, and go to state 73
+    DASH       shift, and go to state 74
+    STAR       shift, and go to state 75
+    SLASH      shift, and go to state 76
+    AND        shift, and go to state 77
+    OR         shift, and go to state 78
+    EQUALS     shift, and go to state 79
+    NOTEQUALS  shift, and go to state 80
+    LESS       shift, and go to state 81
+    GREATER    shift, and go to state 82
+    LESSEQ     shift, and go to state 83
+    GREATEREQ  shift, and go to state 84
+
+
+State 68
+
+   31 exp: exp . CROSS exp
+   32    | exp . DASH exp
+   33    | exp . STAR exp
+   34    | exp . SLASH exp
+   36    | exp . AND exp
+   37    | exp . OR exp
+   38    | exp . EQUALS exp
+   39    | exp . NOTEQUALS exp
+   40    | exp . LESS exp
+   41    | exp . GREATER exp
+   42    | exp . LESSEQ exp
+   43    | exp . GREATEREQ exp
+   51 term: LPAREN exp . RPAREN
+
+    RPAREN     shift, and go to state 95
+    CROSS      shift, and go to state 73
+    DASH       shift, and go to state 74
+    STAR       shift, and go to state 75
+    SLASH      shift, and go to state 76
+    AND        shift, and go to state 77
+    OR         shift, and go to state 78
+    EQUALS     shift, and go to state 79
+    NOTEQUALS  shift, and go to state 80
+    LESS       shift, and go to state 81
+    GREATER    shift, and go to state 82
+    LESSEQ     shift, and go to state 83
+    GREATEREQ  shift, and go to state 84
+
+
+State 69
+
+   44 exp: DASH term .
+
+    $default  reduce using rule 44 (exp)
+
+
+State 70
+
+   46 term: loc .
+
+    $default  reduce using rule 46 (term)
+
+
+State 71
+
+   31 exp: exp . CROSS exp
+   32    | exp . DASH exp
+   33    | exp . STAR exp
+   34    | exp . SLASH exp
+   35    | NOT exp .
+   36    | exp . AND exp
+   37    | exp . OR exp
+   38    | exp . EQUALS exp
+   39    | exp . NOTEQUALS exp
+   40    | exp . LESS exp
+   41    | exp . GREATER exp
+   42    | exp . LESSEQ exp
+   43    | exp . GREATEREQ exp
+
+    CROSS      shift, and go to state 73
+    DASH       shift, and go to state 74
+    STAR       shift, and go to state 75
+    SLASH      shift, and go to state 76
+    AND        shift, and go to state 77
+    OR         shift, and go to state 78
+    EQUALS     shift, and go to state 79
+    NOTEQUALS  shift, and go to state 80
+    LESS       shift, and go to state 81
+    GREATER    shift, and go to state 82
+    LESSEQ     shift, and go to state 83
+    GREATEREQ  shift, and go to state 84
+
+    CROSS      [reduce using rule 35 (exp)]
+    DASH       [reduce using rule 35 (exp)]
+    STAR       [reduce using rule 35 (exp)]
+    SLASH      [reduce using rule 35 (exp)]
+    AND        [reduce using rule 35 (exp)]
+    OR         [reduce using rule 35 (exp)]
+    EQUALS     [reduce using rule 35 (exp)]
+    NOTEQUALS  [reduce using rule 35 (exp)]
+    LESS       [reduce using rule 35 (exp)]
+    GREATER    [reduce using rule 35 (exp)]
+    LESSEQ     [reduce using rule 35 (exp)]
+    GREATEREQ  [reduce using rule 35 (exp)]
+    $default   reduce using rule 35 (exp)
+
+
+State 72
+
+   26 stmt: RETURN exp SEMICOLON .
+
+    $default  reduce using rule 26 (stmt)
+
+
+State 73
+
+   31 exp: exp CROSS . exp
+
+    TRUE           shift, and go to state 43
+    FALSE          shift, and go to state 44
+    ID             shift, and go to state 9
+    INTLITERAL     shift, and go to state 45
+    STRINGLITERAL  shift, and go to state 46
+    DEREF          shift, and go to state 31
+    LPAREN         shift, and go to state 47
+    DASH           shift, and go to state 49
+    NOT            shift, and go to state 50
+
+    assignExp  go to state 51
+    exp        go to state 96
+    term       go to state 53
+    fncall     go to state 54
+    loc        go to state 55
+    id         go to state 39
+
+
+State 74
+
+   32 exp: exp DASH . exp
+
+    TRUE           shift, and go to state 43
+    FALSE          shift, and go to state 44
+    ID             shift, and go to state 9
+    INTLITERAL     shift, and go to state 45
+    STRINGLITERAL  shift, and go to state 46
+    DEREF          shift, and go to state 31
+    LPAREN         shift, and go to state 47
+    DASH           shift, and go to state 49
+    NOT            shift, and go to state 50
+
+    assignExp  go to state 51
+    exp        go to state 97
+    term       go to state 53
+    fncall     go to state 54
+    loc        go to state 55
+    id         go to state 39
+
+
+State 75
+
+   33 exp: exp STAR . exp
+
+    TRUE           shift, and go to state 43
+    FALSE          shift, and go to state 44
+    ID             shift, and go to state 9
+    INTLITERAL     shift, and go to state 45
+    STRINGLITERAL  shift, and go to state 46
+    DEREF          shift, and go to state 31
+    LPAREN         shift, and go to state 47
+    DASH           shift, and go to state 49
+    NOT            shift, and go to state 50
+
+    assignExp  go to state 51
+    exp        go to state 98
+    term       go to state 53
+    fncall     go to state 54
+    loc        go to state 55
+    id         go to state 39
+
+
+State 76
+
+   34 exp: exp SLASH . exp
+
+    TRUE           shift, and go to state 43
+    FALSE          shift, and go to state 44
+    ID             shift, and go to state 9
+    INTLITERAL     shift, and go to state 45
+    STRINGLITERAL  shift, and go to state 46
+    DEREF          shift, and go to state 31
+    LPAREN         shift, and go to state 47
+    DASH           shift, and go to state 49
+    NOT            shift, and go to state 50
+
+    assignExp  go to state 51
+    exp        go to state 99
+    term       go to state 53
+    fncall     go to state 54
+    loc        go to state 55
+    id         go to state 39
+
+
+State 77
+
+   36 exp: exp AND . exp
+
+    TRUE           shift, and go to state 43
+    FALSE          shift, and go to state 44
+    ID             shift, and go to state 9
+    INTLITERAL     shift, and go to state 45
+    STRINGLITERAL  shift, and go to state 46
+    DEREF          shift, and go to state 31
+    LPAREN         shift, and go to state 47
+    DASH           shift, and go to state 49
+    NOT            shift, and go to state 50
+
+    assignExp  go to state 51
+    exp        go to state 100
+    term       go to state 53
+    fncall     go to state 54
+    loc        go to state 55
+    id         go to state 39
+
+
+State 78
+
+   37 exp: exp OR . exp
+
+    TRUE           shift, and go to state 43
+    FALSE          shift, and go to state 44
+    ID             shift, and go to state 9
+    INTLITERAL     shift, and go to state 45
+    STRINGLITERAL  shift, and go to state 46
+    DEREF          shift, and go to state 31
+    LPAREN         shift, and go to state 47
+    DASH           shift, and go to state 49
+    NOT            shift, and go to state 50
+
+    assignExp  go to state 51
+    exp        go to state 101
+    term       go to state 53
+    fncall     go to state 54
+    loc        go to state 55
+    id         go to state 39
+
+
+State 79
+
+   38 exp: exp EQUALS . exp
+
+    TRUE           shift, and go to state 43
+    FALSE          shift, and go to state 44
+    ID             shift, and go to state 9
+    INTLITERAL     shift, and go to state 45
+    STRINGLITERAL  shift, and go to state 46
+    DEREF          shift, and go to state 31
+    LPAREN         shift, and go to state 47
+    DASH           shift, and go to state 49
+    NOT            shift, and go to state 50
+
+    assignExp  go to state 51
+    exp        go to state 102
+    term       go to state 53
+    fncall     go to state 54
+    loc        go to state 55
+    id         go to state 39
+
+
+State 80
+
+   39 exp: exp NOTEQUALS . exp
+
+    TRUE           shift, and go to state 43
+    FALSE          shift, and go to state 44
+    ID             shift, and go to state 9
+    INTLITERAL     shift, and go to state 45
+    STRINGLITERAL  shift, and go to state 46
+    DEREF          shift, and go to state 31
+    LPAREN         shift, and go to state 47
+    DASH           shift, and go to state 49
+    NOT            shift, and go to state 50
+
+    assignExp  go to state 51
+    exp        go to state 103
+    term       go to state 53
+    fncall     go to state 54
+    loc        go to state 55
+    id         go to state 39
+
+
+State 81
+
+   40 exp: exp LESS . exp
+
+    TRUE           shift, and go to state 43
+    FALSE          shift, and go to state 44
+    ID             shift, and go to state 9
+    INTLITERAL     shift, and go to state 45
+    STRINGLITERAL  shift, and go to state 46
+    DEREF          shift, and go to state 31
+    LPAREN         shift, and go to state 47
+    DASH           shift, and go to state 49
+    NOT            shift, and go to state 50
+
+    assignExp  go to state 51
+    exp        go to state 104
+    term       go to state 53
+    fncall     go to state 54
+    loc        go to state 55
+    id         go to state 39
+
+
+State 82
+
+   41 exp: exp GREATER . exp
+
+    TRUE           shift, and go to state 43
+    FALSE          shift, and go to state 44
+    ID             shift, and go to state 9
+    INTLITERAL     shift, and go to state 45
+    STRINGLITERAL  shift, and go to state 46
+    DEREF          shift, and go to state 31
+    LPAREN         shift, and go to state 47
+    DASH           shift, and go to state 49
+    NOT            shift, and go to state 50
+
+    assignExp  go to state 51
+    exp        go to state 105
+    term       go to state 53
+    fncall     go to state 54
+    loc        go to state 55
+    id         go to state 39
+
+
+State 83
+
+   42 exp: exp LESSEQ . exp
+
+    TRUE           shift, and go to state 43
+    FALSE          shift, and go to state 44
+    ID             shift, and go to state 9
+    INTLITERAL     shift, and go to state 45
+    STRINGLITERAL  shift, and go to state 46
+    DEREF          shift, and go to state 31
+    LPAREN         shift, and go to state 47
+    DASH           shift, and go to state 49
+    NOT            shift, and go to state 50
+
+    assignExp  go to state 51
+    exp        go to state 106
+    term       go to state 53
+    fncall     go to state 54
+    loc        go to state 55
+    id         go to state 39
+
+
+State 84
+
+   43 exp: exp GREATEREQ . exp
+
+    TRUE           shift, and go to state 43
+    FALSE          shift, and go to state 44
+    ID             shift, and go to state 9
+    INTLITERAL     shift, and go to state 45
+    STRINGLITERAL  shift, and go to state 46
+    DEREF          shift, and go to state 31
+    LPAREN         shift, and go to state 47
+    DASH           shift, and go to state 49
+    NOT            shift, and go to state 50
+
+    assignExp  go to state 51
+    exp        go to state 107
+    term       go to state 53
+    fncall     go to state 54
+    loc        go to state 55
+    id         go to state 39
+
+
+State 85
+
+   22 stmt: WRITE exp SEMICOLON .
+
+    $default  reduce using rule 22 (stmt)
+
+
+State 86
+
+   21 stmt: READ loc SEMICOLON .
+
+    $default  reduce using rule 21 (stmt)
+
+
+State 87
+
+   19 stmt: loc CROSSCROSS SEMICOLON .
+
+    $default  reduce using rule 19 (stmt)
+
+
+State 88
+
+   20 stmt: loc DASHDASH SEMICOLON .
+
+    $default  reduce using rule 20 (stmt)
+
+
+State 89
+
+   29 assignExp: loc ASSIGN exp .
+   31 exp: exp . CROSS exp
+   32    | exp . DASH exp
+   33    | exp . STAR exp
+   34    | exp . SLASH exp
+   36    | exp . AND exp
+   37    | exp . OR exp
+   38    | exp . EQUALS exp
+   39    | exp . NOTEQUALS exp
+   40    | exp . LESS exp
+   41    | exp . GREATER exp
+   42    | exp . LESSEQ exp
+   43    | exp . GREATEREQ exp
+
+    CROSS      shift, and go to state 73
+    DASH       shift, and go to state 74
+    STAR       shift, and go to state 75
+    SLASH      shift, and go to state 76
+    AND        shift, and go to state 77
+    OR         shift, and go to state 78
+    EQUALS     shift, and go to state 79
+    NOTEQUALS  shift, and go to state 80
+    LESS       shift, and go to state 81
+    GREATER    shift, and go to state 82
+    LESSEQ     shift, and go to state 83
+    GREATEREQ  shift, and go to state 84
+
+    CROSS      [reduce using rule 29 (assignExp)]
+    DASH       [reduce using rule 29 (assignExp)]
+    STAR       [reduce using rule 29 (assignExp)]
+    SLASH      [reduce using rule 29 (assignExp)]
+    AND        [reduce using rule 29 (assignExp)]
+    OR         [reduce using rule 29 (assignExp)]
+    EQUALS     [reduce using rule 29 (assignExp)]
+    NOTEQUALS  [reduce using rule 29 (assignExp)]
+    LESS       [reduce using rule 29 (assignExp)]
+    GREATER    [reduce using rule 29 (assignExp)]
+    LESSEQ     [reduce using rule 29 (assignExp)]
+    GREATEREQ  [reduce using rule 29 (assignExp)]
+    $default   reduce using rule 29 (assignExp)
+
+
+State 90
+
+   53 fncall: id LPAREN RPAREN .
+
+    $default  reduce using rule 53 (fncall)
+
+
+State 91
+
+   31 exp: exp . CROSS exp
+   32    | exp . DASH exp
+   33    | exp . STAR exp
+   34    | exp . SLASH exp
+   36    | exp . AND exp
+   37    | exp . OR exp
+   38    | exp . EQUALS exp
+   39    | exp . NOTEQUALS exp
+   40    | exp . LESS exp
+   41    | exp . GREATER exp
+   42    | exp . LESSEQ exp
+   43    | exp . GREATEREQ exp
+   55 actualList: exp .
+
+    CROSS      shift, and go to state 73
+    DASH       shift, and go to state 74
+    STAR       shift, and go to state 75
+    SLASH      shift, and go to state 76
+    AND        shift, and go to state 77
+    OR         shift, and go to state 78
+    EQUALS     shift, and go to state 79
+    NOTEQUALS  shift, and go to state 80
+    LESS       shift, and go to state 81
+    GREATER    shift, and go to state 82
+    LESSEQ     shift, and go to state 83
+    GREATEREQ  shift, and go to state 84
+
+    $default  reduce using rule 55 (actualList)
+
+
+State 92
+
+   54 fncall: id LPAREN actualList . RPAREN
+   56 actualList: actualList . COMMA exp
+
+    RPAREN  shift, and go to state 108
+    COMMA   shift, and go to state 109
+
+
+State 93
+
+   23 stmt: IF LPAREN exp RPAREN . LCURLY varDeclList stmtList RCURLY
+   24     | IF LPAREN exp RPAREN . LCURLY varDeclList stmtList RCURLY ELSE LCURLY varDeclList stmtList RCURLY
+
+    LCURLY  shift, and go to state 110
+
+
+State 94
+
+   25 stmt: WHILE LPAREN exp RPAREN . LCURLY varDeclList stmtList RCURLY
+
+    LCURLY  shift, and go to state 111
+
+
+State 95
+
+   51 term: LPAREN exp RPAREN .
+
+    $default  reduce using rule 51 (term)
+
+
+State 96
+
+   31 exp: exp . CROSS exp
+   31    | exp CROSS exp .
+   32    | exp . DASH exp
+   33    | exp . STAR exp
+   34    | exp . SLASH exp
+   36    | exp . AND exp
+   37    | exp . OR exp
+   38    | exp . EQUALS exp
+   39    | exp . NOTEQUALS exp
+   40    | exp . LESS exp
+   41    | exp . GREATER exp
+   42    | exp . LESSEQ exp
+   43    | exp . GREATEREQ exp
+
+    CROSS      shift, and go to state 73
+    DASH       shift, and go to state 74
+    STAR       shift, and go to state 75
+    SLASH      shift, and go to state 76
+    AND        shift, and go to state 77
+    OR         shift, and go to state 78
+    EQUALS     shift, and go to state 79
+    NOTEQUALS  shift, and go to state 80
+    LESS       shift, and go to state 81
+    GREATER    shift, and go to state 82
+    LESSEQ     shift, and go to state 83
+    GREATEREQ  shift, and go to state 84
+
+    CROSS      [reduce using rule 31 (exp)]
+    DASH       [reduce using rule 31 (exp)]
+    STAR       [reduce using rule 31 (exp)]
+    SLASH      [reduce using rule 31 (exp)]
+    AND        [reduce using rule 31 (exp)]
+    OR         [reduce using rule 31 (exp)]
+    EQUALS     [reduce using rule 31 (exp)]
+    NOTEQUALS  [reduce using rule 31 (exp)]
+    LESS       [reduce using rule 31 (exp)]
+    GREATER    [reduce using rule 31 (exp)]
+    LESSEQ     [reduce using rule 31 (exp)]
+    GREATEREQ  [reduce using rule 31 (exp)]
+    $default   reduce using rule 31 (exp)
+
+
+State 97
+
+   31 exp: exp . CROSS exp
+   32    | exp . DASH exp
+   32    | exp DASH exp .
+   33    | exp . STAR exp
+   34    | exp . SLASH exp
+   36    | exp . AND exp
+   37    | exp . OR exp
+   38    | exp . EQUALS exp
+   39    | exp . NOTEQUALS exp
+   40    | exp . LESS exp
+   41    | exp . GREATER exp
+   42    | exp . LESSEQ exp
+   43    | exp . GREATEREQ exp
+
+    CROSS      shift, and go to state 73
+    DASH       shift, and go to state 74
+    STAR       shift, and go to state 75
+    SLASH      shift, and go to state 76
+    AND        shift, and go to state 77
+    OR         shift, and go to state 78
+    EQUALS     shift, and go to state 79
+    NOTEQUALS  shift, and go to state 80
+    LESS       shift, and go to state 81
+    GREATER    shift, and go to state 82
+    LESSEQ     shift, and go to state 83
+    GREATEREQ  shift, and go to state 84
+
+    CROSS      [reduce using rule 32 (exp)]
+    DASH       [reduce using rule 32 (exp)]
+    STAR       [reduce using rule 32 (exp)]
+    SLASH      [reduce using rule 32 (exp)]
+    AND        [reduce using rule 32 (exp)]
+    OR         [reduce using rule 32 (exp)]
+    EQUALS     [reduce using rule 32 (exp)]
+    NOTEQUALS  [reduce using rule 32 (exp)]
+    LESS       [reduce using rule 32 (exp)]
+    GREATER    [reduce using rule 32 (exp)]
+    LESSEQ     [reduce using rule 32 (exp)]
+    GREATEREQ  [reduce using rule 32 (exp)]
+    $default   reduce using rule 32 (exp)
+
+
+State 98
+
+   31 exp: exp . CROSS exp
+   32    | exp . DASH exp
+   33    | exp . STAR exp
+   33    | exp STAR exp .
+   34    | exp . SLASH exp
+   36    | exp . AND exp
+   37    | exp . OR exp
+   38    | exp . EQUALS exp
+   39    | exp . NOTEQUALS exp
+   40    | exp . LESS exp
+   41    | exp . GREATER exp
+   42    | exp . LESSEQ exp
+   43    | exp . GREATEREQ exp
+
+    CROSS      shift, and go to state 73
+    DASH       shift, and go to state 74
+    STAR       shift, and go to state 75
+    SLASH      shift, and go to state 76
+    AND        shift, and go to state 77
+    OR         shift, and go to state 78
+    EQUALS     shift, and go to state 79
+    NOTEQUALS  shift, and go to state 80
+    LESS       shift, and go to state 81
+    GREATER    shift, and go to state 82
+    LESSEQ     shift, and go to state 83
+    GREATEREQ  shift, and go to state 84
+
+    CROSS      [reduce using rule 33 (exp)]
+    DASH       [reduce using rule 33 (exp)]
+    STAR       [reduce using rule 33 (exp)]
+    SLASH      [reduce using rule 33 (exp)]
+    AND        [reduce using rule 33 (exp)]
+    OR         [reduce using rule 33 (exp)]
+    EQUALS     [reduce using rule 33 (exp)]
+    NOTEQUALS  [reduce using rule 33 (exp)]
+    LESS       [reduce using rule 33 (exp)]
+    GREATER    [reduce using rule 33 (exp)]
+    LESSEQ     [reduce using rule 33 (exp)]
+    GREATEREQ  [reduce using rule 33 (exp)]
+    $default   reduce using rule 33 (exp)
+
+
+State 99
+
+   31 exp: exp . CROSS exp
+   32    | exp . DASH exp
+   33    | exp . STAR exp
+   34    | exp . SLASH exp
+   34    | exp SLASH exp .
+   36    | exp . AND exp
+   37    | exp . OR exp
+   38    | exp . EQUALS exp
+   39    | exp . NOTEQUALS exp
+   40    | exp . LESS exp
+   41    | exp . GREATER exp
+   42    | exp . LESSEQ exp
+   43    | exp . GREATEREQ exp
+
+    CROSS      shift, and go to state 73
+    DASH       shift, and go to state 74
+    STAR       shift, and go to state 75
+    SLASH      shift, and go to state 76
+    AND        shift, and go to state 77
+    OR         shift, and go to state 78
+    EQUALS     shift, and go to state 79
+    NOTEQUALS  shift, and go to state 80
+    LESS       shift, and go to state 81
+    GREATER    shift, and go to state 82
+    LESSEQ     shift, and go to state 83
+    GREATEREQ  shift, and go to state 84
+
+    CROSS      [reduce using rule 34 (exp)]
+    DASH       [reduce using rule 34 (exp)]
+    STAR       [reduce using rule 34 (exp)]
+    SLASH      [reduce using rule 34 (exp)]
+    AND        [reduce using rule 34 (exp)]
+    OR         [reduce using rule 34 (exp)]
+    EQUALS     [reduce using rule 34 (exp)]
+    NOTEQUALS  [reduce using rule 34 (exp)]
+    LESS       [reduce using rule 34 (exp)]
+    GREATER    [reduce using rule 34 (exp)]
+    LESSEQ     [reduce using rule 34 (exp)]
+    GREATEREQ  [reduce using rule 34 (exp)]
+    $default   reduce using rule 34 (exp)
+
+
+State 100
+
+   31 exp: exp . CROSS exp
+   32    | exp . DASH exp
+   33    | exp . STAR exp
+   34    | exp . SLASH exp
+   36    | exp . AND exp
+   36    | exp AND exp .
+   37    | exp . OR exp
+   38    | exp . EQUALS exp
+   39    | exp . NOTEQUALS exp
+   40    | exp . LESS exp
+   41    | exp . GREATER exp
+   42    | exp . LESSEQ exp
+   43    | exp . GREATEREQ exp
+
+    CROSS      shift, and go to state 73
+    DASH       shift, and go to state 74
+    STAR       shift, and go to state 75
+    SLASH      shift, and go to state 76
+    AND        shift, and go to state 77
+    OR         shift, and go to state 78
+    EQUALS     shift, and go to state 79
+    NOTEQUALS  shift, and go to state 80
+    LESS       shift, and go to state 81
+    GREATER    shift, and go to state 82
+    LESSEQ     shift, and go to state 83
+    GREATEREQ  shift, and go to state 84
+
+    CROSS      [reduce using rule 36 (exp)]
+    DASH       [reduce using rule 36 (exp)]
+    STAR       [reduce using rule 36 (exp)]
+    SLASH      [reduce using rule 36 (exp)]
+    AND        [reduce using rule 36 (exp)]
+    OR         [reduce using rule 36 (exp)]
+    EQUALS     [reduce using rule 36 (exp)]
+    NOTEQUALS  [reduce using rule 36 (exp)]
+    LESS       [reduce using rule 36 (exp)]
+    GREATER    [reduce using rule 36 (exp)]
+    LESSEQ     [reduce using rule 36 (exp)]
+    GREATEREQ  [reduce using rule 36 (exp)]
+    $default   reduce using rule 36 (exp)
+
+
+State 101
+
+   31 exp: exp . CROSS exp
+   32    | exp . DASH exp
+   33    | exp . STAR exp
+   34    | exp . SLASH exp
+   36    | exp . AND exp
+   37    | exp . OR exp
+   37    | exp OR exp .
+   38    | exp . EQUALS exp
+   39    | exp . NOTEQUALS exp
+   40    | exp . LESS exp
+   41    | exp . GREATER exp
+   42    | exp . LESSEQ exp
+   43    | exp . GREATEREQ exp
+
+    CROSS      shift, and go to state 73
+    DASH       shift, and go to state 74
+    STAR       shift, and go to state 75
+    SLASH      shift, and go to state 76
+    AND        shift, and go to state 77
+    OR         shift, and go to state 78
+    EQUALS     shift, and go to state 79
+    NOTEQUALS  shift, and go to state 80
+    LESS       shift, and go to state 81
+    GREATER    shift, and go to state 82
+    LESSEQ     shift, and go to state 83
+    GREATEREQ  shift, and go to state 84
+
+    CROSS      [reduce using rule 37 (exp)]
+    DASH       [reduce using rule 37 (exp)]
+    STAR       [reduce using rule 37 (exp)]
+    SLASH      [reduce using rule 37 (exp)]
+    AND        [reduce using rule 37 (exp)]
+    OR         [reduce using rule 37 (exp)]
+    EQUALS     [reduce using rule 37 (exp)]
+    NOTEQUALS  [reduce using rule 37 (exp)]
+    LESS       [reduce using rule 37 (exp)]
+    GREATER    [reduce using rule 37 (exp)]
+    LESSEQ     [reduce using rule 37 (exp)]
+    GREATEREQ  [reduce using rule 37 (exp)]
+    $default   reduce using rule 37 (exp)
+
+
+State 102
+
+   31 exp: exp . CROSS exp
+   32    | exp . DASH exp
+   33    | exp . STAR exp
+   34    | exp . SLASH exp
+   36    | exp . AND exp
+   37    | exp . OR exp
+   38    | exp . EQUALS exp
+   38    | exp EQUALS exp .
+   39    | exp . NOTEQUALS exp
+   40    | exp . LESS exp
+   41    | exp . GREATER exp
+   42    | exp . LESSEQ exp
+   43    | exp . GREATEREQ exp
+
+    CROSS      shift, and go to state 73
+    DASH       shift, and go to state 74
+    STAR       shift, and go to state 75
+    SLASH      shift, and go to state 76
+    AND        shift, and go to state 77
+    OR         shift, and go to state 78
+    EQUALS     shift, and go to state 79
+    NOTEQUALS  shift, and go to state 80
+    LESS       shift, and go to state 81
+    GREATER    shift, and go to state 82
+    LESSEQ     shift, and go to state 83
+    GREATEREQ  shift, and go to state 84
+
+    CROSS      [reduce using rule 38 (exp)]
+    DASH       [reduce using rule 38 (exp)]
+    STAR       [reduce using rule 38 (exp)]
+    SLASH      [reduce using rule 38 (exp)]
+    AND        [reduce using rule 38 (exp)]
+    OR         [reduce using rule 38 (exp)]
+    EQUALS     [reduce using rule 38 (exp)]
+    NOTEQUALS  [reduce using rule 38 (exp)]
+    LESS       [reduce using rule 38 (exp)]
+    GREATER    [reduce using rule 38 (exp)]
+    LESSEQ     [reduce using rule 38 (exp)]
+    GREATEREQ  [reduce using rule 38 (exp)]
+    $default   reduce using rule 38 (exp)
+
+
+State 103
+
+   31 exp: exp . CROSS exp
+   32    | exp . DASH exp
+   33    | exp . STAR exp
+   34    | exp . SLASH exp
+   36    | exp . AND exp
+   37    | exp . OR exp
+   38    | exp . EQUALS exp
+   39    | exp . NOTEQUALS exp
+   39    | exp NOTEQUALS exp .
+   40    | exp . LESS exp
+   41    | exp . GREATER exp
+   42    | exp . LESSEQ exp
+   43    | exp . GREATEREQ exp
+
+    CROSS      shift, and go to state 73
+    DASH       shift, and go to state 74
+    STAR       shift, and go to state 75
+    SLASH      shift, and go to state 76
+    AND        shift, and go to state 77
+    OR         shift, and go to state 78
+    EQUALS     shift, and go to state 79
+    NOTEQUALS  shift, and go to state 80
+    LESS       shift, and go to state 81
+    GREATER    shift, and go to state 82
+    LESSEQ     shift, and go to state 83
+    GREATEREQ  shift, and go to state 84
+
+    CROSS      [reduce using rule 39 (exp)]
+    DASH       [reduce using rule 39 (exp)]
+    STAR       [reduce using rule 39 (exp)]
+    SLASH      [reduce using rule 39 (exp)]
+    AND        [reduce using rule 39 (exp)]
+    OR         [reduce using rule 39 (exp)]
+    EQUALS     [reduce using rule 39 (exp)]
+    NOTEQUALS  [reduce using rule 39 (exp)]
+    LESS       [reduce using rule 39 (exp)]
+    GREATER    [reduce using rule 39 (exp)]
+    LESSEQ     [reduce using rule 39 (exp)]
+    GREATEREQ  [reduce using rule 39 (exp)]
+    $default   reduce using rule 39 (exp)
+
+
+State 104
+
+   31 exp: exp . CROSS exp
+   32    | exp . DASH exp
+   33    | exp . STAR exp
+   34    | exp . SLASH exp
+   36    | exp . AND exp
+   37    | exp . OR exp
+   38    | exp . EQUALS exp
+   39    | exp . NOTEQUALS exp
+   40    | exp . LESS exp
+   40    | exp LESS exp .
+   41    | exp . GREATER exp
+   42    | exp . LESSEQ exp
+   43    | exp . GREATEREQ exp
+
+    CROSS      shift, and go to state 73
+    DASH       shift, and go to state 74
+    STAR       shift, and go to state 75
+    SLASH      shift, and go to state 76
+    AND        shift, and go to state 77
+    OR         shift, and go to state 78
+    EQUALS     shift, and go to state 79
+    NOTEQUALS  shift, and go to state 80
+    LESS       shift, and go to state 81
+    GREATER    shift, and go to state 82
+    LESSEQ     shift, and go to state 83
+    GREATEREQ  shift, and go to state 84
+
+    CROSS      [reduce using rule 40 (exp)]
+    DASH       [reduce using rule 40 (exp)]
+    STAR       [reduce using rule 40 (exp)]
+    SLASH      [reduce using rule 40 (exp)]
+    AND        [reduce using rule 40 (exp)]
+    OR         [reduce using rule 40 (exp)]
+    EQUALS     [reduce using rule 40 (exp)]
+    NOTEQUALS  [reduce using rule 40 (exp)]
+    LESS       [reduce using rule 40 (exp)]
+    GREATER    [reduce using rule 40 (exp)]
+    LESSEQ     [reduce using rule 40 (exp)]
+    GREATEREQ  [reduce using rule 40 (exp)]
+    $default   reduce using rule 40 (exp)
+
+
+State 105
+
+   31 exp: exp . CROSS exp
+   32    | exp . DASH exp
+   33    | exp . STAR exp
+   34    | exp . SLASH exp
+   36    | exp . AND exp
+   37    | exp . OR exp
+   38    | exp . EQUALS exp
+   39    | exp . NOTEQUALS exp
+   40    | exp . LESS exp
+   41    | exp . GREATER exp
+   41    | exp GREATER exp .
+   42    | exp . LESSEQ exp
+   43    | exp . GREATEREQ exp
+
+    CROSS      shift, and go to state 73
+    DASH       shift, and go to state 74
+    STAR       shift, and go to state 75
+    SLASH      shift, and go to state 76
+    AND        shift, and go to state 77
+    OR         shift, and go to state 78
+    EQUALS     shift, and go to state 79
+    NOTEQUALS  shift, and go to state 80
+    LESS       shift, and go to state 81
+    GREATER    shift, and go to state 82
+    LESSEQ     shift, and go to state 83
+    GREATEREQ  shift, and go to state 84
+
+    CROSS      [reduce using rule 41 (exp)]
+    DASH       [reduce using rule 41 (exp)]
+    STAR       [reduce using rule 41 (exp)]
+    SLASH      [reduce using rule 41 (exp)]
+    AND        [reduce using rule 41 (exp)]
+    OR         [reduce using rule 41 (exp)]
+    EQUALS     [reduce using rule 41 (exp)]
+    NOTEQUALS  [reduce using rule 41 (exp)]
+    LESS       [reduce using rule 41 (exp)]
+    GREATER    [reduce using rule 41 (exp)]
+    LESSEQ     [reduce using rule 41 (exp)]
+    GREATEREQ  [reduce using rule 41 (exp)]
+    $default   reduce using rule 41 (exp)
+
+
+State 106
+
+   31 exp: exp . CROSS exp
+   32    | exp . DASH exp
+   33    | exp . STAR exp
+   34    | exp . SLASH exp
+   36    | exp . AND exp
+   37    | exp . OR exp
+   38    | exp . EQUALS exp
+   39    | exp . NOTEQUALS exp
+   40    | exp . LESS exp
+   41    | exp . GREATER exp
+   42    | exp . LESSEQ exp
+   42    | exp LESSEQ exp .
+   43    | exp . GREATEREQ exp
+
+    CROSS      shift, and go to state 73
+    DASH       shift, and go to state 74
+    STAR       shift, and go to state 75
+    SLASH      shift, and go to state 76
+    AND        shift, and go to state 77
+    OR         shift, and go to state 78
+    EQUALS     shift, and go to state 79
+    NOTEQUALS  shift, and go to state 80
+    LESS       shift, and go to state 81
+    GREATER    shift, and go to state 82
+    LESSEQ     shift, and go to state 83
+    GREATEREQ  shift, and go to state 84
+
+    CROSS      [reduce using rule 42 (exp)]
+    DASH       [reduce using rule 42 (exp)]
+    STAR       [reduce using rule 42 (exp)]
+    SLASH      [reduce using rule 42 (exp)]
+    AND        [reduce using rule 42 (exp)]
+    OR         [reduce using rule 42 (exp)]
+    EQUALS     [reduce using rule 42 (exp)]
+    NOTEQUALS  [reduce using rule 42 (exp)]
+    LESS       [reduce using rule 42 (exp)]
+    GREATER    [reduce using rule 42 (exp)]
+    LESSEQ     [reduce using rule 42 (exp)]
+    GREATEREQ  [reduce using rule 42 (exp)]
+    $default   reduce using rule 42 (exp)
+
+
+State 107
+
+   31 exp: exp . CROSS exp
+   32    | exp . DASH exp
+   33    | exp . STAR exp
+   34    | exp . SLASH exp
+   36    | exp . AND exp
+   37    | exp . OR exp
+   38    | exp . EQUALS exp
+   39    | exp . NOTEQUALS exp
+   40    | exp . LESS exp
+   41    | exp . GREATER exp
+   42    | exp . LESSEQ exp
+   43    | exp . GREATEREQ exp
+   43    | exp GREATEREQ exp .
+
+    CROSS      shift, and go to state 73
+    DASH       shift, and go to state 74
+    STAR       shift, and go to state 75
+    SLASH      shift, and go to state 76
+    AND        shift, and go to state 77
+    OR         shift, and go to state 78
+    EQUALS     shift, and go to state 79
+    NOTEQUALS  shift, and go to state 80
+    LESS       shift, and go to state 81
+    GREATER    shift, and go to state 82
+    LESSEQ     shift, and go to state 83
+    GREATEREQ  shift, and go to state 84
+
+    CROSS      [reduce using rule 43 (exp)]
+    DASH       [reduce using rule 43 (exp)]
+    STAR       [reduce using rule 43 (exp)]
+    SLASH      [reduce using rule 43 (exp)]
+    AND        [reduce using rule 43 (exp)]
+    OR         [reduce using rule 43 (exp)]
+    EQUALS     [reduce using rule 43 (exp)]
+    NOTEQUALS  [reduce using rule 43 (exp)]
+    LESS       [reduce using rule 43 (exp)]
+    GREATER    [reduce using rule 43 (exp)]
+    LESSEQ     [reduce using rule 43 (exp)]
+    GREATEREQ  [reduce using rule 43 (exp)]
+    $default   reduce using rule 43 (exp)
+
+
+State 108
+
+   54 fncall: id LPAREN actualList RPAREN .
+
+    $default  reduce using rule 54 (fncall)
+
+
+State 109
+
+   56 actualList: actualList COMMA . exp
+
+    TRUE           shift, and go to state 43
+    FALSE          shift, and go to state 44
+    ID             shift, and go to state 9
+    INTLITERAL     shift, and go to state 45
+    STRINGLITERAL  shift, and go to state 46
+    DEREF          shift, and go to state 31
+    LPAREN         shift, and go to state 47
+    DASH           shift, and go to state 49
+    NOT            shift, and go to state 50
+
+    assignExp  go to state 51
+    exp        go to state 112
+    term       go to state 53
+    fncall     go to state 54
+    loc        go to state 55
+    id         go to state 39
+
+
+State 110
+
+   23 stmt: IF LPAREN exp RPAREN LCURLY . varDeclList stmtList RCURLY
+   24     | IF LPAREN exp RPAREN LCURLY . varDeclList stmtList RCURLY ELSE LCURLY varDeclList stmtList RCURLY
+
+    $default  reduce using rule 7 (varDeclList)
+
+    varDeclList  go to state 113
+
+
+State 111
+
+   25 stmt: WHILE LPAREN exp RPAREN LCURLY . varDeclList stmtList RCURLY
+
+    $default  reduce using rule 7 (varDeclList)
+
+    varDeclList  go to state 114
+
+
+State 112
+
+   31 exp: exp . CROSS exp
+   32    | exp . DASH exp
+   33    | exp . STAR exp
+   34    | exp . SLASH exp
+   36    | exp . AND exp
+   37    | exp . OR exp
+   38    | exp . EQUALS exp
+   39    | exp . NOTEQUALS exp
+   40    | exp . LESS exp
+   41    | exp . GREATER exp
+   42    | exp . LESSEQ exp
+   43    | exp . GREATEREQ exp
+   56 actualList: actualList COMMA exp .
+
+    CROSS      shift, and go to state 73
+    DASH       shift, and go to state 74
+    STAR       shift, and go to state 75
+    SLASH      shift, and go to state 76
+    AND        shift, and go to state 77
+    OR         shift, and go to state 78
+    EQUALS     shift, and go to state 79
+    NOTEQUALS  shift, and go to state 80
+    LESS       shift, and go to state 81
+    GREATER    shift, and go to state 82
+    LESSEQ     shift, and go to state 83
+    GREATEREQ  shift, and go to state 84
+
+    $default  reduce using rule 56 (actualList)
+
+
+State 113
+
+    6 varDeclList: varDeclList . varDecl
+   23 stmt: IF LPAREN exp RPAREN LCURLY varDeclList . stmtList RCURLY
+   24     | IF LPAREN exp RPAREN LCURLY varDeclList . stmtList RCURLY ELSE LCURLY varDeclList stmtList RCURLY
+
+    INT  shift, and go to state 4
+
+    $default  reduce using rule 17 (stmtList)
+
+    varDecl   go to state 25
+    stmtList  go to state 115
+    type      go to state 27
+
+
+State 114
+
+    6 varDeclList: varDeclList . varDecl
+   25 stmt: WHILE LPAREN exp RPAREN LCURLY varDeclList . stmtList RCURLY
+
+    INT  shift, and go to state 4
+
+    $default  reduce using rule 17 (stmtList)
+
+    varDecl   go to state 25
+    stmtList  go to state 116
+    type      go to state 27
+
+
+State 115
+
+   16 stmtList: stmtList . stmt
+   23 stmt: IF LPAREN exp RPAREN LCURLY varDeclList stmtList . RCURLY
+   24     | IF LPAREN exp RPAREN LCURLY varDeclList stmtList . RCURLY ELSE LCURLY varDeclList stmtList RCURLY
+
+    IF      shift, and go to state 28
+    WHILE   shift, and go to state 29
+    RETURN  shift, and go to state 30
+    ID      shift, and go to state 9
+    DEREF   shift, and go to state 31
+    RCURLY  shift, and go to state 117
+    WRITE   shift, and go to state 33
+    READ    shift, and go to state 34
+
+    stmt       go to state 35
+    assignExp  go to state 36
+    fncall     go to state 37
+    loc        go to state 38
+    id         go to state 39
+
+
+State 116
+
+   16 stmtList: stmtList . stmt
+   25 stmt: WHILE LPAREN exp RPAREN LCURLY varDeclList stmtList . RCURLY
+
+    IF      shift, and go to state 28
+    WHILE   shift, and go to state 29
+    RETURN  shift, and go to state 30
+    ID      shift, and go to state 9
+    DEREF   shift, and go to state 31
+    RCURLY  shift, and go to state 118
+    WRITE   shift, and go to state 33
+    READ    shift, and go to state 34
+
+    stmt       go to state 35
+    assignExp  go to state 36
+    fncall     go to state 37
+    loc        go to state 38
+    id         go to state 39
+
+
+State 117
+
+   23 stmt: IF LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY .
+   24     | IF LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY . ELSE LCURLY varDeclList stmtList RCURLY
+
+    ELSE  shift, and go to state 119
+
+    $default  reduce using rule 23 (stmt)
+
+
+State 118
+
+   25 stmt: WHILE LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY .
+
+    $default  reduce using rule 25 (stmt)
+
+
+State 119
+
+   24 stmt: IF LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY ELSE . LCURLY varDeclList stmtList RCURLY
+
+    LCURLY  shift, and go to state 120
+
+
+State 120
+
+   24 stmt: IF LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY ELSE LCURLY . varDeclList stmtList RCURLY
+
+    $default  reduce using rule 7 (varDeclList)
+
+    varDeclList  go to state 121
+
+
+State 121
+
+    6 varDeclList: varDeclList . varDecl
+   24 stmt: IF LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY ELSE LCURLY varDeclList . stmtList RCURLY
+
+    INT  shift, and go to state 4
+
+    $default  reduce using rule 17 (stmtList)
+
+    varDecl   go to state 25
+    stmtList  go to state 122
+    type      go to state 27
+
+
+State 122
+
+   16 stmtList: stmtList . stmt
+   24 stmt: IF LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY ELSE LCURLY varDeclList stmtList . RCURLY
+
+    IF      shift, and go to state 28
+    WHILE   shift, and go to state 29
+    RETURN  shift, and go to state 30
+    ID      shift, and go to state 9
+    DEREF   shift, and go to state 31
+    RCURLY  shift, and go to state 123
+    WRITE   shift, and go to state 33
+    READ    shift, and go to state 34
+
+    stmt       go to state 35
+    assignExp  go to state 36
+    fncall     go to state 37
+    loc        go to state 38
+    id         go to state 39
+
+
+State 123
+
+   24 stmt: IF LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY ELSE LCURLY varDeclList stmtList RCURLY .
+
+    $default  reduce using rule 24 (stmt)

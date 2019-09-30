@@ -47,11 +47,12 @@
 	lake::IDToken * idTokenValue;
 	lake::ASTNode * astNode;
 	lake::ProgramNode * programNode;
-	std::list<DeclNode *> * declList;
+	std::list<DeclNode *> * declListNode;
 	lake::DeclNode * declNode;
 	lake::VarDeclNode * varDeclNode;
 	lake::TypeNode * typeNode;
 	lake::IdNode * idNode;
+  lake::StmtListNode * stmtListNode;
 }
 
 %define parse.assert
@@ -67,7 +68,7 @@
 %token               ELSE
 %token               WHILE
 %token               RETURN
-%token <idTokenValue> ID
+%token <idTokenValue>ID
 %token               INTLITERAL
 %token               STRINGLITERAL
 %token               DEREF
@@ -112,7 +113,7 @@
 %type <formalsNode> formals
 %type <formalsListNode> formalsList
 %type <formalDeclNode> formalDecl
-%type <fnBodyNode> fnBody
+%type <FnBodyNode> fnBody
 %type <stmtListNode> stmtList
 %type <stmtNode> stmt
 %type <AssignNode> assignExp
@@ -158,17 +159,17 @@ declList : declList decl {
 
 /* TODO */
 decl : varDecl {
-  $$ = new DeclNode(varDeclNode($1));
+  $$ = new VarDeclNode($1->token_type, $1->_id);
 		//Make sure to fill out this rule
 } | fnDecl {
-  $$ = new DeclNode(fnDecl($1));
+  $$ = new FnDeclNode($1);
 }
 
 /* TODO */
 varDeclList : varDeclList varDecl {
 
 } | /* epsilon */ {
-  $$ = new std::list<varDeclNode *>();
+  $$ = new std::list<VarDeclNode *>();
 }
 
 /* COMPLETE */
@@ -178,9 +179,11 @@ varDecl : type id SEMICOLON {
 
 /* TODO */
 fnDecl : type id formals fnBody {
-  $$ = new ???
+  $$ = new FnDeclNode(new TypeNode($1->_line, $1->_column),
+    new IdNode($2),
+    new std::list<FormalDeclNode *>($3),
+    new FnBodyNode($4));
 }
-
 
 /* TODO */
 formals : LPAREN RPAREN {
@@ -202,13 +205,16 @@ formalDecl : type id {
 }
 
 /* TODO */
-fnBody : LCURLY RCURLY {}
+fnBody : LCURLY varDeclList stmtList RCURLY {
+
+}
 
 /* TODO */
 stmtList : stmtList stmt {
-
+  $1->push_back($2);
+  $$ = $1;
 } | /* epsilon */ {
-  $$ = new std::list<stmtNode *>();
+  $$ = new std::list<StmtNode *>();
 }
 
 /* TODO */
