@@ -48,6 +48,7 @@
 	lake::ASTNode * astNode;
 	lake::ProgramNode * programNode;
 	std::list<DeclNode *> * declListNode;
+  std::list<FormalDeclNode *> * formalsList;
 	lake::DeclNode * declNode;
   std::list<VarDeclNode *> * varDeclListNode;
 	lake::VarDeclNode * varDeclNode;
@@ -55,12 +56,16 @@
 	lake::IdNode * idNode;
   std::list<StmtNode *> * stmtListNode;
   lake::StmtNode * stmtNode;
-  FnBodyNode * fnBodyNode;
-  FormalsListNode * formalsListNode;
-  FormalsListNode * formalsNode;
-  FormalDeclNode * formalDeclNode;
-  FnDeclNode * fnDeclNode;
-  DerefNode * derefNode;
+  lake::FnBodyNode * fnBodyNode;
+  lake::FormalsListNode * formalsListNode;
+  lake::FormalsListNode * formalsNode;
+  lake::FormalDeclNode * formalDeclNode;
+  lake::FnDeclNode * fnDeclNode;
+  lake::DerefNode * derefNode;
+  lake::AssignNode * assignNode;
+  lake::ExpNode * expNode;
+  lake::IfStmtNode * ifStmtNode;
+  lake::CallExpNode * callExpNode;
 }
 
 %define parse.assert
@@ -72,10 +77,10 @@
 %token <tokenValue>  VOID
 %token               TRUE
 %token               FALSE
-%token               IF
+%token <tokenValue>  IF
 %token               ELSE
-%token               WHILE
-%token               RETURN
+%token <tokenValue>  WHILE
+%token <tokenValue>  RETURN
 %token <idTokenValue>ID
 %token               INTLITERAL
 %token               STRINGLITERAL
@@ -104,7 +109,7 @@
 %token               GREATER
 %token               LESSEQ
 %token               GREATEREQ
-%token               ASSIGN
+%token <tokenValue>  ASSIGN
 
 /* Nonterminals
 *  NOTE: You will need to add more nonterminals
@@ -119,21 +124,23 @@
 %type <varDeclNode> varDecl
 %type <fnDeclNode> fnDecl
 %type <formalsNode> formals
-%type <formalsListNode> formalsList
+%type <formalsList> formalsList
 %type <formalDeclNode> formalDecl
 %type <fnBodyNode> fnBody
 %type <stmtListNode> stmtList
 %type <stmtNode> stmt
-%type <AssignNode> assignExp
-%type <ExpNode> exp
+%type <assignNode> assignExp
+%type <expNode> exp
 /* %type <term> ??? */
 /* %type <CallExpNode> fnCall */
 /* %type <actualListNode> ??? */
 %type <primTypeNode> primType
 %type <typeNode> type
 /* %type <indirectNode> ??? */
-%type <derefNode> loc
+%type <expNode> loc
 %type <idNode> id
+%type <ifStmtNode> ifStmt
+%type <callExpNode> fncall
 
 
 /* NOTE: Make sure to add precedence and associativity
@@ -184,7 +191,7 @@ decl : varDecl {
 } | fnDecl {
   $$ = $1;
 }
-
+  ;
 /* TODO */
 varDeclList : varDeclList varDecl {
   $1->push_back($2);
@@ -192,35 +199,43 @@ varDeclList : varDeclList varDecl {
 } | /* epsilon */ {
   $$ = new std::list<VarDeclNode *>();
 }
+  ;
 
 /* COMPLETE */
 varDecl : type id SEMICOLON {
   $$ = new VarDeclNode($1, $2);
 }
+  ;
 
 /* TODO */
 fnDecl : type id formals fnBody {
   $$ = new FnDeclNode(new TypeNode($1->lineNum, $1->colNum),
   $2, $3, $4);
 }
+  ;
 
 /* TODO */
 formals : LPAREN RPAREN {
-  $$ = new FormalsListNode(std::list<FormalDeclNode *>());
+  $$ = new FormalsListNode(new std::list<FormalDeclNode *>());
 } | LPAREN formalsList RPAREN {
-  $$ = $2;
+  $$ = new FormalsListNode($2);
 }
+  ;
 
 /* TODO */
 formalsList : formalDecl {
-
+  std::list<FormalDeclNode *> * list = new std::list<FormalDeclNode *>();
+  list->push_back($1);
+  $$ = list;
 } | formalDecl COMMA formalsList {
-
+  $3->push_back($1);
+  $$ = $3;
 }
+  ;
 
 /* TODO */
 formalDecl : type id {
-
+  $$ = new FormalDeclNode($1, $2);
 }
 
 /* TODO */
@@ -238,33 +253,33 @@ stmtList : stmtList stmt {
 
 /* TODO */
 stmt : assignExp SEMICOLON {
-
+  $$ = new AssignStmtNode($1);
 } | loc CROSSCROSS SEMICOLON {
-
+  $$ = new PostIncStmtNode($1);
 } | loc DASHDASH SEMICOLON {
-
+  $$ = new PostDecStmtNode($1);
 } | READ loc SEMICOLON {
-
+  $$ = new ReadStmtNode($2);
 } | WRITE exp SEMICOLON {
-
+  $$ = new WriteStmtNode($2);
 } | IF LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY {
-
+  $$ = new IfStmtNode($1->_line, $1->_column, $3, new VarDeclListNode($6), new StmtListNode($7));
 } | IF LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY ELSE LCURLY varDeclList stmtList RCURLY {
-
+  $$ = new IfElseStmtNode($3, new VarDeclListNode($6), new StmtListNode($7), new VarDeclListNode($11), new StmtListNode($12));
 } | WHILE LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY {
-
+  $$ = new WhileStmtNode($1->_line, $1->_column, $3, new VarDeclListNode($6), new StmtListNode($7));
 } | RETURN exp SEMICOLON {
-
+  $$ = new ReturnStmtNode($1->_line, $1->_column, $2);
 } | RETURN SEMICOLON {
-
+  $$ = new ReturnStmtNode($1->_line, $1->_column, nullptr);
 } | fncall SEMICOLON {
-
+  $$ = new CallStmtNode($1);
 }
 
 /* TODO */
 assignExp : loc ASSIGN exp {
-
 }
+  ;
 
 /* TODO */
 exp : assignExp {
