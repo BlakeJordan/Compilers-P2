@@ -152,6 +152,7 @@ namespace lake {
 	lake::ASTNode * astNode;
 	lake::ProgramNode * programNode;
 	std::list<DeclNode *> * declListNode;
+  std::list<FormalDeclNode *> * formalsList;
 	lake::DeclNode * declNode;
   std::list<VarDeclNode *> * varDeclListNode;
 	lake::VarDeclNode * varDeclNode;
@@ -159,14 +160,18 @@ namespace lake {
 	lake::IdNode * idNode;
   std::list<StmtNode *> * stmtListNode;
   lake::StmtNode * stmtNode;
-  FnBodyNode * fnBodyNode;
-  FormalsListNode * formalsListNode;
-  FormalsListNode * formalsNode;
-  FormalDeclNode * formalDeclNode;
-  FnDeclNode * fnDeclNode;
-  DerefNode * derefNode;
+  lake::FnBodyNode * fnBodyNode;
+  lake::FormalsListNode * formalsListNode;
+  lake::FormalsListNode * formalsNode;
+  lake::FormalDeclNode * formalDeclNode;
+  lake::FnDeclNode * fnDeclNode;
+  lake::DerefNode * indirect;
+  lake::AssignNode * assignNode;
+  lake::ExpNode * expNode;
+  lake::IfStmtNode * ifStmtNode;
+  lake::CallExpNode * callExpNode;
 
-#line 170 "grammar.hh" // lalr1.cc:377
+#line 175 "grammar.hh" // lalr1.cc:377
     };
 #else
     typedef YYSTYPE semantic_type;
@@ -538,7 +543,7 @@ namespace lake {
 
 #line 5 "lake.yy" // lalr1.cc:377
 } // lake
-#line 542 "grammar.hh" // lalr1.cc:377
+#line 547 "grammar.hh" // lalr1.cc:377
 
 
 

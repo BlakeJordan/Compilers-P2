@@ -2,6 +2,7 @@ Nonterminals useless in grammar
 
    primType
    indirect
+   ifStmt
 
 
 Terminals unused in grammar

@@ -554,7 +554,7 @@ namespace lake {
           switch (yyn)
             {
   case 2:
-#line 162 "lake.yy" // lalr1.cc:859
+#line 169 "lake.yy" // lalr1.cc:859
     {
   (yylhs.value.programNode) = new ProgramNode(new DeclListNode((yystack_[0].value.declListNode)));
   *root = (yylhs.value.programNode);
@@ -563,7 +563,7 @@ namespace lake {
     break;
 
   case 3:
-#line 169 "lake.yy" // lalr1.cc:859
+#line 176 "lake.yy" // lalr1.cc:859
     {
   (yystack_[1].value.declListNode)->push_back((yystack_[0].value.declNode));
   (yylhs.value.declListNode) = (yystack_[1].value.declListNode);
@@ -575,7 +575,7 @@ namespace lake {
     break;
 
   case 4:
-#line 175 "lake.yy" // lalr1.cc:859
+#line 182 "lake.yy" // lalr1.cc:859
     {
   (yylhs.value.declListNode) = new std::list<DeclNode *>();
 }
@@ -583,7 +583,7 @@ namespace lake {
     break;
 
   case 5:
-#line 181 "lake.yy" // lalr1.cc:859
+#line 188 "lake.yy" // lalr1.cc:859
     {
   (yylhs.value.declNode) = (yystack_[0].value.varDeclNode);
 		//Make sure to fill out this rule
@@ -592,7 +592,7 @@ namespace lake {
     break;
 
   case 6:
-#line 184 "lake.yy" // lalr1.cc:859
+#line 191 "lake.yy" // lalr1.cc:859
     {
   (yylhs.value.declNode) = (yystack_[0].value.fnDeclNode);
 }
@@ -600,7 +600,7 @@ namespace lake {
     break;
 
   case 7:
-#line 189 "lake.yy" // lalr1.cc:859
+#line 196 "lake.yy" // lalr1.cc:859
     {
   (yystack_[1].value.varDeclListNode)->push_back((yystack_[0].value.varDeclNode));
   (yylhs.value.varDeclListNode) = (yystack_[1].value.varDeclListNode);
@@ -609,7 +609,7 @@ namespace lake {
     break;
 
   case 8:
-#line 192 "lake.yy" // lalr1.cc:859
+#line 199 "lake.yy" // lalr1.cc:859
     {
   (yylhs.value.varDeclListNode) = new std::list<VarDeclNode *>();
 }
@@ -617,7 +617,7 @@ namespace lake {
     break;
 
   case 9:
-#line 197 "lake.yy" // lalr1.cc:859
+#line 205 "lake.yy" // lalr1.cc:859
     {
   (yylhs.value.varDeclNode) = new VarDeclNode((yystack_[2].value.typeNode), (yystack_[1].value.idNode));
 }
@@ -625,7 +625,7 @@ namespace lake {
     break;
 
   case 10:
-#line 202 "lake.yy" // lalr1.cc:859
+#line 211 "lake.yy" // lalr1.cc:859
     {
   (yylhs.value.fnDeclNode) = new FnDeclNode(new TypeNode((yystack_[3].value.typeNode)->lineNum, (yystack_[3].value.typeNode)->colNum),
   (yystack_[2].value.idNode), (yystack_[1].value.formalsNode), (yystack_[0].value.fnBodyNode));
@@ -634,412 +634,413 @@ namespace lake {
     break;
 
   case 11:
-#line 208 "lake.yy" // lalr1.cc:859
+#line 218 "lake.yy" // lalr1.cc:859
     {
-  (yylhs.value.formalsNode) = new FormalsListNode(std::list<FormalDeclNode *>());
+  (yylhs.value.formalsNode) = new FormalsListNode(new std::list<FormalDeclNode *>());
 }
 #line 642 "parser.cc" // lalr1.cc:859
     break;
 
   case 12:
-#line 210 "lake.yy" // lalr1.cc:859
+#line 220 "lake.yy" // lalr1.cc:859
     {
-  (yylhs.value.formalsNode) = (yystack_[1].value.formalsListNode);
+  (yylhs.value.formalsNode) = new FormalsListNode((yystack_[1].value.formalsList));
 }
 #line 650 "parser.cc" // lalr1.cc:859
     break;
 
   case 13:
-#line 215 "lake.yy" // lalr1.cc:859
+#line 226 "lake.yy" // lalr1.cc:859
     {
-
+  std::list<FormalDeclNode *> * list = new std::list<FormalDeclNode *>();
+  list->push_back((yystack_[0].value.formalDeclNode));
+  (yylhs.value.formalsList) = list;
 }
-#line 658 "parser.cc" // lalr1.cc:859
+#line 660 "parser.cc" // lalr1.cc:859
     break;
 
   case 14:
-#line 217 "lake.yy" // lalr1.cc:859
+#line 230 "lake.yy" // lalr1.cc:859
     {
-
+  (yystack_[0].value.formalsList)->push_back((yystack_[2].value.formalDeclNode));
+  (yylhs.value.formalsList) = (yystack_[0].value.formalsList);
 }
-#line 666 "parser.cc" // lalr1.cc:859
+#line 669 "parser.cc" // lalr1.cc:859
     break;
 
   case 15:
-#line 222 "lake.yy" // lalr1.cc:859
+#line 237 "lake.yy" // lalr1.cc:859
     {
-
+  (yylhs.value.formalDeclNode) = new FormalDeclNode((yystack_[1].value.typeNode), (yystack_[0].value.idNode));
 }
-#line 674 "parser.cc" // lalr1.cc:859
+#line 677 "parser.cc" // lalr1.cc:859
     break;
 
   case 16:
-#line 227 "lake.yy" // lalr1.cc:859
+#line 242 "lake.yy" // lalr1.cc:859
     {
-  (yylhs.value.fnBodyNode) = new FnBodyNode(new VarDeclListNode((yystack_[2].value.varDeclListNode)), new StmtListNode((yystack_[1].value.stmtListNode)));
+  (yylhs.value.fnBodyNode) = new FnBodyNode((yystack_[3].value.tokenValue)->_line, (yystack_[3].value.tokenValue)->_column, new VarDeclListNode((yystack_[2].value.varDeclListNode)), new StmtListNode((yystack_[1].value.stmtListNode)));
 }
-#line 682 "parser.cc" // lalr1.cc:859
+#line 685 "parser.cc" // lalr1.cc:859
     break;
 
   case 17:
-#line 232 "lake.yy" // lalr1.cc:859
+#line 247 "lake.yy" // lalr1.cc:859
     {
   (yystack_[1].value.stmtListNode)->push_back((yystack_[0].value.stmtNode));
   (yylhs.value.stmtListNode) = (yystack_[1].value.stmtListNode);
 }
-#line 691 "parser.cc" // lalr1.cc:859
+#line 694 "parser.cc" // lalr1.cc:859
     break;
 
   case 18:
-#line 235 "lake.yy" // lalr1.cc:859
+#line 250 "lake.yy" // lalr1.cc:859
     {
   (yylhs.value.stmtListNode) = new std::list<StmtNode *>();
 }
-#line 699 "parser.cc" // lalr1.cc:859
+#line 702 "parser.cc" // lalr1.cc:859
     break;
 
   case 19:
-#line 240 "lake.yy" // lalr1.cc:859
+#line 255 "lake.yy" // lalr1.cc:859
     {
-
+  (yylhs.value.stmtNode) = new AssignStmtNode((yystack_[1].value.assignNode));
 }
-#line 707 "parser.cc" // lalr1.cc:859
+#line 710 "parser.cc" // lalr1.cc:859
     break;
 
   case 20:
-#line 242 "lake.yy" // lalr1.cc:859
+#line 257 "lake.yy" // lalr1.cc:859
     {
-
+  (yylhs.value.stmtNode) = new PostIncStmtNode((yystack_[2].value.expNode));
 }
-#line 715 "parser.cc" // lalr1.cc:859
+#line 718 "parser.cc" // lalr1.cc:859
     break;
 
   case 21:
-#line 244 "lake.yy" // lalr1.cc:859
+#line 259 "lake.yy" // lalr1.cc:859
     {
-
+  (yylhs.value.stmtNode) = new PostDecStmtNode((yystack_[2].value.expNode));
 }
-#line 723 "parser.cc" // lalr1.cc:859
+#line 726 "parser.cc" // lalr1.cc:859
     break;
 
   case 22:
-#line 246 "lake.yy" // lalr1.cc:859
+#line 261 "lake.yy" // lalr1.cc:859
     {
-
+  (yylhs.value.stmtNode) = new ReadStmtNode((yystack_[1].value.expNode));
 }
-#line 731 "parser.cc" // lalr1.cc:859
+#line 734 "parser.cc" // lalr1.cc:859
     break;
 
   case 23:
-#line 248 "lake.yy" // lalr1.cc:859
+#line 263 "lake.yy" // lalr1.cc:859
     {
-
+  (yylhs.value.stmtNode) = new WriteStmtNode((yystack_[1].value.expNode));
 }
-#line 739 "parser.cc" // lalr1.cc:859
+#line 742 "parser.cc" // lalr1.cc:859
     break;
 
   case 24:
-#line 250 "lake.yy" // lalr1.cc:859
+#line 265 "lake.yy" // lalr1.cc:859
     {
-
+  (yylhs.value.stmtNode) = new IfStmtNode((yystack_[7].value.tokenValue)->_line, (yystack_[7].value.tokenValue)->_column, (yystack_[5].value.expNode), new VarDeclListNode((yystack_[2].value.varDeclListNode)), new StmtListNode((yystack_[1].value.stmtListNode)));
 }
-#line 747 "parser.cc" // lalr1.cc:859
+#line 750 "parser.cc" // lalr1.cc:859
     break;
 
   case 25:
-#line 252 "lake.yy" // lalr1.cc:859
+#line 267 "lake.yy" // lalr1.cc:859
     {
-
+  (yylhs.value.stmtNode) = new IfElseStmtNode((yystack_[10].value.expNode), new VarDeclListNode((yystack_[7].value.varDeclListNode)), new StmtListNode((yystack_[6].value.stmtListNode)), new VarDeclListNode((yystack_[2].value.varDeclListNode)), new StmtListNode((yystack_[1].value.stmtListNode)));
 }
-#line 755 "parser.cc" // lalr1.cc:859
+#line 758 "parser.cc" // lalr1.cc:859
     break;
 
   case 26:
-#line 254 "lake.yy" // lalr1.cc:859
+#line 269 "lake.yy" // lalr1.cc:859
     {
-
+  (yylhs.value.stmtNode) = new WhileStmtNode((yystack_[7].value.tokenValue)->_line, (yystack_[7].value.tokenValue)->_column, (yystack_[5].value.expNode), new VarDeclListNode((yystack_[2].value.varDeclListNode)), new StmtListNode((yystack_[1].value.stmtListNode)));
 }
-#line 763 "parser.cc" // lalr1.cc:859
+#line 766 "parser.cc" // lalr1.cc:859
     break;
 
   case 27:
-#line 256 "lake.yy" // lalr1.cc:859
+#line 271 "lake.yy" // lalr1.cc:859
     {
-
+  (yylhs.value.stmtNode) = new ReturnStmtNode((yystack_[2].value.tokenValue)->_line, (yystack_[2].value.tokenValue)->_column, (yystack_[1].value.expNode));
 }
-#line 771 "parser.cc" // lalr1.cc:859
+#line 774 "parser.cc" // lalr1.cc:859
     break;
 
   case 28:
-#line 258 "lake.yy" // lalr1.cc:859
+#line 273 "lake.yy" // lalr1.cc:859
     {
-
+  (yylhs.value.stmtNode) = new ReturnStmtNode((yystack_[1].value.tokenValue)->_line, (yystack_[1].value.tokenValue)->_column, nullptr);
 }
-#line 779 "parser.cc" // lalr1.cc:859
+#line 782 "parser.cc" // lalr1.cc:859
     break;
 
   case 29:
-#line 260 "lake.yy" // lalr1.cc:859
+#line 275 "lake.yy" // lalr1.cc:859
     {
-
+  (yylhs.value.stmtNode) = new CallStmtNode((yystack_[1].value.callExpNode));
 }
-#line 787 "parser.cc" // lalr1.cc:859
+#line 790 "parser.cc" // lalr1.cc:859
     break;
 
   case 30:
-#line 265 "lake.yy" // lalr1.cc:859
+#line 280 "lake.yy" // lalr1.cc:859
     {
-
 }
-#line 795 "parser.cc" // lalr1.cc:859
+#line 797 "parser.cc" // lalr1.cc:859
     break;
 
   case 31:
-#line 270 "lake.yy" // lalr1.cc:859
+#line 285 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 803 "parser.cc" // lalr1.cc:859
+#line 805 "parser.cc" // lalr1.cc:859
     break;
 
   case 32:
-#line 272 "lake.yy" // lalr1.cc:859
+#line 287 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 811 "parser.cc" // lalr1.cc:859
+#line 813 "parser.cc" // lalr1.cc:859
     break;
 
   case 33:
-#line 274 "lake.yy" // lalr1.cc:859
+#line 289 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 819 "parser.cc" // lalr1.cc:859
+#line 821 "parser.cc" // lalr1.cc:859
     break;
 
   case 34:
-#line 276 "lake.yy" // lalr1.cc:859
+#line 291 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 827 "parser.cc" // lalr1.cc:859
+#line 829 "parser.cc" // lalr1.cc:859
     break;
 
   case 35:
-#line 278 "lake.yy" // lalr1.cc:859
+#line 293 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 835 "parser.cc" // lalr1.cc:859
+#line 837 "parser.cc" // lalr1.cc:859
     break;
 
   case 36:
-#line 280 "lake.yy" // lalr1.cc:859
+#line 295 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 843 "parser.cc" // lalr1.cc:859
+#line 845 "parser.cc" // lalr1.cc:859
     break;
 
   case 37:
-#line 282 "lake.yy" // lalr1.cc:859
+#line 297 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 851 "parser.cc" // lalr1.cc:859
+#line 853 "parser.cc" // lalr1.cc:859
     break;
 
   case 38:
-#line 284 "lake.yy" // lalr1.cc:859
+#line 299 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 859 "parser.cc" // lalr1.cc:859
+#line 861 "parser.cc" // lalr1.cc:859
     break;
 
   case 39:
-#line 286 "lake.yy" // lalr1.cc:859
+#line 301 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 867 "parser.cc" // lalr1.cc:859
+#line 869 "parser.cc" // lalr1.cc:859
     break;
 
   case 40:
-#line 288 "lake.yy" // lalr1.cc:859
+#line 303 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 875 "parser.cc" // lalr1.cc:859
+#line 877 "parser.cc" // lalr1.cc:859
     break;
 
   case 41:
-#line 290 "lake.yy" // lalr1.cc:859
-    {
-
-}
-#line 883 "parser.cc" // lalr1.cc:859
-    break;
-
-  case 42:
-#line 292 "lake.yy" // lalr1.cc:859
-    {
-
-}
-#line 891 "parser.cc" // lalr1.cc:859
-    break;
-
-  case 43:
-#line 294 "lake.yy" // lalr1.cc:859
-    {
-
-}
-#line 899 "parser.cc" // lalr1.cc:859
-    break;
-
-  case 44:
-#line 296 "lake.yy" // lalr1.cc:859
-    {
-
-}
-#line 907 "parser.cc" // lalr1.cc:859
-    break;
-
-  case 45:
-#line 298 "lake.yy" // lalr1.cc:859
-    {
-
-}
-#line 915 "parser.cc" // lalr1.cc:859
-    break;
-
-  case 46:
-#line 300 "lake.yy" // lalr1.cc:859
-    {
-
-}
-#line 923 "parser.cc" // lalr1.cc:859
-    break;
-
-  case 47:
 #line 305 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 931 "parser.cc" // lalr1.cc:859
+#line 885 "parser.cc" // lalr1.cc:859
     break;
 
-  case 48:
+  case 42:
 #line 307 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 939 "parser.cc" // lalr1.cc:859
+#line 893 "parser.cc" // lalr1.cc:859
     break;
 
-  case 49:
+  case 43:
 #line 309 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 947 "parser.cc" // lalr1.cc:859
+#line 901 "parser.cc" // lalr1.cc:859
     break;
 
-  case 50:
+  case 44:
 #line 311 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 955 "parser.cc" // lalr1.cc:859
+#line 909 "parser.cc" // lalr1.cc:859
     break;
 
-  case 51:
+  case 45:
 #line 313 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 963 "parser.cc" // lalr1.cc:859
+#line 917 "parser.cc" // lalr1.cc:859
     break;
 
-  case 52:
+  case 46:
 #line 315 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 971 "parser.cc" // lalr1.cc:859
+#line 925 "parser.cc" // lalr1.cc:859
+    break;
+
+  case 47:
+#line 320 "lake.yy" // lalr1.cc:859
+    {
+
+}
+#line 933 "parser.cc" // lalr1.cc:859
+    break;
+
+  case 48:
+#line 322 "lake.yy" // lalr1.cc:859
+    {
+
+}
+#line 941 "parser.cc" // lalr1.cc:859
+    break;
+
+  case 49:
+#line 324 "lake.yy" // lalr1.cc:859
+    {
+
+}
+#line 949 "parser.cc" // lalr1.cc:859
+    break;
+
+  case 50:
+#line 326 "lake.yy" // lalr1.cc:859
+    {
+
+}
+#line 957 "parser.cc" // lalr1.cc:859
+    break;
+
+  case 51:
+#line 328 "lake.yy" // lalr1.cc:859
+    {
+
+}
+#line 965 "parser.cc" // lalr1.cc:859
+    break;
+
+  case 52:
+#line 330 "lake.yy" // lalr1.cc:859
+    {
+
+}
+#line 973 "parser.cc" // lalr1.cc:859
     break;
 
   case 53:
-#line 317 "lake.yy" // lalr1.cc:859
+#line 332 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 979 "parser.cc" // lalr1.cc:859
+#line 981 "parser.cc" // lalr1.cc:859
     break;
 
   case 54:
-#line 322 "lake.yy" // lalr1.cc:859
+#line 337 "lake.yy" // lalr1.cc:859
     { // fn call with no args
 
 }
-#line 987 "parser.cc" // lalr1.cc:859
+#line 989 "parser.cc" // lalr1.cc:859
     break;
 
   case 55:
-#line 324 "lake.yy" // lalr1.cc:859
+#line 339 "lake.yy" // lalr1.cc:859
     { // with args
 
 }
-#line 995 "parser.cc" // lalr1.cc:859
+#line 997 "parser.cc" // lalr1.cc:859
     break;
 
   case 56:
-#line 329 "lake.yy" // lalr1.cc:859
+#line 344 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 1003 "parser.cc" // lalr1.cc:859
+#line 1005 "parser.cc" // lalr1.cc:859
     break;
 
   case 57:
-#line 331 "lake.yy" // lalr1.cc:859
+#line 346 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 1011 "parser.cc" // lalr1.cc:859
+#line 1013 "parser.cc" // lalr1.cc:859
     break;
 
   case 58:
-#line 336 "lake.yy" // lalr1.cc:859
+#line 351 "lake.yy" // lalr1.cc:859
     { (yylhs.value.typeNode) = new IntNode((yystack_[0].value.tokenValue)->_line, (yystack_[0].value.tokenValue)->_column); }
-#line 1017 "parser.cc" // lalr1.cc:859
+#line 1019 "parser.cc" // lalr1.cc:859
     break;
 
   case 59:
-#line 351 "lake.yy" // lalr1.cc:859
+#line 367 "lake.yy" // lalr1.cc:859
     {
 
 }
-#line 1025 "parser.cc" // lalr1.cc:859
+#line 1027 "parser.cc" // lalr1.cc:859
     break;
 
   case 60:
-#line 353 "lake.yy" // lalr1.cc:859
+#line 369 "lake.yy" // lalr1.cc:859
     {
-
 }
-#line 1033 "parser.cc" // lalr1.cc:859
+#line 1034 "parser.cc" // lalr1.cc:859
     break;
 
   case 61:
-#line 358 "lake.yy" // lalr1.cc:859
+#line 373 "lake.yy" // lalr1.cc:859
     { (yylhs.value.idNode) = new IdNode((yystack_[0].value.idTokenValue)); }
-#line 1039 "parser.cc" // lalr1.cc:859
+#line 1040 "parser.cc" // lalr1.cc:859
     break;
 
 
-#line 1043 "parser.cc" // lalr1.cc:859
+#line 1044 "parser.cc" // lalr1.cc:859
             default:
               break;
             }
@@ -1397,13 +1398,13 @@ namespace lake {
   const unsigned short int
   Parser::yyrline_[] =
   {
-       0,   162,   162,   169,   175,   181,   184,   189,   192,   197,
-     202,   208,   210,   215,   217,   222,   227,   232,   235,   240,
-     242,   244,   246,   248,   250,   252,   254,   256,   258,   260,
-     265,   270,   272,   274,   276,   278,   280,   282,   284,   286,
-     288,   290,   292,   294,   296,   298,   300,   305,   307,   309,
-     311,   313,   315,   317,   322,   324,   329,   331,   336,   351,
-     353,   358
+       0,   169,   169,   176,   182,   188,   191,   196,   199,   205,
+     211,   218,   220,   226,   230,   237,   242,   247,   250,   255,
+     257,   259,   261,   263,   265,   267,   269,   271,   273,   275,
+     280,   285,   287,   289,   291,   293,   295,   297,   299,   301,
+     303,   305,   307,   309,   311,   313,   315,   320,   322,   324,
+     326,   328,   330,   332,   337,   339,   344,   346,   351,   367,
+     369,   373
   };
 
   // Print the state stack on the debug stream.
@@ -1488,8 +1489,8 @@ namespace lake {
 
 #line 5 "lake.yy" // lalr1.cc:1167
 } // lake
-#line 1492 "parser.cc" // lalr1.cc:1167
-#line 359 "lake.yy" // lalr1.cc:1168
+#line 1493 "parser.cc" // lalr1.cc:1167
+#line 374 "lake.yy" // lalr1.cc:1168
 
 
 void

@@ -61,7 +61,7 @@
   lake::FormalsListNode * formalsNode;
   lake::FormalDeclNode * formalDeclNode;
   lake::FnDeclNode * fnDeclNode;
-  lake::DerefNode * derefNode;
+  lake::DerefNode * indirect;
   lake::AssignNode * assignNode;
   lake::ExpNode * expNode;
   lake::IfStmtNode * ifStmtNode;
@@ -70,46 +70,46 @@
 
 %define parse.assert
 
-%token               END    0     "end of file"
-%token               NEWLINE "newline"
-%token <tokenValue>  BOOL
-%token <tokenValue>  INT
-%token <tokenValue>  VOID
-%token               TRUE
-%token               FALSE
-%token <tokenValue>  IF
-%token               ELSE
-%token <tokenValue>  WHILE
-%token <tokenValue>  RETURN
-%token <idTokenValue>ID
-%token               INTLITERAL
-%token               STRINGLITERAL
-%token               DEREF
-%token               LCURLY
-%token               RCURLY
-%token               LPAREN
-%token               RPAREN
-%token               SEMICOLON
-%token               COMMA
-%token               DOT
-%token               WRITE
-%token               READ
-%token               CROSSCROSS
-%token               DASHDASH
-%token               CROSS
-%token               DASH
-%token               STAR
-%token               SLASH
-%token               NOT
-%token               AND
-%token               OR
-%token               EQUALS
-%token               NOTEQUALS
-%token               LESS
-%token               GREATER
-%token               LESSEQ
-%token               GREATEREQ
-%token <tokenValue>  ASSIGN
+%token                  END    0     "end of file"
+%token                  NEWLINE "newline"
+%token <tokenValue>     BOOL
+%token <tokenValue>     INT
+%token <tokenValue>     VOID
+%token <tokenValue>     TRUE
+%token <tokenValue>     FALSE
+%token <tokenValue>     IF
+%token <tokenValue>     ELSE
+%token <tokenValue>     WHILE
+%token <tokenValue>     RETURN
+%token <idTokenValue>   ID
+%token <intLitToken>    INTLITERAL
+%token <StringLitToken> STRINGLITERAL
+%token <tokenValue>     DEREF
+%token <tokenValue>     LCURLY
+%token <tokenValue>     RCURLY
+%token <tokenValue>     LPAREN
+%token <tokenValue>     RPAREN
+%token <tokenValue>     SEMICOLON
+%token <tokenValue>     COMMA
+%token <tokenValue>     DOT
+%token <tokenValue>     WRITE
+%token <tokenValue>     READ
+%token <tokenValue>     CROSSCROSS
+%token <tokenValue>     DASHDASH
+%token <tokenValue>     CROSS
+%token <tokenValue>     DASH
+%token <tokenValue>     STAR
+%token <tokenValue>     SLASH
+%token <tokenValue>     NOT
+%token <tokenValue>     AND
+%token <tokenValue>     OR
+%token <tokenValue>     EQUALS
+%token <tokenValue>     NOTEQUALS
+%token <tokenValue>     LESS
+%token <tokenValue>     GREATER
+%token <tokenValue>     LESSEQ
+%token <tokenValue>     GREATEREQ
+%token <tokenValue>     ASSIGN
 
 /* Nonterminals
 *  NOTE: You will need to add more nonterminals
@@ -136,7 +136,7 @@
 /* %type <actualListNode> ??? */
 %type <primTypeNode> primType
 %type <typeNode> type
-/* %type <indirectNode> ??? */
+%type <indirectNode> indirect
 %type <expNode> loc
 %type <idNode> id
 %type <ifStmtNode> ifStmt
@@ -240,7 +240,7 @@ formalDecl : type id {
 
 /* TODO */
 fnBody : LCURLY varDeclList stmtList RCURLY {
-  $$ = new FnBodyNode(new VarDeclListNode($2), new StmtListNode($3));
+  $$ = new FnBodyNode($1->_line, $1->_column, new VarDeclListNode($2), new StmtListNode($3));
 }
 
 /* TODO */
@@ -357,16 +357,16 @@ primType : INT { $$ = new IntNode($1->_line, $1->_column); }
 
 /* TODO */
 indirect : indirect DEREF {
-
+  $1->push_back($2);
+  $$ = $1;
 } | /* epsilon */ {
-
+  $$ = new DerefNode(NULL, 0);
 }
 
 /* TODO */
 loc : id {
 
 } | DEREF loc {
-
 }
 
 /* COMPLETE */
